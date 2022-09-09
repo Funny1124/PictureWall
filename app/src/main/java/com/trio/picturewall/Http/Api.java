@@ -1,19 +1,31 @@
 package com.trio.picturewall.Http;
 
 import android.os.NetworkOnMainThreadException;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.trio.picturewall.entity.User;
+import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.responseBody.ResponseBody;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Api {
 
@@ -84,7 +96,24 @@ public class Api {
             try {
                 OkHttpClient client = new OkHttpClient();
                 //发起请求，传入callback进行回调
-                client.newCall(request).enqueue(ResponseBody.callback);
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        e.printStackTrace();
+                    }
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                        Type jsonType = new TypeToken<ResponseBody<User>>(){}.getType();
+                        // 获取响应体的json串
+                        String body = Objects.requireNonNull(response.body()).string();
+                        Log.d("info", body);
+                        // 解析json串到自己封装的状态
+                        ResponseBody<User> dataResponseBody = new Gson().fromJson(body,jsonType);
+                        LoginData.loginUser = dataResponseBody.getData();
+                        Log.d("info", dataResponseBody.toString());
+                        Log.d("User:", LoginData.loginUser.getId());
+                    }
+                });
             }catch (NetworkOnMainThreadException ex){
                 ex.printStackTrace();
             }
