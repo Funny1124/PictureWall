@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.AlterActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.PublishActivity"
             android:exported="false" />
         <activity
