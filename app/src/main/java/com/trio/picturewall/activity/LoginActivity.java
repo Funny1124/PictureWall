@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
+import com.trio.picturewall.information.LoginData;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,9 +29,15 @@ public class LoginActivity extends AppCompatActivity {
                 String userpassword = password.getText().toString();
                 //调用登录方法
                 Api.login(username,userpassword);
-
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                finish();
+                try {//等待1秒
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(LoginData.loginUser != null){
+                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    finish();
+                }
             }
         });
 
