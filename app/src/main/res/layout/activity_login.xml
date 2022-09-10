@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.LoginActivity"
     android:orientation="vertical"
     android:gravity="center">
@@ -20,10 +21,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="欢迎来到ImageWall"
-            android:textSize="24dp"
-            android:textColor="#000"
-            android:layout_marginTop="20dp"
+            android:text="PictureWall"
+            android:textSize="24sp"
+            android:textColor="@color/selector"
+            android:typeface="serif"
+            android:layout_marginTop="24dp"
             android:gravity="center"/>
     </LinearLayout>
 
@@ -36,16 +38,16 @@
         <LinearLayout
             android:id="@+id/login_edit"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="160dp"
             android:orientation="vertical"
-            android:layout_marginRight="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginRight="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginTop="48dp"
             android:gravity="center">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/round_rectangle">
+                android:layout_height="56dp"
+                android:background="@drawable/edit_text_top_conner_rectangle">
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:layout_width="30dp"
@@ -62,16 +64,17 @@
                     android:id="@+id/account"
                     android:background="@null"
                     android:hint="请输入账号"
-                    android:textSize="13dp"
+                    android:textSize="13sp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textNoSuggestions"/>
+                    android:inputType="text"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/round_rectangle">
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edit_text_bottom_conner_rectangle">
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:layout_width="30dp"
@@ -88,29 +91,46 @@
                     android:id="@+id/password"
                     android:background="@null"
                     android:hint="请输入密码"
-                    android:textSize="13dp"
+                    android:textSize="13sp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textNoSuggestions"/>
+                    android:inputType="textPassword"/>
             </LinearLayout>
         </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="未注册的账号请先注册账号"
-            android:gravity="center"/>
-
         <Button
             android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="60dp"
-            android:background="@drawable/button_rectangle"
+            android:layout_marginLeft="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="48dp"
+            android:background="@drawable/conner_rectangle"
             android:text="登录"
             android:textColor="#fff" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="未注册的账号请先" />
+
+            <TextView
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="#03A9F4"
+                android:text="前往注册" />
+
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/login_other"
             android:layout_width="match_parent"
@@ -155,15 +175,6 @@
                     android:text="QQ"/>
             </LinearLayout>
         </LinearLayout>
-        <TextView
-            android:id="@+id/register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"
-            android:layout_marginLeft="50dp"
-            android:textColor="#03A9F4"
-            android:text="注册"
-            android:gravity="center"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -180,6 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="用户协议"
+            android:textColor="#03A9F4"
             android:autoLink="all"/>
     </LinearLayout>
 </LinearLayout>

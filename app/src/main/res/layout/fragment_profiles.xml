@@ -11,14 +11,14 @@
     <LinearLayout
         android:id="@+id/user_info"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_margin="8dp"
-        android:background="@color/teal_200"
+        android:layout_height="240dp"
+        android:background="@drawable/bottom_corner_rectangle"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="24dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -63,6 +63,7 @@
                 android:id="@+id/follower"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/following"
                 android:orientation="vertical">
@@ -79,6 +80,7 @@
                 android:id="@+id/following"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 app:layout_constraintStart_toEndOf="@+id/follower"
                 app:layout_constraintEnd_toStartOf="@+id/goods"
                 android:orientation="vertical">
@@ -95,6 +97,7 @@
                 android:id="@+id/goods"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 app:layout_constraintStart_toEndOf="@id/following"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:orientation="vertical">
@@ -113,7 +116,10 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="3dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/top_corner_rectangle">
 <!--        app:tabMode="scrollable">-->
 
         <com.google.android.material.tabs.TabItem
@@ -132,7 +138,7 @@
             android:id="@+id/good_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="点赞列表" />
+            android:text="点赞" />
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -140,6 +146,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="8dp"
         android:orientation="vertical"/>
 
 </LinearLayout>

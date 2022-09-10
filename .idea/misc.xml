@@ -18,10 +18,17 @@
         <entry key="..\:/AndroidStudio/Android_Project/ImageShare2/PictureWall/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
         <entry key="..\:/AndroidStudio/Android_Project/ImageShare2/PictureWall/app/src/main/res/layout/fragment_profiles.xml" value="0.22826086956521738" />
         <entry key="..\:/AndroidStudio/Android_Project/ImageShare2/PictureWall/app/src/main/res/layout/fragment_share.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable-v24/add.xml" value="0.169" />
+        <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable-v24/edit_border_picture.xml" value="0.169" />
+        <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable/bottom_corner_rectangle.xml" value="0.169" />
         <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable/button_rectangle.xml" value="0.2065" />
+        <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable/edit_text_buttom_conner_rectangle.xml" value="0.169" />
+        <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable/edit_text_top_conner_rectangle.xml" value="0.169" />
         <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable/round_rectangle.xml" value="0.2065" />
-        <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable/top_circle_rectangle.xml" value="0.152" />
+        <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/layout/activity_main.xml" value="0.2734375" />
+        <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/layout/activity_publish.xml" value="0.2734375" />
         <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/layout/activity_register.xml" value="0.25833333333333336" />
         <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/layout/activity_welcome.xml" value="0.2734375" />
         <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/layout/fragment_find.xml" value="0.2734375" />

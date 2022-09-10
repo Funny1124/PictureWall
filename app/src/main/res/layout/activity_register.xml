@@ -20,10 +20,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="欢迎来到ImageWall"
-            android:textSize="24dp"
-            android:textColor="#000"
-            android:layout_marginTop="20dp"
+            android:text="PictureWall"
+            android:textSize="24sp"
+            android:textColor="@color/selector"
+            android:typeface="serif"
+            android:layout_marginTop="24dp"
             android:gravity="center"/>
     </LinearLayout>
 
@@ -44,8 +45,8 @@
             android:gravity="center">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/round_rectangle">
+                android:layout_height="56dp"
+                android:background="@drawable/edit_text_top_conner_rectangle">
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:layout_width="30dp"
@@ -55,33 +56,35 @@
                 <TextView
                     android:layout_width="1dp"
                     android:background="#DCDCDC"
-                    android:layout_margin="15dp"
+                    android:layout_margin="16dp"
                     android:layout_height="match_parent"/>
 
                 <EditText
                     android:id="@+id/registerUsername"
                     android:background="@null"
                     android:hint="请输入账号"
-                    android:textSize="13dp"
+                    android:textSize="13sp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textNoSuggestions"/>
+                    android:inputType="text"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/round_rectangle">
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edit_text_rectangle">
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:layout_width="30dp"
                     android:layout_gravity="center_vertical"
                     android:background="@mipmap/lock"
                     android:layout_height="30dp"/>
+
                 <TextView
                     android:layout_width="1dp"
                     android:background="#DCDCDC"
-                    android:layout_margin="15dp"
+                    android:layout_margin="16dp"
                     android:layout_height="match_parent"/>
 
                 <EditText
@@ -90,13 +93,14 @@
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:hint="请输入密码"
-                    android:inputType="textNoSuggestions"
-                    android:textSize="13dp" />
+                    android:inputType="textPassword"
+                    android:textSize="13sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/round_rectangle">
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edit_text_bottom_conner_rectangle">
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:layout_width="30dp"
@@ -106,7 +110,7 @@
                 <TextView
                     android:layout_width="1dp"
                     android:background="#DCDCDC"
-                    android:layout_margin="15dp"
+                    android:layout_margin="16dp"
                     android:layout_height="match_parent"/>
 
                 <EditText
@@ -115,7 +119,7 @@
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:hint="请再次输入密码"
-                    android:inputType="textNoSuggestions"
+                    android:inputType="textPassword"
                     android:textSize="13dp" />
             </LinearLayout>
         </LinearLayout>
@@ -126,7 +130,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="50dp"
-            android:background="@color/cardview_shadow_start_color"
+            android:background="@drawable/conner_rectangle"
             android:text="注册"
             android:textColor="#fff" />
 
