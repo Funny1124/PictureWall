@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PictureWall</string>
+    <string name="dialog_list_text">请选择</string>
+    <string name="dialog_btn_confirm_text">ignore</string>
 </resources>
