@@ -17,11 +17,12 @@ import com.google.android.material.tabs.TabLayout;
 import com.trio.picturewall.R;
 import com.trio.picturewall.ui.home.find.FindFragment;
 import com.trio.picturewall.ui.home.following.FollowingFragment;
-import com.trio.picturewall.ui.home.following.FollowingViewModel;
+
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel mViewModel;
+    private HomeViewModel homeViewModel;
 
     private FindFragment findFragment;
     private FollowingFragment followingFragment;
@@ -38,15 +39,14 @@ public class HomeFragment extends Fragment {
         findFragment = FindFragment.newInstance();
         followingFragment = FollowingFragment.newInstance();
         getChildFragmentManager().beginTransaction().replace(R.id.linearLayout,findFragment).commit();
-        TabLayout tabLayout = (TabLayout)root.findViewById(R.id.tabLayout);
+        TabLayout tabLayout = root.findViewById(R.id.tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Toast.makeText(getActivity(),tab.getText(),Toast.LENGTH_SHORT).show();
-                if (tab.getText().equals("爱看")){
+                if (Objects.equals(tab.getText(), "发现")){
                     getChildFragmentManager().beginTransaction().replace(R.id.linearLayout,findFragment).commit();
                 }
-                if (tab.getText().equals("精选")){
+                if (tab.getText().equals("关注")){
                     getChildFragmentManager().beginTransaction().replace(R.id.linearLayout,followingFragment).commit();
                 }
             }
@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         // TODO: Use the ViewModel
     }
 

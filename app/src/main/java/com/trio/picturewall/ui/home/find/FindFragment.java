@@ -16,7 +16,7 @@ import com.trio.picturewall.R;
 
 public class FindFragment extends Fragment {
 
-    private FindViewModel mViewModel;
+    private FindViewModel findViewModel;
 
     public static FindFragment newInstance() {
         return new FindFragment();
@@ -31,7 +31,7 @@ public class FindFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(FindViewModel.class);
+        findViewModel = new ViewModelProvider(this).get(FindViewModel.class);
         // TODO: Use the ViewModel
     }
 

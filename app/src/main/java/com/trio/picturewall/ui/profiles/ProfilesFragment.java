@@ -16,7 +16,7 @@ import com.trio.picturewall.R;
 
 public class ProfilesFragment extends Fragment {
 
-    private ProfilesViewModel mViewModel;
+    private ProfilesViewModel profilesViewModel;
 
     public static ProfilesFragment newInstance() {
         return new ProfilesFragment();
@@ -31,7 +31,7 @@ public class ProfilesFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfilesViewModel.class);
+        profilesViewModel = new ViewModelProvider(this).get(ProfilesViewModel.class);
         // TODO: Use the ViewModel
     }
 

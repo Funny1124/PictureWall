@@ -16,7 +16,7 @@ import com.trio.picturewall.R;
 
 public class FollowingFragment extends Fragment {
 
-    private FollowingViewModel mViewModel;
+    private FollowingViewModel followingViewModel;
 
     public static FollowingFragment newInstance() {
         return new FollowingFragment();
@@ -31,7 +31,7 @@ public class FollowingFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(FollowingViewModel.class);
+        followingViewModel = new ViewModelProvider(this).get(FollowingViewModel.class);
         // TODO: Use the ViewModel
     }
 

@@ -13,14 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trio.picturewall.R;
 import com.trio.picturewall.activity.PublishActivity;
 import com.trio.picturewall.databinding.FragmentShareBinding;
 import com.trio.picturewall.widget.CircleButton;
 
 public class ShareFragment extends Fragment {
 
-    private ShareViewModel mViewModel;
+    private ShareViewModel shareViewModel;
     private FragmentShareBinding binding;
 
     public static ShareFragment newInstance() {
@@ -30,7 +29,7 @@ public class ShareFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ShareViewModel shareViewModel =
+        shareViewModel =
                 new ViewModelProvider(this).get(ShareViewModel.class);
 
         binding = FragmentShareBinding.inflate(inflater, container, false);
@@ -49,7 +48,7 @@ public class ShareFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ShareViewModel.class);
+        shareViewModel = new ViewModelProvider(this).get(ShareViewModel.class);
         // TODO: Use the ViewModel
     }
 
