@@ -3,31 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/wel_bg"
 
-    tools:context=".activity.WelcomeActivity"
     android:orientation="vertical"
-    android:gravity="center_vertical">
+    tools:context=".activity.WelcomeActivity">
 
-    <ImageView
-        android:id="@+id/camera"
+    <com.trio.picturewall.widget.CircleButton
+        android:id="@+id/enter"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:background="@mipmap/camera" />
-
-    <TextView
-        android:id="@+id/wel_text"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="打开生活，发现美好"
-        android:textSize="18dp"
-        android:gravity="center"
-        android:textColor="#fff"/>
-    <com.trio.picturewall.widget.CircleButton
-        android:id="@+id/enter"
-        android:layout_marginTop="20dp"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"/>
+        android:layout_marginTop="560dp" />
 </LinearLayout>

@@ -14,7 +14,6 @@ import com.trio.picturewall.widget.CircleButton;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    private ImageView camera;
     private CircleButton enter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
         /*
         动画
          */
-        camera = findViewById(R.id.camera);
         enter = findViewById(R.id.enter);
-//        Animation camera_ani = AnimationUtils.loadAnimation(WelcomeActivity.this,R.anim.wel_rotate);
-//        camera.startAnimation(camera_ani);
 //        Animation enter_ani = AnimationUtils.loadAnimation(WelcomeActivity.this,R.anim.wel_translate_left);
 //        enter.startAnimation(enter_ani);
 
