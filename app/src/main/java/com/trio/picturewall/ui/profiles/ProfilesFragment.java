@@ -13,11 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.trio.picturewall.R;
+import com.trio.picturewall.databinding.FragmentProfilesBinding;
+import com.trio.picturewall.ui.share.ShareViewModel;
 
 public class ProfilesFragment extends Fragment {
 
     private ProfilesViewModel profilesViewModel;
-
+    private FragmentProfilesBinding binding;
     public static ProfilesFragment newInstance() {
         return new ProfilesFragment();
     }
@@ -25,7 +27,10 @@ public class ProfilesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profiles, container, false);
+        profilesViewModel=new ViewModelProvider(this).get(ProfilesViewModel.class);
+        binding = FragmentProfilesBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        return root;
     }
 
     @Override
