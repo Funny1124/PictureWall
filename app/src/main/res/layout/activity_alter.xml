@@ -90,7 +90,7 @@
             android:background="#DCDCDC" />
 
         <EditText
-            android:id="@+id/account"
+            android:id="@+id/temp_username"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toEndOf="@+id/i1"
@@ -128,7 +128,7 @@
             android:background="#DCDCDC" />
 
         <EditText
-            android:id="@+id/sex"
+            android:id="@+id/temp_sex"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toEndOf="@+id/i2"
@@ -166,7 +166,7 @@
             android:background="#DCDCDC" />
 
         <EditText
-            android:id="@+id/profiles"
+            android:id="@+id/temp_introduce"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toEndOf="@+id/i3"
@@ -183,7 +183,7 @@
         android:layout_marginTop="30dp">
 
         <Button
-            android:id="@+id/tv_save"
+            android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

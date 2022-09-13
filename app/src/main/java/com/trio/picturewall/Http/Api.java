@@ -111,6 +111,7 @@ public class Api {
                         LoginData.loginUser = dataResponseBody.getData();
                         Log.d("info", dataResponseBody.toString());
                         Log.d("User:", LoginData.loginUser.getId());
+                        Log.d("User:", LoginData.loginUser.getUsername());
                     }
                 });
             }catch (NetworkOnMainThreadException ex){
