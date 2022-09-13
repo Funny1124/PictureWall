@@ -15,6 +15,15 @@ public class User {
     public User() {
     }
 
+    //用于修改信息
+    public User(String id, String username, String sex, String introduce, String avatar) {
+        this.id = id;
+        this.username = username;
+        this.sex = sex;
+        this.introduce = introduce;
+        this.avatar = avatar;
+    }
+
     public User(String id, String appKey, String username,
                 String password, String sex, String introduce,
                 String avatar, String createTime, String lastUpdateTime) {
