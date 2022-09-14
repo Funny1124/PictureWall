@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.LoginActivity"
     android:orientation="vertical"
     android:gravity="center">
@@ -12,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="56dp"
         android:gravity="center">
         <ImageView
             android:layout_width="80dp"
@@ -32,7 +31,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
         <LinearLayout
@@ -49,7 +48,7 @@
                 android:layout_height="56dp"
                 android:background="@drawable/edit_text_top_conner_rectangle">
                 <ImageView
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_width="30dp"
                     android:layout_gravity="center_vertical"
                     android:background="@mipmap/person"
@@ -57,7 +56,7 @@
                 <TextView
                     android:layout_width="1dp"
                     android:background="#DCDCDC"
-                    android:layout_margin="15dp"
+                    android:layout_margin="16dp"
                     android:layout_height="match_parent"/>
 
                 <EditText
@@ -74,9 +73,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_bottom_conner_rectangle">
+                android:gravity="center"
+                android:background="@drawable/edit_text_bottom_conner_rectangle"
+                android:orientation="horizontal">
                 <ImageView
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_width="30dp"
                     android:layout_gravity="center_vertical"
                     android:background="@mipmap/lock"
@@ -92,9 +93,16 @@
                     android:background="@null"
                     android:hint="请输入密码"
                     android:textSize="13sp"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:inputType="textPassword"/>
+                <ImageView
+                    android:id="@+id/iv_pwd_switch"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@mipmap/eye_off" />
             </LinearLayout>
         </LinearLayout>
         <Button
@@ -127,6 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
                 android:textColor="#03A9F4"
                 android:text="前往注册" />
 
@@ -138,7 +147,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center">
             <LinearLayout
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -159,7 +168,7 @@
                 android:background="#E6E6E6"
                 android:layout_margin="20dp"/>
             <LinearLayout
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="16dp"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -187,7 +196,7 @@
             android:text="登录即同意"
             android:textColor="#939292"/>
         <TextView
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="8dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="用户协议"

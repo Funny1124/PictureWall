@@ -72,8 +72,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:gravity="center"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_rectangle">
+                android:background="@drawable/edit_text_rectangle"
+                android:orientation="horizontal">
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:layout_width="30dp"
@@ -89,18 +91,27 @@
 
                 <EditText
                     android:id="@+id/registerPassword"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:hint="请输入密码"
                     android:inputType="textPassword"
                     android:textSize="13sp" />
+                <ImageView
+                    android:id="@+id/iv_pwd_switch1"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@mipmap/eye_off" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_bottom_conner_rectangle">
+                android:gravity="center"
+                android:background="@drawable/edit_text_bottom_conner_rectangle"
+                android:orientation="horizontal">
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:layout_width="30dp"
@@ -115,12 +126,19 @@
 
                 <EditText
                     android:id="@+id/verifyPassword"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="@integer/material_motion_duration_long_1"
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:hint="请再次输入密码"
                     android:inputType="textPassword"
                     android:textSize="13dp" />
+                <ImageView
+                    android:id="@+id/iv_pwd_switch2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@mipmap/eye_off" />
             </LinearLayout>
         </LinearLayout>
         <Button

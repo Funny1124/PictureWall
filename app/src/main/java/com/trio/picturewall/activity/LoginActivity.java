@@ -3,24 +3,43 @@ package com.trio.picturewall.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.information.LoginData;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private Boolean bPwdSwitch = false; //是否查看密码
+    private ImageView ivPwdSwitch;
+    private EditText account;
+    private EditText password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        EditText account = findViewById(R.id.account);
-        EditText password = findViewById(R.id.password);
+        ivPwdSwitch = findViewById(R.id.iv_pwd_switch);
+        account = findViewById(R.id.account);
+        password = findViewById(R.id.password);
 
+        ivPwdSwitch.setOnClickListener(view -> {//眼睛，密码查看
+            bPwdSwitch = !bPwdSwitch;
+            if (bPwdSwitch){
+                ivPwdSwitch.setImageResource(R.mipmap.eye);
+                password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            }else {
+                ivPwdSwitch.setImageResource(R.mipmap.eye_off);
+                password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|
+                        InputType.TYPE_CLASS_TEXT);
+                password.setTypeface(Typeface.DEFAULT);
+            }
+        });
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
