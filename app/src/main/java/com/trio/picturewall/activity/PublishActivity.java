@@ -1,5 +1,8 @@
 package com.trio.picturewall.activity;
 
+import static com.trio.picturewall.Http.Api.post;
+import static com.trio.picturewall.Http.Api.postAdd;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -19,12 +22,14 @@ import android.os.NetworkOnMainThreadException;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
+import com.trio.picturewall.information.LoginData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,13 +51,12 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class PublishActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private final Gson gson = new Gson();
     //uri对象
     private Uri imageUri;
-    //获取照片
-    private String imagePath = null;
-    private String dir = null;
+
+    private EditText edit_img_name = null;
+    private EditText edit_img_context = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
         findViewById(R.id.publish).setOnClickListener(this);
         findViewById(R.id.null_view).setOnClickListener(this);
+        findViewById(R.id.cancel).setOnClickListener(this);
 
     }
 
@@ -67,7 +72,18 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
         switch (view.getId()) {
+            case R.id.cancel:
+                finish();
+                break;
             case R.id.publish:
+                edit_img_name = findViewById(R.id.edit_img_name);
+                String title = edit_img_name.getText().toString().trim();
+
+                edit_img_context = findViewById(R.id.edit_img_context);
+                String content = edit_img_context.getText().toString().trim();
+
+                postAdd(LoginData.picture.getImageCode(),LoginData.loginUser.getId(), title,content);
+
                 finish();
                 break;
             case R.id.null_view:
@@ -109,16 +125,15 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 if (resultCode == RESULT_OK) {
                     try {
                         if(data != null) {
+                            //获取uri
                             Uri uri = data.getData();
                             imageUri = uri;
-
+                            //uri转文件
                             String path = getImagePath(imageUri,null);
                             File file = new File(path);   //图片地址
-
+                            //上传到服务器
                             post(file);
-                            finish();
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -130,108 +145,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void post(File file){
-        new Thread(() -> {
-
-            // url路径
-            String url = "http://47.107.52.7:88/member/photo/image/upload";
-
-            Log.d("DialogActivity", "upload-run: 上传照片！");
-            // 请求头
-            Headers headers = new Headers.Builder()
-                    .add("appId", "10f623a5dc0345e0ade966247f1c7a24")
-                    .add("appSecret", "48335c92b7b6fbf374899af0d381708a379fe")
-                    .add("Accept", "application/json, text/plain, */*")
-                    .build();
-
-            MediaType mediaType=MediaType.Companion.parse("text/x-markdown; charset=utf-8");
-
-            RequestBody fileBody=RequestBody.Companion.create(file,mediaType);
-            RequestBody body = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("fileList", file.getName(),fileBody)
-                    .build();
-
-            //请求组合创建
-            Request request = new Request.Builder()
-                    .url(url)
-                    // 将请求头加至请求中
-                    .headers(headers)
-                    .post(body)
-                    .build();
-            System.out.println(request);
-            try {
-                OkHttpClient client = new OkHttpClient();
-                //发起请求，传入callback进行回调
-                client.newCall(request).enqueue(callback);
-            }catch (NetworkOnMainThreadException ex){
-                ex.printStackTrace();
-            }
-        }).start();
-    }
-
-    /**
-     * 回调
-     */
-    private final Callback callback = new Callback() {
-        @Override
-        public void onFailure(@NonNull Call call, IOException e) {
-            //TODO 请求失败处理
-            e.printStackTrace();
-        }
-        @Override
-        public void onResponse(@NonNull Call call, Response response) throws IOException {
-            //TODO 请求成功处理
-            Type jsonType = new TypeToken<ResponseBody<Object>>(){}.getType();
-            // 获取响应体的json串
-            String body = response.body().string();
-            Log.d("info", body);
-            // 解析json串到自己封装的状态
-            ResponseBody<Object> dataResponseBody = gson.fromJson(body,jsonType);
-            Log.d("info", dataResponseBody.toString());
-        }
-    };
 
 
-    /**
-     * http响应体的封装协议
-     * @param <T> 泛型
-     */
-    public static class ResponseBody <T> {
-
-        /**
-         * 业务响应码
-         */
-        private int code;
-        /**
-         * 响应提示信息
-         */
-        private String msg;
-        /**
-         * 响应数据
-         */
-        private T data;
-
-        public ResponseBody(){}
-
-        public int getCode() {
-            return code;
-        }
-        public String getMsg() {
-            return msg;
-        }
-        public T getData() {
-            return data;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return "ResponseBody{" +
-                    "code=" + code +
-                    ", msg='" + msg + '\'' +
-                    ", data=" + data +
-                    '}';
-        }
-    }
 }
