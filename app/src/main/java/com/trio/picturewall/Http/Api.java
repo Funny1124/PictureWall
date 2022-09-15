@@ -248,7 +248,7 @@ public class Api {
             Map<String, Object> bodyMap = new HashMap<>();
             bodyMap.put("content", content);
             bodyMap.put("imageCode", imageCode);
-            bodyMap.put("pUserId", "1570327632636153856");
+            bodyMap.put("pUserId", pUserId);
             bodyMap.put("title", title);
             // 将Map转换为字符串类型加入请求体中
             String body = gson.toJson(bodyMap);
