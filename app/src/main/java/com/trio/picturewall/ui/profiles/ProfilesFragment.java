@@ -3,17 +3,21 @@ package com.trio.picturewall.ui.profiles;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.trio.picturewall.R;
 import com.trio.picturewall.activity.AlterActivity;
 import com.trio.picturewall.activity.LoginActivity;
@@ -24,6 +28,9 @@ public class ProfilesFragment extends Fragment {
 
     private ProfilesViewModel profilesViewModel;
     private FragmentProfilesBinding binding;
+    private ImageView mineUserIcon;
+    private TextView mineUserName;
+    private TextView mineUserIntroduce;
 
     public static ProfilesFragment newInstance() {
         return new ProfilesFragment();
@@ -35,6 +42,9 @@ public class ProfilesFragment extends Fragment {
         profilesViewModel = new ViewModelProvider(this).get(ProfilesViewModel.class);
         binding = FragmentProfilesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        //加载个人信息
+        setUserData();
 
         binding.mineUserIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,5 +106,18 @@ public class ProfilesFragment extends Fragment {
                 });
 
         listDialog.create().show();
+    }
+
+    /**
+     * 加载个人信息
+     */
+    private void setUserData(){
+        //加载头像
+        Glide.with(this).load(profilesViewModel.getMineUserIconPath()).into(binding.mineUserIcon);
+        //加载用户名
+        binding.mineUserName.setText(profilesViewModel.getMineUserName());
+        //加载用户名
+        binding.mineUserIntro.setText(profilesViewModel.getMineUserIntroduce());
+
     }
 }
