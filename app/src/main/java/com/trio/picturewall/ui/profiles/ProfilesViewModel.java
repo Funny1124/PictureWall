@@ -40,4 +40,5 @@ public class ProfilesViewModel extends ViewModel {
     public void setMineUserIntroduce(String mineUserIntroduce) {
         this.mineUserIntroduce = mineUserIntroduce;
     }
+
 }
