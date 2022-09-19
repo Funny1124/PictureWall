@@ -18,12 +18,15 @@ public class Picture {
     public String getImageCode(){
         return imageCode;
     }
+
     public void setImageCode(String imageCode){
         this.imageCode = imageCode;
     }
+
     public ArrayList<String> getImageUrlList(){
         return imageUrlList;
     }
+
     public void setImageUrlList(ArrayList<String> imageUrlList){
         this.imageUrlList = imageUrlList;
     }
