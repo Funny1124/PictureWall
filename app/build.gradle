@@ -49,5 +49,6 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.13.0'
 
-
+    //第三方 圆形 图片
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
