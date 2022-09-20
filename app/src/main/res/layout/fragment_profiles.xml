@@ -12,7 +12,8 @@
         android:id="@+id/user_info"
         android:layout_width="match_parent"
         android:layout_height="168dp"
-        android:background="@drawable/bottom_corner_rectangle"
+        android:layout_margin="8dp"
+        android:background="@drawable/conner_rectangle"
         android:orientation="vertical">
 
         <LinearLayout
@@ -124,8 +125,10 @@
         android:layout_height="wrap_content"
         app:tabIndicatorFullWidth="false"
         app:tabIndicatorHeight="3dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/top_corner_rectangle">
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/conner_rectangle">
 <!--        app:tabMode="scrollable">-->
 
 <!--        android:id="@+id/my_share"-->
@@ -152,14 +155,9 @@
         android:id="@+id/lv_news_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
         android:scrollbars="none"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 </LinearLayout>

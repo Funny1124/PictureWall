@@ -16,8 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.Target;
 import com.trio.picturewall.R;
 import com.trio.picturewall.entity.MyPosts;
 
@@ -50,7 +48,7 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHo
     @Override
     public myViewHodler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //创建自定义布局
-        View itemView = View.inflate(context, R.layout.post, null);
+        View itemView = View.inflate(context, R.layout.myposts, null);
         return new myViewHodler(itemView);
     }
 
