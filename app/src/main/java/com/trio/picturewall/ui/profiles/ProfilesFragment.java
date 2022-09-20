@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -27,11 +28,13 @@ import com.trio.picturewall.R;
 import com.trio.picturewall.activity.AlterActivity;
 import com.trio.picturewall.activity.LoginActivity;
 import com.trio.picturewall.adapter.MyPostsAdapter;
+import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.databinding.FragmentProfilesBinding;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.information.LoginData;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,6 +53,11 @@ public class ProfilesFragment extends Fragment {
 
     private View view;
 
+    private TextView topTitleView;
+
+//    private RecyclerView recyclerView;
+    private RecyclerViewAdapter adapter;
+
     public static ProfilesFragment newInstance() {
         return new ProfilesFragment();
     }
@@ -66,12 +74,13 @@ public class ProfilesFragment extends Fragment {
         //获取信息
         Api.getMyPosts("1","5",LoginData.loginUser.getId());
         //初始化动态数据
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        initRecyclerView();
+        initRecyclerView2();
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        initRecyclerView();
 
         binding.mineUserIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,6 +186,24 @@ public class ProfilesFragment extends Fragment {
                 Toast.makeText(requireActivity(),"点击了item-home",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void initRecyclerView2() {
+
+        recyclerView = view.findViewById(R.id.lv_news_list);
+        adapter = new RecyclerViewAdapter(getActivity(), createData());
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setAdapter(adapter);
+    }
+    private List<Integer> createData() {
+        List<Integer> data = new ArrayList<Integer>();
+        for (int i = 0; i < 100; i++) {
+            if (i % 2 == 0) {
+                data.add(R.mipmap.seraphine);
+            } else {
+                data.add(R.mipmap.seraphine);
+            }
+        }
+        return data;
     }
 
     /**
