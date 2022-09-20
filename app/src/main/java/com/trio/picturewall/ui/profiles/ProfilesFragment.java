@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
@@ -32,6 +33,9 @@ import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.databinding.FragmentProfilesBinding;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.information.LoginData;
+import com.trio.picturewall.ui.profiles.collecttion.CollectionFragment;
+import com.trio.picturewall.ui.profiles.good.GoodFragment;
+import com.trio.picturewall.ui.profiles.myposts.MyPostsFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,19 +48,15 @@ import okhttp3.Response;
 
 public class ProfilesFragment extends Fragment {
 
-    public static List<MyPosts> myPostsList;
-    public RecyclerView recyclerView;//定义RecyclerView
-    private MyPostsAdapter myPostsAdapter;
+    private MyPostsFragment myPostsFragment;
+    private CollectionFragment collectionFragment;
+    private GoodFragment goodFragment;
 
     private ProfilesViewModel profilesViewModel;
     private FragmentProfilesBinding binding;
 
     private View view;
 
-    private TextView topTitleView;
-
-//    private RecyclerView recyclerView;
-    private RecyclerViewAdapter adapter;
 
     public static ProfilesFragment newInstance() {
         return new ProfilesFragment();
@@ -69,18 +69,39 @@ public class ProfilesFragment extends Fragment {
         binding = FragmentProfilesBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 
+        myPostsFragment = MyPostsFragment.newInstance();
+        collectionFragment = CollectionFragment.newInstance();
+        goodFragment = GoodFragment.newInstance();
+        getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout,myPostsFragment).commit();
+        TabLayout tabLayout = view.findViewById(R.id.profiles_tabLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (Objects.equals(tab.getText(), "动态")){
+                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout,myPostsFragment).commit();
+                }
+                if (tab.getText().equals("收藏")){
+                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout,collectionFragment).commit();
+                }
+                if (tab.getText().equals("点赞")){
+                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout,goodFragment).commit();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         //加载个人信息
         setUserData();
         //获取信息
-        Api.getMyPosts("1","5",LoginData.loginUser.getId());
-        //初始化动态数据
-        initRecyclerView2();
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        initRecyclerView();
+
 
         binding.mineUserIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,79 +178,5 @@ public class ProfilesFragment extends Fragment {
 
     }
 
-    private void initRecyclerView() {
-        //获取RecyclerView
-        recyclerView = view.findViewById(R.id.lv_news_list);
-        //创建adapter
-        myPostsAdapter = new MyPostsAdapter(getActivity(), myPostsList);
-        //给RecyclerView设置adapter
-        recyclerView.setAdapter(myPostsAdapter);
-        //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
-        //参数是：上下文、列表方向（横向还是纵向）、是否倒叙
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
-        //设置item的分割线
-        //mCollectRecyclerView.addItemDecoration(new DividerItemDecoration(requireActivity(),DividerItemDecoration.VERTICAL));
 
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                // super.getItemOffsets(outRect, view, parent, state);
-                outRect.set(32, 32, 32, 32);
-            }
-        });
-
-        //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
-        myPostsAdapter.setOnItemClickListener(new MyPostsAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(View view, MyPosts data) {
-                //此处进行监听事件的业务处理
-                Toast.makeText(requireActivity(),"点击了item-home",Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    private void initRecyclerView2() {
-
-        recyclerView = view.findViewById(R.id.lv_news_list);
-        adapter = new RecyclerViewAdapter(getActivity(), createData());
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.setAdapter(adapter);
-    }
-    private List<Integer> createData() {
-        List<Integer> data = new ArrayList<Integer>();
-        for (int i = 0; i < 100; i++) {
-            if (i % 2 == 0) {
-                data.add(R.mipmap.seraphine);
-            } else {
-                data.add(R.mipmap.seraphine);
-            }
-        }
-        return data;
-    }
-
-    /**
-     * 请求数据，控制台可见
-     */
-    private void initRequest() {
-
-//        String url ="http://"+ OkHttpClientUtils.IP+":2048/requestPosts";
-//        OkHttpClientUtils.getRequest(url, new Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e){
-//                Log.i("initRequest","onFailure:"+e.getMessage());
-//            }
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException{
-//                String result = Objects.requireNonNull(response.body()).string();
-//                if(response.isSuccessful())
-//                {
-//
-//                    ResultBean resultBean = new Gson().fromJson(result,ResultBean.class);
-//
-//                    postsBeanList = resultBean.getData();
-//                    //回调的方法执行在子线程
-//                    Log.d("result:",result);
-//                }
-//            }
-//        });
-    }
 }

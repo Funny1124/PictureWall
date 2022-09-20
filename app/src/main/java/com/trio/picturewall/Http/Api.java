@@ -14,6 +14,7 @@ import com.trio.picturewall.entity.Records;
 import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.responseBody.ResponseBody;
 import com.trio.picturewall.ui.profiles.ProfilesFragment;
+import com.trio.picturewall.ui.profiles.myposts.MyPostsFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -314,7 +315,7 @@ public class Api {
                         // 解析json串到自己封装的状态
                         ResponseBody<Records> dataResponseBody = gson.fromJson(body,jsonType);
                         Log.d("info", dataResponseBody.toString());
-                        ProfilesFragment.myPostsList =dataResponseBody.getData().getRecords();
+                        MyPostsFragment.myPostsList =dataResponseBody.getData().getRecords();
                     }
                 });
             }catch (NetworkOnMainThreadException ex){
