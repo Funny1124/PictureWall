@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/PictureWall/app/src/main/res/layout/fragment_find.xml" value="0.1" />
+        <entry key="..\:/Android/PictureWall/app/src/main/res/layout/fragment_my_posts.xml" value="0.1" />
+        <entry key="..\:/Android/PictureWall/app/src/main/res/layout/fragment_profiles.xml" value="0.1" />
+        <entry key="..\:/Android/PictureWall/app/src/main/res/layout/myposts.xml" value="0.1" />
+        <entry key="..\:/Android/PictureWall/app/src/main/res/layout/post.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/Android_Project/ImageShare2/PictureWall/app/src/main/res/drawable-v24/add.xml" value="0.135" />
         <entry key="..\:/AndroidStudio/Android_Project/ImageShare2/PictureWall/app/src/main/res/drawable-v24/edit_border_picture.xml" value="0.135" />
         <entry key="..\:/AndroidStudio/Android_Project/ImageShare2/PictureWall/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.135" />
