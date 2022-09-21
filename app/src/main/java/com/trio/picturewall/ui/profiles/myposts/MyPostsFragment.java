@@ -43,15 +43,7 @@ public class MyPostsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Api.getMyPosts("1", "12", LoginData.loginUser.getId());
         view = inflater.inflate(R.layout.fragment_my_posts, container, false);
-//        //初始化动态数据
-//        initRecyclerView2();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         initRecyclerView();
         return view;
     }
