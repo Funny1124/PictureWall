@@ -64,11 +64,13 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHo
     public void onBindViewHolder(myViewHodler holder, int position) {
         //根据点击位置绑定数据
         MyPosts data = myPostsList.get(position);
-        myPosts=data.getImageUrlList();
+        myPosts = data.getImageUrlList();
         //设置图片
-        Glide.with(holder.imageView.getContext())
-                .load(myPosts[0])
-                .into(holder.imageView);
+        if (myPosts.length != 0) {
+            Glide.with(holder.imageView.getContext())
+                    .load(myPosts[0])
+                    .into(holder.imageView);
+        }
         holder.userName.setText(data.getTitle());//获取实体类中的name字段并设置
 //        holder.description.setText(data.getId());//获取实体类中的price字段并设置
     }
@@ -105,12 +107,12 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MyPosts data= myPostsList.get(getLayoutPosition());
+                    MyPosts data = myPostsList.get(getLayoutPosition());
                     //可以选择直接在本位置直接写业务处理
-                    Toast.makeText(context,"点击了item",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "点击了item", Toast.LENGTH_SHORT).show();
                     //此处回传点击监听事件
-                    if(onItemClickListener!=null){
-                        onItemClickListener.OnItemClick(v,data );
+                    if (onItemClickListener != null) {
+                        onItemClickListener.OnItemClick(v, data);
                     }
                 }
             });
@@ -178,9 +180,9 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHo
         String fileName = +System.currentTimeMillis() + ".jpg";
         File file = new File(galleryPath, fileName);
         try {
-            if (!Objects.requireNonNull(file.getParentFile()).exists()){
-                if (!file.getParentFile().mkdirs()){
-                    Log.e("图片","创建文件失败");
+            if (!Objects.requireNonNull(file.getParentFile()).exists()) {
+                if (!file.getParentFile().mkdirs()) {
+                    Log.e("图片", "创建文件失败");
                 }
             }
             FileOutputStream fos = new FileOutputStream(file);

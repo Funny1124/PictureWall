@@ -33,6 +33,7 @@ public class GoodFragment extends Fragment {
     private RecyclerViewAdapter adapter;
 
     private List<MyPosts> myPostsList;
+
     public static GoodFragment newInstance() {
         return new GoodFragment();
     }
@@ -58,6 +59,7 @@ public class GoodFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(GoodViewModel.class);
         // TODO: Use the ViewModel
     }
+
     private void initRecyclerView2() {
 
         recyclerView = view.findViewById(R.id.good_list);

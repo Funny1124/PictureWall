@@ -36,17 +36,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         if ((position % 6 == 0) || (position % 8 == 4)) {
-            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 600));
+            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 648));
         } else {
             holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
         }
         MyPosts data = myPostsList.get(position);
         goodUrls = data.getImageUrlList();
         //设置图片
-        if (goodUrls != null)
+        if (goodUrls.length != 0) {
             Glide.with(holder.imageView.getContext())
                     .load(goodUrls[0])
                     .into(holder.imageView);
+        }
+
     }
 
     @Override

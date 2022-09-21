@@ -43,8 +43,8 @@ public class MyPostsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Api.getMyPosts("1","6", LoginData.loginUser.getId());
-        view=inflater.inflate(R.layout.fragment_my_posts, container, false);
+        Api.getMyPosts("1", "12", LoginData.loginUser.getId());
+        view = inflater.inflate(R.layout.fragment_my_posts, container, false);
 //        //初始化动态数据
 //        initRecyclerView2();
         try {
@@ -62,6 +62,7 @@ public class MyPostsFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(MyPostsViewModel.class);
         // TODO: Use the ViewModel
     }
+
     private void initRecyclerView() {
         //获取RecyclerView
         recyclerView = view.findViewById(R.id.lv_news_list);
@@ -88,7 +89,7 @@ public class MyPostsFragment extends Fragment {
             @Override
             public void OnItemClick(View view, MyPosts data) {
                 //此处进行监听事件的业务处理
-                Toast.makeText(requireActivity(),"点击了item-home",Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity(), "点击了item-home", Toast.LENGTH_SHORT).show();
             }
         });
     }
