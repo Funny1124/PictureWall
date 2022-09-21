@@ -5,9 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.profiles.good.GoodFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/good_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="GOOD" />
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:scrollbars="none" />
 
 </FrameLayout>

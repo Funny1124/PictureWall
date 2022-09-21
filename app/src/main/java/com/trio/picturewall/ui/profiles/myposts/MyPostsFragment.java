@@ -35,8 +35,6 @@ public class MyPostsFragment extends Fragment {
     private MyPostsAdapter myPostsAdapter;
     private View view;
 
-    //    private RecyclerView recyclerView;
-    private RecyclerViewAdapter adapter;
 
     public static MyPostsFragment newInstance() {
         return new MyPostsFragment();
@@ -45,12 +43,12 @@ public class MyPostsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Api.getMyPosts("1","5", LoginData.loginUser.getId());
+        Api.getMyPosts("1","6", LoginData.loginUser.getId());
         view=inflater.inflate(R.layout.fragment_my_posts, container, false);
 //        //初始化动态数据
 //        initRecyclerView2();
         try {
-            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -94,23 +92,6 @@ public class MyPostsFragment extends Fragment {
             }
         });
     }
-    private void initRecyclerView2() {
 
-        recyclerView = view.findViewById(R.id.lv_news_list);
-        adapter = new RecyclerViewAdapter(getActivity(), createData());
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.setAdapter(adapter);
-    }
-    private List<Integer> createData() {
-        List<Integer> data = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            if (i % 2 == 0) {
-                data.add(R.mipmap.seraphine);
-            } else {
-                data.add(R.mipmap.seraphine);
-            }
-        }
-        return data;
-    }
 
 }

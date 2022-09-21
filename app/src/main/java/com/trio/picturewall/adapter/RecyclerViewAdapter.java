@@ -9,7 +9,9 @@ import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.trio.picturewall.R;
+import com.trio.picturewall.entity.MyPosts;
 
 import java.util.List;
 
@@ -17,11 +19,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private Context context;
 
-    private List<Integer> data;
+    List<MyPosts> myPostsList;
+    private String[] goodUrls;
 
-    public RecyclerViewAdapter(Context context, List<Integer> data) {
+    public RecyclerViewAdapter(Context context, List<MyPosts> myPostsList) {
         this.context = context;
-        this.data = data;
+        this.myPostsList = myPostsList;
     }
 
     @Override
@@ -32,17 +35,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.imageView.setImageResource(this.data.get(position));
-        if (position % 2 == 0) {
-            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
+        if ((position % 6 == 0) || (position % 8 == 4)) {
+            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 600));
         } else {
-            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 400));
+            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
         }
+        MyPosts data = myPostsList.get(position);
+        goodUrls = data.getImageUrlList();
+        //设置图片
+        if (goodUrls != null)
+            Glide.with(holder.imageView.getContext())
+                    .load(goodUrls[0])
+                    .into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return this.data.size();
+        return this.myPostsList.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
