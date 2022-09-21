@@ -37,11 +37,13 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Api {
-    //"f3d10b15acaf4ed0a0cee98adc03b447"
-    //21695a53223293e7b4b64bef4935133f57af3
-    public static String appId = "036c2739697b4e89997e5897849d2975";
 
-    public static String appSecret = "21695a53223293e7b4b64bef4935133f57af3";
+    //冀
+    public static String appId = "f3d10b15acaf4ed0a0cee98adc03b447";
+    public static String appSecret = "545153dc74d28165d46f9833b9e7282fb20ce";
+
+//    public static String appId = "036c2739697b4e89997e5897849d2975";
+//    public static String appSecret = "21695a53223293e7b4b64bef4935133f57af3";
 
 //    public static String appId = "10f623a5dc0345e0ade966247f1c7a24";
 //    public static String appSecret = "48335c92b7b6fbf374899af0d381708a379fe";
@@ -322,10 +324,10 @@ public class Api {
                         }.getType();
                         // 获取响应体的json串
                         String body = Objects.requireNonNull(response.body()).string();
-                        Log.d("info", body);
+                        Log.d("动态：", body);
                         // 解析json串到自己封装的状态
                         ResponseBody<Records> dataResponseBody = gson.fromJson(body, jsonType);
-                        Log.d("info", dataResponseBody.toString());
+                        Log.d("动态：", dataResponseBody.toString());
                         MyPostsFragment.myPostsList = dataResponseBody.getData().getRecords();
                     }
                 });
@@ -339,7 +341,7 @@ public class Api {
         new Thread(() -> {
 
             // url路径
-            String url = "http://47.107.52.7:88/member/photo/share?current=1&size=3&userId=" +
+            String url = "http://47.107.52.7:88/member/photo/share?current=1&size=6&userId=" +
                     LoginData.loginUser.getId();
 
             // 请求头
@@ -371,10 +373,10 @@ public class Api {
                         }.getType();
                         // 获取响应体的json串
                         String body = Objects.requireNonNull(response.body()).string();
-                        Log.d("info", body);
+                        Log.d("发现：", body);
                         // 解析json串到自己封装的状态
                         ResponseBody<Records> dataResponseBody = gson.fromJson(body, jsonType);
-                        Log.d("info", dataResponseBody.toString());
+                        Log.d("发现：", dataResponseBody.toString());
                         FindFragment.myPostsList = dataResponseBody.getData().getRecords();
                     }
                 });

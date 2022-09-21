@@ -40,9 +40,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder>{
         MyPosts data = postlist.get(position);
         myPosts=data.getImageUrlList();
         //设置图片
-        Glide.with(holder.imageView.getContext())
-                .load(myPosts[0])
-                .into(holder.imageView);
+        if(myPosts.length != 0) {
+            Glide.with(holder.imageView.getContext())
+                    .load(myPosts[0])
+                    .into(holder.imageView);
+        }
        holder.userName.setText(data.getTitle());//获取实体类中的name字段并设置
 //       holder.description.setText(data.getId());//获取实体类中的price字段并设置
     }
