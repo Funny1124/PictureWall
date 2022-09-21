@@ -1,7 +1,13 @@
 package com.trio.picturewall.entity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class Records {
     private List<MyPosts> records;
