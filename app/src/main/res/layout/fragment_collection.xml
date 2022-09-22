@@ -5,9 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.profiles.collecttion.CollectionFragment">
 
-    <TextView
+    <ListView
+        android:id="@+id/lv_news_list222"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_margin="8dp"
+        android:scrollbars="none"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp" />
 
 </FrameLayout>
