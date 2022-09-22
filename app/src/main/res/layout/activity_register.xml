@@ -141,6 +141,7 @@
                     android:src="@mipmap/eye_off" />
             </LinearLayout>
         </LinearLayout>
+
         <Button
             android:id="@+id/register_btn"
             android:layout_width="match_parent"
@@ -151,12 +152,20 @@
             android:background="@drawable/conner_rectangle"
             android:text="注册"
             android:textColor="#fff" />
-
+        <TextView
+            android:id="@+id/tipInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:textColor="#FB0808"
+            android:text="  "
+            android:textSize="12sp"/>
         <LinearLayout
             android:id="@+id/login_other"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:gravity="center">
             <LinearLayout
                 android:layout_marginRight="15dp"
@@ -197,5 +206,6 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
 
 </LinearLayout>
