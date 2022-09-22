@@ -16,16 +16,18 @@ import com.trio.picturewall.entity.MyPosts;
 
 import java.util.List;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder>{
-    private Context context;
-    private List<MyPosts> postlist;
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
+    private final Context context;
+    private final List<MyPosts> postlist;
     private String[] myPosts;
     private OnItemClickListener onItemClickListener;    //创建构造函数
+
     public PostAdapter(Context context, List<MyPosts> postlist) {
         //将传递过来的数据，赋值给本地变量
         this.context = context;//上下文
         this.postlist = postlist;//实体类数据ArrayList
     }
+
     @NonNull
     @Override
     public PostAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,18 +37,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(PostAdapter.viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostAdapter.viewHolder holder, int position) {
         //根据点击位置绑定数据
         MyPosts data = postlist.get(position);
-        myPosts=data.getImageUrlList();
+        myPosts = data.getImageUrlList();
         //设置图片
-        if(myPosts.length != 0) {
+        if (myPosts.length != 0) {
             Glide.with(holder.imageView.getContext())
                     .load(myPosts[0])
                     .into(holder.imageView);
         }
-       holder.userName.setText(data.getTitle());//获取实体类中的name字段并设置
-//       holder.description.setText(data.getId());//获取实体类中的price字段并设置
+        holder.userName.setText(data.getTitle());//获取实体类中的name字段并设置
+        holder.content.setText(data.getContent());//获取实体类中的name字段并设置
     }
 
     @Override
@@ -54,9 +56,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder>{
         return postlist.size();
     }
 
-    class viewHolder extends RecyclerView.ViewHolder{
-        private ImageView imageView;
-        private TextView userName;
+    class viewHolder extends RecyclerView.ViewHolder {
+        private final ImageView imageView;
+        private final TextView userName;
+        private final TextView content;
 //        private TextView description;
 //        private ImageView good;
 //        private ImageView download;
@@ -68,6 +71,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder>{
 
             imageView = itemView.findViewById(R.id.iv_image);
             userName = itemView.findViewById(R.id.picture_username);
+            content = itemView.findViewById(R.id.picture_content);
 
             //点击事件放在adapter中使用，也可以写个接口在activity中调用
             //方法一：在adapter中设置点击事件

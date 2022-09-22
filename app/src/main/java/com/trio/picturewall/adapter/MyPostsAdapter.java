@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +26,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHodler> {
-    private Context context;
-    private List<MyPosts> myPostsList;
+    private final Context context;
+    private final List<MyPosts> myPostsList;
     private String[] myPosts;
 
     //创建构造函数
@@ -42,9 +40,9 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHo
     /**
      * 创建viewhodler，相当于listview中getview中的创建view和viewhodler
      *
-     * @param parent
-     * @param viewType
-     * @return
+     * @param parent   parent
+     * @param viewType viewType
+     * @return myViewHodler
      */
     @NonNull
     @Override
@@ -57,8 +55,8 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHo
     /**
      * 绑定数据，数据与view绑定
      *
-     * @param holder
-     * @param position
+     * @param holder   holder
+     * @param position position
      */
     @Override
     public void onBindViewHolder(myViewHodler holder, int position) {
@@ -72,14 +70,14 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHo
                     .into(holder.imageView);
         }
         holder.userName.setText(data.getTitle());//获取实体类中的name字段并设置
-//        holder.description.setText(data.getId());//获取实体类中的price字段并设置
+        holder.content.setText(data.getContent());//获取实体类中的content字段并设置
     }
 
 
     /**
      * 得到总条数
      *
-     * @return
+     * @return myPostsList.size()
      */
     @Override
     public int getItemCount() {
@@ -88,8 +86,9 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHo
 
     //自定义viewhodler
     class myViewHodler extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private TextView userName;
+        private final ImageView imageView;
+        private final TextView userName;
+        private final TextView content;
 //        private TextView description;
 //        private ImageView good;
 //        private ImageView download;
@@ -101,6 +100,7 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHo
 
             imageView = itemView.findViewById(R.id.iv_image);
             userName = itemView.findViewById(R.id.picture_username);
+            content = itemView.findViewById(R.id.picture_content);
 
             //点击事件放在adapter中使用，也可以写个接口在activity中调用
             //方法一：在adapter中设置点击事件
@@ -177,7 +177,7 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.myViewHo
         String galleryPath = Environment.getExternalStorageDirectory()
                 + File.separator + Environment.DIRECTORY_DCIM
                 + File.separator + "Camera" + File.separator;
-        String fileName = +System.currentTimeMillis() + ".jpg";
+        String fileName = System.currentTimeMillis() + ".jpg";
         File file = new File(galleryPath, fileName);
         try {
             if (!Objects.requireNonNull(file.getParentFile()).exists()) {
