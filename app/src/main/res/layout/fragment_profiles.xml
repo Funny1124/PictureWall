@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.profiles.ProfilesFragment">
 
@@ -19,20 +19,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:orientation="horizontal">
 
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/mine_user_icon"
-                android:layout_margin="16dp"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:layout_margin="8dp"
                 android:src="@mipmap/seraphine"
-                app:civ_border_width="0dp"
-                app:civ_border_color="#FF000000"/>
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="0dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -56,112 +56,132 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="遇事不决，只问春风。"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/profiles_setting"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:src="@mipmap/settings" />
+
         </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp">
+
             <LinearLayout
                 android:id="@+id/follower"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toStartOf="@id/following"
-                android:orientation="vertical">
+                app:layout_constraintStart_toStartOf="parent">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50"/>
+                    android:text="50" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="粉丝 "/>
+                    android:text="粉丝 " />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/following"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                app:layout_constraintStart_toEndOf="@+id/follower"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toStartOf="@+id/goods"
-                android:orientation="vertical">
+                app:layout_constraintStart_toEndOf="@+id/follower">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50"/>
+                    android:text="50" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="关注"/>
+                    android:text="关注" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/goods"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                app:layout_constraintStart_toEndOf="@id/following"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:orientation="vertical">
+                app:layout_constraintStart_toEndOf="@id/following">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50"/>
+                    android:text="50" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="获赞"/>
+                    android:text="获赞" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/profiles_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorFullWidth="false"
-        app:tabIndicatorHeight="3dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/conner_rectangle">
-<!--        app:tabMode="scrollable">-->
+        android:background="@drawable/conner_rectangle"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="3dp">
+        <!--        app:tabMode="scrollable">-->
 
-<!--        android:id="@+id/my_share"-->
+        <!--        android:id="@+id/my_share"-->
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="动态" />
 
-<!--        android:id="@+id/my_collect"-->
+        <!--        android:id="@+id/my_collect"-->
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="收藏" />
 
-<!--        android:id="@+id/good_list"-->
+        <!--        android:id="@+id/good_list"-->
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="点赞" />
 
     </com.google.android.material.tabs.TabLayout>
+
     <LinearLayout
         android:id="@+id/profiles_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"/>
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/lv_news_list"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:scrollbars="none"-->
-<!--        android:divider="@android:color/transparent"-->
-<!--        android:dividerHeight="8dp"-->
-<!--        />-->
+        android:orientation="vertical" />
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/lv_news_list"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:scrollbars="none"-->
+    <!--        android:divider="@android:color/transparent"-->
+    <!--        android:dividerHeight="8dp"-->
+    <!--        />-->
 
 </LinearLayout>

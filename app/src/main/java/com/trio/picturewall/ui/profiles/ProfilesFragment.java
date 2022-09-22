@@ -57,7 +57,6 @@ public class ProfilesFragment extends Fragment {
 
     private View view;
 
-
     public static ProfilesFragment newInstance() {
         return new ProfilesFragment();
     }
@@ -72,19 +71,19 @@ public class ProfilesFragment extends Fragment {
         myPostsFragment = MyPostsFragment.newInstance();
         collectionFragment = CollectionFragment.newInstance();
         goodFragment = GoodFragment.newInstance();
-        getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout,myPostsFragment).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, myPostsFragment).commit();
         TabLayout tabLayout = view.findViewById(R.id.profiles_tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (Objects.equals(tab.getText(), "动态")){
-                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout,myPostsFragment).commit();
+                if (Objects.equals(tab.getText(), "动态")) {
+                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, myPostsFragment).commit();
                 }
-                if (tab.getText().equals("收藏")){
-                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout,collectionFragment).commit();
+                if (tab.getText().equals("收藏")) {
+                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, collectionFragment).commit();
                 }
-                if (tab.getText().equals("点赞")){
-                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout,goodFragment).commit();
+                if (tab.getText().equals("点赞")) {
+                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, goodFragment).commit();
                 }
             }
 
@@ -100,16 +99,13 @@ public class ProfilesFragment extends Fragment {
         });
         //加载个人信息
         setUserData();
-        //获取信息
 
-
-        binding.mineUserIcon.setOnClickListener(new View.OnClickListener() {
+        binding.profilesSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showListDialog();
             }
         });
-
         return view;
     }
 
@@ -168,7 +164,7 @@ public class ProfilesFragment extends Fragment {
     /**
      * 加载个人信息
      */
-    private void setUserData(){
+    private void setUserData() {
         //加载头像
         Glide.with(this).load(profilesViewModel.getMineUserIconPath()).into(binding.mineUserIcon);
         //加载用户名
@@ -177,6 +173,5 @@ public class ProfilesFragment extends Fragment {
         binding.mineUserIntro.setText(profilesViewModel.getMineUserIntroduce());
 
     }
-
 
 }
