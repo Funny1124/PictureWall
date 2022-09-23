@@ -293,54 +293,7 @@ public class Api {
         }).start();
     }
 
-    public static void getMyPosts(String current, String size, String userId) {
-        new Thread(() -> {
-            // url路径
-            String url = "http://47.107.52.7:88/member/photo/share/myself?" +
-                    "current=" + current +
-                    "&size=" + size +
-                    "&userId=" + userId;
-            // 请求头
-            Headers headers = new Headers.Builder()
-                    .add("appId", appId)
-                    .add("appSecret", appSecret)
-                    .add("Accept", "application/json, text/plain, */*")
-                    .build();
 
-            //请求组合创建
-            Request request = new Request.Builder()
-                    .url(url)
-                    // 将请求头加至请求中
-                    .headers(headers)
-                    .get()
-                    .build();
-            try {
-                OkHttpClient client = new OkHttpClient();
-                //发起请求，传入callback进行回调
-                client.newCall(request).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        Type jsonType = new TypeToken<ResponseBody<Records>>() {
-                        }.getType();
-                        // 获取响应体的json串
-                        String body = Objects.requireNonNull(response.body()).string();
-                        Log.d("动态：", body);
-                        // 解析json串到自己封装的状态
-                        ResponseBody<Records> dataResponseBody = gson.fromJson(body, jsonType);
-                        Log.d("动态：", dataResponseBody.toString());
-                        MyPostsFragment.myPostsList = dataResponseBody.getData().getRecords();
-                    }
-                });
-            } catch (NetworkOnMainThreadException ex) {
-                ex.printStackTrace();
-            }
-        }).start();
-    }
 
     public static void find() {
         new Thread(() -> {
