@@ -1,21 +1,17 @@
 package com.trio.picturewall.ui.profiles.collecttion;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -26,7 +22,6 @@ import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
 import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.responseBody.ResponseBody;
-import com.trio.picturewall.ui.profiles.myposts.MyPostsFragment;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -59,7 +54,7 @@ public class CollectionFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        view= inflater.inflate(R.layout.fragment_collection, container, false);
+        view = inflater.inflate(R.layout.fragment_collection, container, false);
         lvNewsList = view.findViewById(R.id.lv_news_list222);
         initData();
 
@@ -72,14 +67,16 @@ public class CollectionFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
         // TODO: Use the ViewModel
     }
+
     private void initData() {
         newsData = new ArrayList<>();
         adapter = new CollecttionAdapter(getContext(),
                 R.layout.list_item, newsData);
         lvNewsList.setAdapter(adapter);
 
-        getMyPosts("1","6", LoginData.loginUser.getId());
+        getMyPosts("1", "6", LoginData.loginUser.getId());
     }
+
     private void initView() {
 
 
@@ -90,6 +87,7 @@ public class CollectionFragment extends Fragment {
 //            }
 //        }
     }
+
     public void getMyPosts(String current, String size, String userId) {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/share/myself?" +
@@ -118,6 +116,7 @@ public class CollectionFragment extends Fragment {
             ex.printStackTrace();
         }
     }
+
     public final Callback callback = new Callback() {
         @Override
         public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -131,18 +130,17 @@ public class CollectionFragment extends Fragment {
             String body = Objects.requireNonNull(response.body()).string();
             Log.d("动态：", body);
 
-            getActivity().runOnUiThread(new Runnable() {
+            requireActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Gson gson = new Gson();
-                    Type jsonType = new TypeToken<ResponseBody<Records>>() {}.getType();
+                    Type jsonType = new TypeToken<ResponseBody<Records>>() {
+                    }.getType();
                     // 解析json串到自己封装的状态
                     ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
                     Log.d("动态：", dataResponseBody.getData().getRecords().toString());
-                    for (MyPosts news:dataResponseBody.getData().getRecords()) {
+                    for (MyPosts news : dataResponseBody.getData().getRecords()) {
                         adapter.add(news);
                     }
-
                     adapter.notifyDataSetChanged();
                 }
             });

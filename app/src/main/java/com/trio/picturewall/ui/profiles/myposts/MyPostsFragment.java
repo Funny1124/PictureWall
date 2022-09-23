@@ -134,6 +134,7 @@ public class MyPostsFragment extends Fragment {
             ex.printStackTrace();
         }
     }
+
     public final Callback callback = new Callback() {
         @Override
         public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -152,7 +153,8 @@ public class MyPostsFragment extends Fragment {
                 @Override
                 public void run() {
                     Gson gson = new Gson();
-                    Type jsonType = new TypeToken<ResponseBody<Records>>() {}.getType();
+                    Type jsonType = new TypeToken<ResponseBody<Records>>() {
+                    }.getType();
                     // 解析json串到自己封装的状态
                     ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
                     Log.d("动态：", dataResponseBody.getData().getRecords().toString());
