@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="50dp"
-        android:gravity="center">
+        android:gravity="center"
+        tools:ignore="UseCompoundDrawables">
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -31,7 +32,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
         <LinearLayout
@@ -48,11 +49,11 @@
                 android:layout_height="56dp"
                 android:background="@drawable/edit_text_top_conner_rectangle">
                 <ImageView
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_width="32dp"
                     android:layout_gravity="center_vertical"
                     android:background="@mipmap/person"
-                    android:layout_height="30dp"/>
+                    android:layout_height="32dp"/>
                 <TextView
                     android:layout_width="1dp"
                     android:background="#DCDCDC"
@@ -77,11 +78,11 @@
                 android:background="@drawable/edit_text_rectangle"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_width="32dp"
                     android:layout_gravity="center_vertical"
                     android:background="@mipmap/lock"
-                    android:layout_height="30dp"/>
+                    android:layout_height="32dp"/>
 
                 <TextView
                     android:layout_width="1dp"
@@ -113,11 +114,11 @@
                 android:background="@drawable/edit_text_bottom_conner_rectangle"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_width="32dp"
                     android:layout_gravity="center_vertical"
                     android:background="@mipmap/lock"
-                    android:layout_height="30dp"/>
+                    android:layout_height="32dp"/>
                 <TextView
                     android:layout_width="1dp"
                     android:background="#DCDCDC"
@@ -147,20 +148,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:layout_marginRight="50dp"
             android:background="@drawable/conner_rectangle"
             android:text="注册"
             android:textColor="#fff" />
-        <TextView
-            android:id="@+id/tipInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="center"
-            android:textColor="#FB0808"
-            android:text="  "
-            android:textSize="12sp"/>
         <LinearLayout
             android:id="@+id/login_other"
             android:layout_width="match_parent"
@@ -168,14 +160,14 @@
             android:layout_marginTop="16dp"
             android:gravity="center">
             <LinearLayout
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="16dp"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical">
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:background="@mipmap/wechat"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -187,16 +179,16 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="#E6E6E6"
-                android:layout_margin="20dp"/>
+                android:layout_margin="24dp"/>
             <LinearLayout
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="16dp"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical">
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:background="@mipmap/qq"/>
                 <TextView
                     android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText registerUsername;
     private EditText registerPassword;
     private EditText verifyPassword;
-    private TextView TipInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
         registerUsername = findViewById(R.id.registerUsername);
         registerPassword = findViewById(R.id.registerPassword);
         verifyPassword = findViewById(R.id.verifyPassword);
-        TipInfo=findViewById(R.id.tipInfo);
 
         ivPwdSwitch1.setOnClickListener(view -> {//第一个密码框 眼睛，密码查看
             bPwdSwitch1 = !bPwdSwitch1;
@@ -90,8 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (password.equals(vPassword)) {
                     register(username, password);
                 } else {
-                    TipInfo.setText("输入的两次密码不一样......");
-                    Log.e(TAG,"输入的两次密码不一样......");
+                    Toast.makeText(getApplicationContext(), "两次输入的密码不一样，请重新输入！", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -140,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    TipInfo.setText("连接服务器出错");
+                    Toast.makeText(getApplicationContext(), "连接服务器出错", Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -155,14 +153,14 @@ public class RegisterActivity extends AppCompatActivity {
             // 解析json串
             ResponseBody<Object> dataResponseBody = new Gson().fromJson(body, jsonType);
             Log.d(TAG, dataResponseBody.toString());
-            if (dataResponseBody.getCode()==200){
+            if (dataResponseBody.getCode() == 200) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 finish();
-            }else {
+            } else {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        TipInfo.setText(dataResponseBody.getMsg());
+                        Toast.makeText(getApplicationContext(), dataResponseBody.getMsg(), Toast.LENGTH_LONG).show();
                     }
                 });
             }
