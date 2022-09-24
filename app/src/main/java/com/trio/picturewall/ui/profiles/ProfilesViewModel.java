@@ -12,7 +12,7 @@ public class ProfilesViewModel extends ViewModel {
 
     {
 //        mineUserIconPath = LoginData.loginUser.getAvatar();
-        mineUserIconPath = "https://t7.baidu.com/it/u=1819248061,230866778&fm=193&f=GIF";
+        mineUserIconPath = LoginData.loginUser.getAvatar();
         mineUserName = LoginData.loginUser.getUsername();
         mineUserIntroduce = LoginData.loginUser.getIntroduce();
     }
