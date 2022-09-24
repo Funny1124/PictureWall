@@ -1,12 +1,14 @@
 package com.trio.picturewall.ui.profiles.good;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
+import com.trio.picturewall.activity.LoginActivity;
+import com.trio.picturewall.activity.RegisterActivity;
 import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
@@ -38,7 +42,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class GoodFragment extends Fragment {
+public class GoodFragment extends Fragment{
 
     private GoodViewModel mViewModel;
     private View view;
@@ -75,6 +79,13 @@ public class GoodFragment extends Fragment {
         adapter = new RecyclerViewAdapter(getActivity(), myPostsList);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
+        //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
+        adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, MyPosts data) {
+                Toast.makeText(getActivity(), "点击了item ", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void getMyPosts(String current, String size, String userId) {
