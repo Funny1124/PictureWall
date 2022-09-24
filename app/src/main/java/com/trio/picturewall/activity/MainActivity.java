@@ -23,10 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
         com.trio.picturewall.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        /*
-                  请求 我的 动态 数据
-         */
-        Api.getMyPosts("1", "12", LoginData.loginUser.getId());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
