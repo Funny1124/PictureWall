@@ -6,11 +6,17 @@ import static com.trio.picturewall.Http.Api.postAdd;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +45,8 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
+
+
 
         findViewById(R.id.publish).setOnClickListener(this);
         findViewById(R.id.null_view).setOnClickListener(this);
@@ -77,85 +85,55 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 //                Intent intent = new Intent(Intent.ACTION_PICK);
 //                intent.setType("image/*");
 //                startActivityForResult(intent, 0);
-                Intent intent = new Intent(Intent.ACTION_PICK);
+                Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                //intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent,"Select Picture"), 0);
 
 
         }
     }
 
-
-    @SuppressLint("Range")
-    private String getImagePath(Uri uri, String selection) {
-        String path = null;
-        // 通过Uri和selection来获取真实的图片路径
-        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-            }
-            cursor.close();
-        }
-        return path;
-    }
-
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 0:
-//                if (resultCode == RESULT_OK) {
-//                    try {
-//                        if(data != null) {
-//                            //获取uri
-//                            Uri uri = data.getData();
-//                            imageUri = uri;
-//                            //uri转文件
-//                            String path = getImagePath(imageUri,null);
-//                            File file = new File(path);   //图片地址
-//                            //上传到服务器
-//                            post(file);
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
                 if (resultCode == RESULT_OK) {
                     Uri uri;
                     ArrayList<File> fileList = new ArrayList<>();
                     try {
-
                         if (data != null) {
                             ClipData imageNames = data.getClipData();
                             if (imageNames != null) {
                                 for (int i = 0; i < imageNames.getItemCount(); i++) {
                                     Uri imageUri = imageNames.getItemAt(i).getUri();
                                     //uri转文件
-                                    String path = getImagePath(imageUri, null);
+                                    String path = handleImageOkKitKat(imageUri);
                                     File file = new File(path);   //图片地址
                                     fileList.add(file);
                                     System.out.println(file);
                                 }
                                 post(fileList);
-                                //uri = imageNames.getItemAt(0).getUri();
                             } else {
                                 uri = data.getData();
-                                String path = getImagePath(uri, null);
+                                String path = handleImageOkKitKat(uri);
                                 File file = new File(path);   //图片地址
-                                //post(file);
-                                //fileList.add(uri.toString());
+                                fileList.add(file);
+                                System.out.println(path);
+                                post(fileList);
+
                             }
                         } else {
                             uri = data.getData();
-                            String path = getImagePath(uri, null);
+                            String path = handleImageOkKitKat(uri);
                             File file = new File(path);   //图片地址
-                            //post(file);
-                            //fileList.add(uri.toString());
+                            fileList.add(file);
+                            System.out.println(path);
+                            post(fileList);
+
                         }
                     } catch (Exception e) {
-
+                        System.out.println(e);
                     }
                 }
                 break;
@@ -164,6 +142,45 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
+
+    private String handleImageOkKitKat(Uri uri) {
+        String imagePath=null;
+        Log.d("uri=intent.getData :",""+uri);
+        if (DocumentsContract.isDocumentUri(this,uri)){
+            String docId = DocumentsContract.getDocumentId(uri);        //数据表里指定的行
+            Log.d("getDocumentId(uri) :",""+docId);
+            Log.d("uri.getAuthority() :",""+uri.getAuthority());
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())){
+                String id = docId.split(":")[1];
+                String selection = MediaStore.Images.Media._ID + "=" + id;
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,selection);
+            }
+            else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"),Long.valueOf(docId));
+                imagePath = getImagePath(contentUri,null);
+            }
+
+        }
+        else if ("content".equalsIgnoreCase(uri.getScheme())){
+            imagePath = getImagePath(uri,null);
+        }
+        return imagePath;
+    }
+
+    @SuppressLint("Range")
+    public String getImagePath(Uri uri,String selection) {
+        System.out.println("异常0");
+        String path = null;
+        Cursor cursor = getContentResolver().query(uri,null,selection,null,null);   //内容提供器
+        if (cursor!=null){
+            if (cursor.moveToFirst()){
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));   //获取路径
+            }
+        }
+        cursor.close();
+        return path;
+    }
+
 
 
 }
