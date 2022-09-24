@@ -33,7 +33,7 @@ import okhttp3.Response;
 
 public class Api {
 
-    //冀
+//    //冀
 //    public static String appId = "f3d10b15acaf4ed0a0cee98adc03b447";
 //    public static String appSecret = "545153dc74d28165d46f9833b9e7282fb20ce";
 

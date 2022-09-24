@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.profiles.collecttion.CollectionFragment">
 
-    <ListView
-        android:id="@+id/lv_news_list222"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/clllected_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"

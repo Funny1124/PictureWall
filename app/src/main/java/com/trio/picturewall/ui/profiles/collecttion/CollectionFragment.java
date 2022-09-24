@@ -1,5 +1,6 @@
 package com.trio.picturewall.ui.profiles.collecttion;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
@@ -12,12 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.adapter.CollecttionAdapter;
+import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
 import com.trio.picturewall.information.LoginData;
@@ -39,9 +43,9 @@ import okhttp3.Response;
 public class CollectionFragment extends Fragment {
 
     private CollectionViewModel mViewModel;
-    private CollecttionAdapter adapter;
-    private List<MyPosts> newsData;
-    private ListView lvNewsList;
+    private RecyclerViewAdapter adapter;
+    private List<MyPosts> myPostsList;
+    private RecyclerView recyclerView;
     private View view;
 
     public CollectionFragment() {
@@ -55,7 +59,7 @@ public class CollectionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_collection, container, false);
-        lvNewsList = view.findViewById(R.id.lv_news_list222);
+        recyclerView = view.findViewById(R.id.clllected_recyclerView);
         initData();
 
         return view;
@@ -69,10 +73,10 @@ public class CollectionFragment extends Fragment {
     }
 
     private void initData() {
-        newsData = new ArrayList<>();
-        adapter = new CollecttionAdapter(getContext(),
-                R.layout.list_item, newsData);
-        lvNewsList.setAdapter(adapter);
+        myPostsList = new ArrayList<>();
+        adapter = new RecyclerViewAdapter(getActivity(), myPostsList);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setAdapter(adapter);
 
         getMyPosts("1", "6", LoginData.loginUser.getId());
     }
@@ -130,20 +134,22 @@ public class CollectionFragment extends Fragment {
             String body = Objects.requireNonNull(response.body()).string();
             Log.d("动态：", body);
 
-            requireActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Type jsonType = new TypeToken<ResponseBody<Records>>() {
-                    }.getType();
-                    // 解析json串到自己封装的状态
-                    ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
-                    Log.d("动态：", dataResponseBody.getData().getRecords().toString());
-                    for (MyPosts news : dataResponseBody.getData().getRecords()) {
-                        adapter.add(news);
+            if (isAdded()) {
+                requireActivity().runOnUiThread(new Runnable() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void run() {
+                        Gson gson = new Gson();
+                        Type jsonType = new TypeToken<ResponseBody<Records>>() {
+                        }.getType();
+                        // 解析json串到自己封装的状态
+                        ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
+                        Log.d("动态：", dataResponseBody.getData().getRecords().toString());
+                        myPostsList.addAll(dataResponseBody.getData().getRecords());
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
-                }
-            });
+                });
+            }
         }
     };
 }

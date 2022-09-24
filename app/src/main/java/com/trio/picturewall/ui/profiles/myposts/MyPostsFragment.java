@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -49,7 +50,7 @@ public class MyPostsFragment extends Fragment {
     private MypostsBinding binding;
     public List<MyPosts> myPostsList;
     public RecyclerView recyclerView;//定义RecyclerView
-    private MyPostsAdapter myPostsAdapter;
+    private RecyclerViewAdapter myPostsAdapter;
     private View view;
 
 
@@ -78,31 +79,22 @@ public class MyPostsFragment extends Fragment {
         //获取RecyclerView
         recyclerView = view.findViewById(R.id.lv_news_list);
         //创建adapter
-        myPostsAdapter = new MyPostsAdapter(getActivity(), myPostsList);
+        myPostsAdapter = new RecyclerViewAdapter(getActivity(), myPostsList);
+        //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         //给RecyclerView设置adapter
         recyclerView.setAdapter(myPostsAdapter);
-        //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
         //参数是：上下文、列表方向（横向还是纵向）、是否倒叙
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        //设置item的分割线
-        //mCollectRecyclerView.addItemDecoration(new DividerItemDecoration(requireActivity(),DividerItemDecoration.VERTICAL));
-
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                // super.getItemOffsets(outRect, view, parent, state);
-                outRect.set(32, 32, 32, 32);
-            }
-        });
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
-        myPostsAdapter.setOnItemClickListener(new MyPostsAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(View view, MyPosts data) {
-                //此处进行监听事件的业务处理
-                Toast.makeText(requireActivity(), "点击了item-home", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        myPostsAdapter.setOnItemClickListener(new MyPostsAdapter.OnItemClickListener() {
+//            @Override
+//            public void OnItemClick(View view, MyPosts data) {
+//                //此处进行监听事件的业务处理
+//                Toast.makeText(requireActivity(), "点击了item-home", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 
@@ -148,20 +140,27 @@ public class MyPostsFragment extends Fragment {
             String body = Objects.requireNonNull(response.body()).string();
             Log.d("动态：", body);
 
-            requireActivity().runOnUiThread(new Runnable() {
-                @SuppressLint("NotifyDataSetChanged")
-                @Override
-                public void run() {
-                    Gson gson = new Gson();
-                    Type jsonType = new TypeToken<ResponseBody<Records>>() {
-                    }.getType();
-                    // 解析json串到自己封装的状态
-                    ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
-                    Log.d("动态：", dataResponseBody.getData().getRecords().toString());
-                    myPostsList.addAll(dataResponseBody.getData().getRecords());
-                    myPostsAdapter.notifyDataSetChanged();
-                }
-            });
+            /*
+            if (isAdded())
+            解决Fragment MyPostsFragment{bc1af82} (d470bac1-b3ff-48ba-9586-aaa5eb1498a6)
+             not attached to an activity.
+             */
+            if (isAdded()) {
+                requireActivity().runOnUiThread(new Runnable() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void run() {
+                        Gson gson = new Gson();
+                        Type jsonType = new TypeToken<ResponseBody<Records>>() {
+                        }.getType();
+                        // 解析json串到自己封装的状态
+                        ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
+                        Log.d("动态：", dataResponseBody.getData().getRecords().toString());
+                        myPostsList.addAll(dataResponseBody.getData().getRecords());
+                        myPostsAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
         }
     };
 }

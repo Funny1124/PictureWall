@@ -71,11 +71,12 @@ public class GoodFragment extends Fragment {
 
     private void initRecyclerView2() {
 
-        recyclerView = view.findViewById(R.id.good_list);
+        recyclerView = view.findViewById(R.id.good_recyclerView);
         adapter = new RecyclerViewAdapter(getActivity(), myPostsList);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
     }
+
     public void getMyPosts(String current, String size, String userId) {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/share/myself?" +
@@ -104,6 +105,7 @@ public class GoodFragment extends Fragment {
             ex.printStackTrace();
         }
     }
+
     public final Callback callback = new Callback() {
         @Override
         public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -116,20 +118,22 @@ public class GoodFragment extends Fragment {
             // 获取响应体的json串
             String body = Objects.requireNonNull(response.body()).string();
             Log.d("动态：", body);
-
-            requireActivity().runOnUiThread(new Runnable() {
-                @SuppressLint("NotifyDataSetChanged")
-                @Override
-                public void run() {
-                    Gson gson = new Gson();
-                    Type jsonType = new TypeToken<ResponseBody<Records>>() {}.getType();
-                    // 解析json串到自己封装的状态
-                    ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
-                    Log.d("动态：", dataResponseBody.getData().getRecords().toString());
-                    myPostsList.addAll(dataResponseBody.getData().getRecords());
-                    adapter.notifyDataSetChanged();
-                }
-            });
+            if (isAdded()) {
+                requireActivity().runOnUiThread(new Runnable() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void run() {
+                        Gson gson = new Gson();
+                        Type jsonType = new TypeToken<ResponseBody<Records>>() {
+                        }.getType();
+                        // 解析json串到自己封装的状态
+                        ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
+                        Log.d("动态：", dataResponseBody.getData().getRecords().toString());
+                        myPostsList.addAll(dataResponseBody.getData().getRecords());
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
         }
     };
 }
