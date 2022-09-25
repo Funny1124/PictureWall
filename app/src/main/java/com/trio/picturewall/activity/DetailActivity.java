@@ -89,7 +89,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             focus.setText("已关注");
         }
         name.setText(detail.getUsername());
-        Glide.with(this).load(detail.getImageUrlList()[0]).into(photo);
+        if (detail.getImageUrlList().length != 0){//解决没有图片闪退
+            Glide.with(this).load(detail.getImageUrlList()[0]).into(photo);
+        }
     }
 
     public void getdetail() {

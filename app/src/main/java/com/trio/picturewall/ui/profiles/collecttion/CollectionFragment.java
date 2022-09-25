@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,7 +78,12 @@ public class CollectionFragment extends Fragment {
         adapter = new RecyclerViewAdapter(getActivity(), myPostsList);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
-
+        adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, MyPosts data) {
+                Toast.makeText(getActivity(), "点击了item ", Toast.LENGTH_SHORT).show();
+            }
+        });
         getMyPosts("1", "6", LoginData.loginUser.getId());
     }
 

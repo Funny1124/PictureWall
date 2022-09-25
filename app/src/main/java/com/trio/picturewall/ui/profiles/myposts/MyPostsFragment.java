@@ -88,13 +88,12 @@ public class MyPostsFragment extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
-//        myPostsAdapter.setOnItemClickListener(new MyPostsAdapter.OnItemClickListener() {
-//            @Override
-//            public void OnItemClick(View view, MyPosts data) {
-//                //此处进行监听事件的业务处理
-//                Toast.makeText(requireActivity(), "点击了item-home", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        myPostsAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, MyPosts data) {
+                Toast.makeText(getActivity(), "点击了item ", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -155,8 +154,10 @@ public class MyPostsFragment extends Fragment {
                         }.getType();
                         // 解析json串到自己封装的状态
                         ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
-                        Log.d("动态：", dataResponseBody.getData().getRecords().toString());
-                        myPostsList.addAll(dataResponseBody.getData().getRecords());
+                        if (dataResponseBody.getData() != null){//判断当前用户是否有发布帖子
+                            Log.d("动态：", dataResponseBody.getData().getRecords().toString());
+                            myPostsList.addAll(dataResponseBody.getData().getRecords());
+                        }
                         myPostsAdapter.notifyDataSetChanged();
                     }
                 });
