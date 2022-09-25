@@ -1,6 +1,7 @@
 package com.trio.picturewall.ui.home.find;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
+import com.trio.picturewall.activity.DetailActivity;
 import com.trio.picturewall.adapter.PostAdapter;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
@@ -47,6 +49,7 @@ public class FindFragment extends Fragment {
     public RecyclerView recyclerView;//定义RecyclerView
     private PostAdapter myPostsAdapter;
     private View view;
+    public static int shareId;
 
     public static FindFragment newInstance() {
         return new FindFragment();
@@ -94,15 +97,16 @@ public class FindFragment extends Fragment {
         });
 
         //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
-//        myPostsAdapter.setOnItemClickListener(new MyPostsAdapter.OnItemClickListener() {
-//            @Override
-//            public void OnItemClick(View view, MyPosts data) {
-//                //此处进行监听事件的业务处理
-//                Toast.makeText(requireActivity(), "点击了item-home", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+        myPostsAdapter.setOnItemClickListener(new PostAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, MyPosts data) {
+                //此处进行监听事件的业务处理
+                shareId = myPostsAdapter.data.getId();
+                startActivity(new Intent(getActivity(), DetailActivity.class));
+            }
+        });
     }
+
 
     public void find() {
         // url路径

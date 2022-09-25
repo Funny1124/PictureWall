@@ -21,7 +21,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
     private final List<MyPosts> postlist;
     private String[] myPosts;
     private OnItemClickListener onItemClickListener;    //创建构造函数
-
+    public MyPosts data;
     public PostAdapter(Context context, List<MyPosts> postlist) {
         //将传递过来的数据，赋值给本地变量
         this.context = context;//上下文
@@ -39,7 +39,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.viewHolder holder, int position) {
         //根据点击位置绑定数据
-        MyPosts data = postlist.get(position);
+        data = postlist.get(position);
         myPosts = data.getImageUrlList();
         //设置图片
         if (myPosts.length != 0) {
@@ -78,7 +78,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MyPosts data = postlist.get(getLayoutPosition());
+                    data = postlist.get(getLayoutPosition());
                     //可以选择直接在本位置直接写业务处理
                     Toast.makeText(context, "点击了item", Toast.LENGTH_SHORT).show();
                     //此处回传点击监听事件
