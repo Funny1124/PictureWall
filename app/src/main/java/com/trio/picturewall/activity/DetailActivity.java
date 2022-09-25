@@ -82,7 +82,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         name = findViewById(R.id.user_name);
         focus = findViewById(R.id.focus);
         photo = findViewById(R.id.image_detail);
+        if (detail.getHasFocus()==false) {//detail.getHasFocus() == false：未关注->已关注
+            focus.setText("未关注");
 
+        } else {
+            focus.setText("已关注");
+        }
         name.setText(detail.getUsername());
         Glide.with(this).load(detail.getImageUrlList()[0]).into(photo);
     }
@@ -171,7 +176,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     public void cancelfocus() {
 
         // url路径
-        String url = "http://47.107.52.7:88/member/photo/cancel?focusUserId="
+        String url = "http://47.107.52.7:88/member/photo/focus/cancel?focusUserId="
                 + detail.getpUserId() + "&userId="
                 + LoginData.loginUser.getId();
 
