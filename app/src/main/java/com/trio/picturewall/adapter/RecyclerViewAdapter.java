@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.trio.picturewall.R;
 import com.trio.picturewall.entity.MyPosts;
+import com.trio.picturewall.widget.RadiuImageView;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         if ((position % 6 == 0) || (position % 8 == 4)) {
-            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 648));
+            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 616));
         } else {
             holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
         }
@@ -61,11 +62,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView imageView;
+        private RadiuImageView imageView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            this.imageView = (ImageView) itemView.findViewById(R.id.imageView1);
+            this.imageView =itemView.findViewById(R.id.imageView1);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -24,15 +24,13 @@
             android:layout_marginEnd="16dp"
             android:orientation="horizontal">
 
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/mine_user_icon"
+                android:layout_margin="8dp"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_margin="8dp"
-                android:src="@mipmap/seraphine"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="0dp" />
+                android:scaleType="centerCrop"
+                android:src="@mipmap/seraphine" />
 
             <LinearLayout
                 android:layout_width="0dp"
