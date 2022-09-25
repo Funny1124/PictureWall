@@ -112,6 +112,7 @@ public class FollowingFragment extends Fragment {
         });
     }
 
+
     public void getfocus() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/focus?current=1&size=9&userId=" +

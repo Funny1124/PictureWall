@@ -12,5 +12,4 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
         android:scrollbars="none" />
-
 </FrameLayout>

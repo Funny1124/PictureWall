@@ -91,7 +91,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         name.setText(detail.getUsername());
         Glide.with(this).load(detail.getImageUrlList()[0]).into(photo);
     }
-
     public void getdetail() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/share/detail?shareId="
