@@ -49,7 +49,6 @@ public class FindFragment extends Fragment {
     public RecyclerView recyclerView;//定义RecyclerView
     private PostAdapter myPostsAdapter;
     private View view;
-    public static int shareId;
 
     public static FindFragment newInstance() {
         return new FindFragment();
@@ -101,16 +100,15 @@ public class FindFragment extends Fragment {
             @Override
             public void OnItemClick(View view, MyPosts data) {
                 //此处进行监听事件的业务处理
-                shareId = myPostsAdapter.data.getId();
+                DetailActivity.shareId = myPostsAdapter.data.getId();
                 startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });
     }
 
-
     public void find() {
         // url路径
-        String url = "http://47.107.52.7:88/member/photo/share?current=1&size=6&userId=" +
+        String url = "http://47.107.52.7:88/member/photo/share?current=1&size=9&userId=" +
                 LoginData.loginUser.getId();
 
         // 请求头

@@ -38,7 +38,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     TextView name;
     TextView focus;
     ImageView photo;
-
+    public static int shareId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +95,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     public void getdetail() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/share/detail?shareId="
-                + FindFragment.shareId + "&userId="
+                + shareId + "&userId="
                 + LoginData.loginUser.getId();
 
         // 请求头
