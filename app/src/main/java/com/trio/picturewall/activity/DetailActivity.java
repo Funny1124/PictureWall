@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
+import com.trio.picturewall.entity.Count;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.responseBody.ResponseBody;
@@ -49,7 +50,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         getdetail();
         try {
-            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -65,10 +66,13 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                     hasfocus();
                     focus.setText("已关注");
                     detail.setHasFocus(true);
+                    Count.focusCount++;
+                    //focus.setText(Count.focusCount);
                 } else {
                     cancelfocus();
                     focus.setText("未关注");
                     detail.setHasFocus(false);
+                    Count.focusCount--;
                 }
                 break;
             case R.id.cancel:
@@ -84,7 +88,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         photo = findViewById(R.id.image_detail);
         if (detail.getHasFocus()==false) {//detail.getHasFocus() == false：未关注->已关注
             focus.setText("未关注");
-
         } else {
             focus.setText("已关注");
         }

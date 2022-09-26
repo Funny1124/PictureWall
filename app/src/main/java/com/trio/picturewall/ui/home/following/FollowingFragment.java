@@ -26,6 +26,7 @@ import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.activity.DetailActivity;
 import com.trio.picturewall.adapter.PostAdapter;
+import com.trio.picturewall.entity.Count;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
 import com.trio.picturewall.information.LoginData;
@@ -61,7 +62,8 @@ public class FollowingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_following, container, false);
-        if (DetailActivity.detail.getHasFocus() == false)
+        //if (DetailActivity.detail.getHasFocus() == false)
+        if (Count.focusCount == 0)
             Toast.makeText(getActivity() , "你还未关注任何人" , Toast.LENGTH_SHORT).show();
         else {
             myFocusList = new ArrayList<>();
@@ -115,7 +117,7 @@ public class FollowingFragment extends Fragment {
 
     public void getfocus() {
         // url路径
-        String url = "http://47.107.52.7:88/member/photo/focus?current=1&size=9&userId=" +
+        String url = "http://47.107.52.7:88/member/photo/focus?current=1&size=90&userId=" +
                 LoginData.loginUser.getId();
 
         // 请求头
