@@ -18,7 +18,6 @@ import com.trio.picturewall.R;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.responseBody.ResponseBody;
-import com.trio.picturewall.ui.home.find.FindFragment;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -43,8 +42,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.post_detail);
-
+        setContentView(R.layout.activity_detail);
         findViewById(R.id.focus).setOnClickListener(this);
         findViewById(R.id.cancel).setOnClickListener(this);
 
