@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.find.FindFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/find_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_find"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="8dp"
-        android:scrollbars="none" />
+        android:layout_margin="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/find_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="8dp"
+            android:scrollbars="none" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>
