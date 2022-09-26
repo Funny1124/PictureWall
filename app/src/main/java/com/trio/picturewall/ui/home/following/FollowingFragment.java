@@ -1,18 +1,9 @@
 package com.trio.picturewall.ui.home.following;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +11,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.activity.DetailActivity;
 import com.trio.picturewall.adapter.PostAdapter;
-import com.trio.picturewall.entity.Count;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
 import com.trio.picturewall.information.LoginData;
@@ -54,6 +51,7 @@ public class FollowingFragment extends Fragment {
     public RecyclerView recyclerView;//定义RecyclerView
     private PostAdapter myPostsAdapter;
     private View view;
+
     public static FollowingFragment newInstance() {
         return new FollowingFragment();
     }
@@ -61,15 +59,11 @@ public class FollowingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_following, container, false);
-        //if (DetailActivity.detail.getHasFocus() == false)
-        if (Count.focusCount == 0)
-            Toast.makeText(getActivity() , "你还未关注任何人" , Toast.LENGTH_SHORT).show();
-        else {
-            myFocusList = new ArrayList<>();
-            getfocus();
-            initRecyclerView();
-        }
+        view = inflater.inflate(R.layout.fragment_following, container, false);
+
+        myFocusList = new ArrayList<>();
+        getfocus();
+        initRecyclerView();
         return view;
     }
 
@@ -108,7 +102,7 @@ public class FollowingFragment extends Fragment {
             @Override
             public void OnItemClick(View view, MyPosts data) {
                 //此处进行监听事件的业务处理
-                DetailActivity.shareId = myPostsAdapter.data.getId();
+                DetailActivity.shareId = data.getId();
                 startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });
@@ -146,25 +140,33 @@ public class FollowingFragment extends Fragment {
                 @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    Type jsonType = new TypeToken<ResponseBody<Records>>() {
-                    }.getType();
                     // 获取响应体的json串
                     String body = Objects.requireNonNull(response.body()).string();
                     Log.d("关注：", body);
-                    requireActivity().runOnUiThread(new Runnable() {
-                        @SuppressLint("NotifyDataSetChanged")
-                        @Override
-                        public void run() {
-                            Gson gson = new Gson();
-                            Type jsonType = new TypeToken<ResponseBody<Records>>() {
-                            }.getType();
-                            // 解析json串到自己封装的状态
-                            ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
-                            Log.d("关注：", dataResponseBody.getData().getRecords().toString());
-                            myFocusList.addAll(dataResponseBody.getData().getRecords());
-                            myPostsAdapter.notifyDataSetChanged();
-                        }
-                    });
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @SuppressLint("NotifyDataSetChanged")
+                            @Override
+                            public void run() {
+                                Type jsonType = new TypeToken<ResponseBody<Records>>() {
+                                }.getType();
+                                // 解析json串到自己封装的状态
+                                ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
+                                if (dataResponseBody.getData() != null) {
+                                    Log.d("关注：", dataResponseBody.getData().getRecords().toString());
+                                    myFocusList.addAll(dataResponseBody.getData().getRecords());
+                                }else {
+                                    requireActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(requireActivity(), "你没有关注任何人！", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                                myPostsAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }
             });
         } catch (NetworkOnMainThreadException ex) {

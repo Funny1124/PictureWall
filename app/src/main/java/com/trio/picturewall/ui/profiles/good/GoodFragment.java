@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
+import com.trio.picturewall.activity.DetailActivity;
 import com.trio.picturewall.activity.LoginActivity;
 import com.trio.picturewall.activity.RegisterActivity;
 import com.trio.picturewall.adapter.RecyclerViewAdapter;
@@ -42,7 +43,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class GoodFragment extends Fragment{
+public class GoodFragment extends Fragment {
 
     private GoodViewModel mViewModel;
     private View view;
@@ -83,7 +84,8 @@ public class GoodFragment extends Fragment{
         adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, MyPosts data) {
-                Toast.makeText(getActivity(), "点击了item ", Toast.LENGTH_SHORT).show();
+                DetailActivity.shareId = data.getId();
+                startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });
     }
@@ -134,13 +136,21 @@ public class GoodFragment extends Fragment{
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void run() {
-                        Gson gson = new Gson();
                         Type jsonType = new TypeToken<ResponseBody<Records>>() {
                         }.getType();
                         // 解析json串到自己封装的状态
                         ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
-                        Log.d("动态：", dataResponseBody.getData().getRecords().toString());
-                        myPostsList.addAll(dataResponseBody.getData().getRecords());
+                        if (dataResponseBody.getData() != null) {//判断当前用户是否有发布帖子
+                            Log.d("动态：", dataResponseBody.getData().getRecords().toString());
+                            myPostsList.addAll(dataResponseBody.getData().getRecords());
+                        }else {
+                            requireActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(requireActivity(), "你没有点赞任何作品！", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                         adapter.notifyDataSetChanged();
                     }
                 });

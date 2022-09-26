@@ -1,6 +1,7 @@
 package com.trio.picturewall.ui.profiles.collecttion;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
+import com.trio.picturewall.activity.DetailActivity;
 import com.trio.picturewall.adapter.CollecttionAdapter;
 import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.entity.MyPosts;
@@ -81,7 +83,8 @@ public class CollectionFragment extends Fragment {
         adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, MyPosts data) {
-                Toast.makeText(getActivity(), "点击了item ", Toast.LENGTH_SHORT).show();
+                DetailActivity.shareId = data.getId();
+                startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });
         getMyPosts("1", "6", LoginData.loginUser.getId());
@@ -150,8 +153,17 @@ public class CollectionFragment extends Fragment {
                         }.getType();
                         // 解析json串到自己封装的状态
                         ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
-                        Log.d("动态：", dataResponseBody.getData().getRecords().toString());
-                        myPostsList.addAll(dataResponseBody.getData().getRecords());
+                        if (dataResponseBody.getData() != null) {//判断当前用户是否有发布帖子
+                            Log.d("动态：", dataResponseBody.getData().getRecords().toString());
+                            myPostsList.addAll(dataResponseBody.getData().getRecords());
+                        }else {
+                            requireActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(requireActivity(), "你没有收藏任何分享！", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                         adapter.notifyDataSetChanged();
                     }
                 });

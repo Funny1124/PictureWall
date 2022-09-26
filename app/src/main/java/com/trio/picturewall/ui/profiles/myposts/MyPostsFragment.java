@@ -1,6 +1,7 @@
 package com.trio.picturewall.ui.profiles.myposts;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
+import com.trio.picturewall.activity.DetailActivity;
 import com.trio.picturewall.adapter.MyPostsAdapter;
 import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.databinding.MypostsBinding;
@@ -91,7 +93,8 @@ public class MyPostsFragment extends Fragment {
         myPostsAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, MyPosts data) {
-                Toast.makeText(getActivity(), "点击了item ", Toast.LENGTH_SHORT).show();
+                DetailActivity.shareId = data.getId();
+                startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });
     }
@@ -149,14 +152,20 @@ public class MyPostsFragment extends Fragment {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void run() {
-                        Gson gson = new Gson();
                         Type jsonType = new TypeToken<ResponseBody<Records>>() {
                         }.getType();
                         // 解析json串到自己封装的状态
                         ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
-                        if (dataResponseBody.getData() != null){//判断当前用户是否有发布帖子
+                        if (dataResponseBody.getData() != null) {//判断当前用户是否有发布帖子
                             Log.d("动态：", dataResponseBody.getData().getRecords().toString());
                             myPostsList.addAll(dataResponseBody.getData().getRecords());
+                        }else {
+                            requireActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(requireActivity(), "你没有发布任何作品！", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                         myPostsAdapter.notifyDataSetChanged();
                     }

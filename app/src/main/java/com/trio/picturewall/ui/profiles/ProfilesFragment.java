@@ -3,61 +3,40 @@ package com.trio.picturewall.ui.profiles;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
-import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.activity.AlterActivity;
 import com.trio.picturewall.activity.LoginActivity;
-import com.trio.picturewall.adapter.MyPostsAdapter;
-import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.databinding.FragmentProfilesBinding;
-import com.trio.picturewall.entity.Count;
-import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.ui.profiles.collecttion.CollectionFragment;
 import com.trio.picturewall.ui.profiles.good.GoodFragment;
 import com.trio.picturewall.ui.profiles.myposts.MyPostsFragment;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class ProfilesFragment extends Fragment {
 
     private MyPostsFragment myPostsFragment;
     private CollectionFragment collectionFragment;
     private GoodFragment goodFragment;
-
     private ProfilesViewModel profilesViewModel;
     private FragmentProfilesBinding binding;
-
     private View view;
-    TextView focus;
+
     public static ProfilesFragment newInstance() {
         return new ProfilesFragment();
     }
@@ -172,8 +151,6 @@ public class ProfilesFragment extends Fragment {
         binding.mineUserName.setText(profilesViewModel.getMineUserName());
         //加载用户名
         binding.mineUserIntro.setText(profilesViewModel.getMineUserIntroduce());
-        focus = view.findViewById(R.id.followingCount);
-        focus.setText(Count.focusCount+"");
     }
 
 }

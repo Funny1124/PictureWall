@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -100,11 +101,12 @@ public class FindFragment extends Fragment {
             @Override
             public void OnItemClick(View view, MyPosts data) {
                 //此处进行监听事件的业务处理
-                DetailActivity.shareId = myPostsAdapter.data.getId();
+                DetailActivity.shareId = data.getId();
                 startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });
     }
+
     public void find() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/share?current=1&size=90&userId=" +
@@ -136,25 +138,33 @@ public class FindFragment extends Fragment {
                 @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    Type jsonType = new TypeToken<ResponseBody<Records>>() {
-                    }.getType();
                     // 获取响应体的json串
                     String body = Objects.requireNonNull(response.body()).string();
                     Log.d("发现：", body);
-                    requireActivity().runOnUiThread(new Runnable() {
-                        @SuppressLint("NotifyDataSetChanged")
-                        @Override
-                        public void run() {
-                            Gson gson = new Gson();
-                            Type jsonType = new TypeToken<ResponseBody<Records>>() {
-                            }.getType();
-                            // 解析json串到自己封装的状态
-                            ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
-                            Log.d("发现：", dataResponseBody.getData().getRecords().toString());
-                            myPostsList.addAll(dataResponseBody.getData().getRecords());
-                            myPostsAdapter.notifyDataSetChanged();
-                        }
-                    });
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @SuppressLint("NotifyDataSetChanged")
+                            @Override
+                            public void run() {
+                                Type jsonType = new TypeToken<ResponseBody<Records>>() {
+                                }.getType();
+                                // 解析json串到自己封装的状态
+                                ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
+                                if (dataResponseBody.getData() != null) {
+                                    Log.d("关注：", dataResponseBody.getData().getRecords().toString());
+                                    myPostsList.addAll(dataResponseBody.getData().getRecords());
+                                }else {
+                                    requireActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(requireActivity(), "暂时没有人分享！", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                                myPostsAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }
             });
         } catch (NetworkOnMainThreadException ex) {

@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
-import com.trio.picturewall.entity.Count;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.responseBody.ResponseBody;
@@ -40,6 +39,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     TextView focus;
     ImageView photo;
     public static int shareId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,13 +66,10 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                     hasfocus();
                     focus.setText("已关注");
                     detail.setHasFocus(true);
-                    Count.focusCount++;
-                    //focus.setText(Count.focusCount);
                 } else {
                     cancelfocus();
                     focus.setText("未关注");
                     detail.setHasFocus(false);
-                    Count.focusCount--;
                 }
                 break;
             case R.id.cancel:
@@ -86,16 +83,17 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         name = findViewById(R.id.user_name);
         focus = findViewById(R.id.focus);
         photo = findViewById(R.id.image_detail);
-        if (detail.getHasFocus()==false) {//detail.getHasFocus() == false：未关注->已关注
+        if (detail.getHasFocus() == false) {//detail.getHasFocus() == false：未关注->已关注
             focus.setText("未关注");
         } else {
             focus.setText("已关注");
         }
         name.setText(detail.getUsername());
-        if (detail.getImageUrlList().length != 0){//解决没有图片闪退
+        if (detail.getImageUrlList().length != 0) {//解决没有图片闪退
             Glide.with(this).load(detail.getImageUrlList()[0]).into(photo);
         }
     }
+
     public void getdetail() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/share/detail?shareId="
