@@ -31,6 +31,7 @@ import com.trio.picturewall.activity.LoginActivity;
 import com.trio.picturewall.adapter.MyPostsAdapter;
 import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.databinding.FragmentProfilesBinding;
+import com.trio.picturewall.entity.Count;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.ui.profiles.collecttion.CollectionFragment;
@@ -56,7 +57,7 @@ public class ProfilesFragment extends Fragment {
     private FragmentProfilesBinding binding;
 
     private View view;
-
+    TextView focus;
     public static ProfilesFragment newInstance() {
         return new ProfilesFragment();
     }
@@ -171,7 +172,8 @@ public class ProfilesFragment extends Fragment {
         binding.mineUserName.setText(profilesViewModel.getMineUserName());
         //加载用户名
         binding.mineUserIntro.setText(profilesViewModel.getMineUserIntroduce());
-
+        focus = view.findViewById(R.id.followingCount);
+        focus.setText(Count.focusCount+"");
     }
 
 }
