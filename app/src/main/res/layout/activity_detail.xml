@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <!--    tools:context=".activity.ClassItemInfoActivity"-->
     <LinearLayout
+        android:id="@+id/detial_imgs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_below="@+id/detial_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/image_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/seraphine"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/detial_topbar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/conner_bg_gray"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/cancel"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_marginStart="8dp"
             android:layout_gravity="center"
             android:background="@mipmap/back"
             tools:ignore="ContentDescription" />
@@ -26,13 +50,14 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="8dp"
-            android:gravity="center"
+            android:layout_gravity="center"
             android:src="@mipmap/seraphine" />
 
         <TextView
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
             android:gravity="center"
             android:text="用户名"
             android:textColor="@color/black"
@@ -45,100 +70,58 @@
 
         <ImageView
             android:id="@+id/focus"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:gravity="center"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="center"
             android:src="@mipmap/unfocus" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:layout_weight="1"
-        android:gravity="center">
 
-        <ImageView
-            android:id="@+id/image_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/seraphine"
-            tools:ignore="ContentDescription" />
-    </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/detial_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/detial_bottombar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="作品详情"
-            android:textColor="#9E9E9E" />
+            android:id="@+id/post_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="美味食材"
+            android:textColor="@color/white" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_marginLeft="10dp"
+        <TextView
+            android:id="@+id/post_context"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
+            android:text="琥珀色黄昏像糖在很美的远方，你的脸没有化妆我却疯狂爱上，思念跟影子在傍晚一起被拉长，我手中那张入场券陪我数羊"
+            android:textColor="@color/white" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="作品名称："
-                    android:textColor="#9E9E9E" />
-
-                <TextView
-                    android:id="@+id/post_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="美味食材"
-                    android:textColor="#9E9E9E" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="作品描述："
-                android:textColor="#9E9E9E" />
-
-            <TextView
-                android:id="@+id/post_context"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:text="琥珀色黄昏像糖在很美的远方，你的脸没有化妆我却疯狂爱上，思念跟影子在傍晚一起被拉长，我手中那张入场券陪我数羊"
-                android:textColor="#9E9E9E" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/detial_bottombar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:baselineAligned="false"
         android:gravity="center"
+        android:background="@drawable/conner_bg_gray"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -185,4 +168,4 @@
                 tools:ignore="ContentDescription" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
