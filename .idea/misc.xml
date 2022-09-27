@@ -49,6 +49,10 @@
         <entry key="..\:/bw/PictureWall/app/src/main/res/layout/fragment_find.xml" value="0.1" />
         <entry key="..\:/bw/PictureWall/app/src/main/res/layout/fragment_following.xml" value="0.1" />
         <entry key="..\:/bw/PictureWall/app/src/main/res/layout/fragment_profiles.xml" value="0.2" />
+        <entry key="..\:/last/PictureWall/app/src/main/res/layout/fragment_find.xml" value="0.264" />
+        <entry key="..\:/last/PictureWall/app/src/main/res/layout/fragment_following.xml" value="0.16145833333333334" />
+        <entry key="..\:/last/PictureWall/app/src/main/res/layout/fragment_profiles.xml" value="0.4" />
+        <entry key="..\:/last/PictureWall/app/src/main/res/layout/post_detail.xml" value="0.264" />
       </map>
     </option>
   </component>

@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -51,7 +53,8 @@ public class FollowingFragment extends Fragment {
     public RecyclerView recyclerView;//定义RecyclerView
     private PostAdapter myPostsAdapter;
     private View view;
-
+    private SwipeRefreshLayout swipe;
+    private int current = 1;
     public static FollowingFragment newInstance() {
         return new FollowingFragment();
     }
@@ -60,10 +63,19 @@ public class FollowingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_following, container, false);
-
+        swipe = view.findViewById(R.id.swipe_following);
         myFocusList = new ArrayList<>();
         getfocus();
         initRecyclerView();
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh () {
+                refreshData();
+                initRecyclerView();
+            }
+        });
+
         return view;
     }
 
@@ -84,18 +96,7 @@ public class FollowingFragment extends Fragment {
 
         //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
         //参数是：上下文、列表方向（横向还是纵向）、是否倒叙
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        //设置item的分割线
-        //mCollectRecyclerView.addItemDecoration(new DividerItemDecoration(requireActivity(),DividerItemDecoration.VERTICAL));
-
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                // super.getItemOffsets(outRect, view, parent, state);
-                outRect.set(32, 32, 32, 32);
-            }
-        });
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
         myPostsAdapter.setOnItemClickListener(new PostAdapter.OnItemClickListener() {
@@ -108,11 +109,11 @@ public class FollowingFragment extends Fragment {
         });
     }
 
-
     public void getfocus() {
         // url路径
-        String url = "http://47.107.52.7:88/member/photo/focus?current=1&size=90&userId=" +
-                LoginData.loginUser.getId();
+        String url = "http://47.107.52.7:88/member/photo/focus?current=" +
+                    current +"&size=3&userId=" +
+                    LoginData.loginUser.getId();
 
         // 请求头
         Headers headers = new Headers.Builder()
@@ -172,5 +173,10 @@ public class FollowingFragment extends Fragment {
         } catch (NetworkOnMainThreadException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void refreshData() {
+        current++;
+        getfocus();
     }
 }
