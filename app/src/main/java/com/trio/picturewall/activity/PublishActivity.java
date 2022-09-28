@@ -4,8 +4,11 @@ import static com.trio.picturewall.Http.Api.postAdd;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -13,11 +16,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.NetworkOnMainThreadException;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -30,8 +37,8 @@ import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.hitomi.tilibrary.transfer.TransferConfig;
-import com.hitomi.tilibrary.transfer.Transferee;
+//import com.hitomi.tilibrary.transfer.TransferConfig;
+//import com.hitomi.tilibrary.transfer.Transferee;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.adapter.GridViewAdapter;
@@ -40,9 +47,12 @@ import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.responseBody.ResponseBody;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,12 +67,16 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class PublishActivity extends AppCompatActivity implements View.OnClickListener {
-    //uri对象
-    private Uri imageUri;
 
     private EditText edit_img_name = null;
     private EditText edit_img_context = null;
-    private GridView gridView;
+
+    public static final int PHOTO_REQUEST_CAREMA = 1;// 拍照
+    public static final int CROP_PHOTO = 2;// 裁剪
+    public static final int ARRAY_PHOTO = 3;// 相册选取
+    private Uri imageUri = null;
+
+    //图片数组
     ArrayList<File> fileList = new ArrayList<>();
 
     private GridView gridViewPhoto;
@@ -74,6 +88,8 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     private GridViewAdapter adapter;
     String title = null;
     String content = null;
+    //设置弹窗
+    Dialog mDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,13 +129,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"), 0);
-
+                showDialog();
         }
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -127,7 +139,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             case 0:
                 if (resultCode == RESULT_OK) {
                     Uri uri = null;
-
                     try {
                         if (data != null) {
                             ClipData imageNames = data.getClipData();
@@ -140,15 +151,12 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                                     fileList.add(file);
                                     System.out.println(file);
                                 }
-                                //post(fileList);
                             } else {
                                 uri = data.getData();
                                 String path = handleImageOkKitKat(uri);
                                 File file = new File(path);   //图片地址
                                 fileList.add(file);
                                 System.out.println(path);
-                                //post(fileList);
-
                             }
                         } else {
                             uri = data.getData();
@@ -156,8 +164,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                             File file = new File(path);   //图片地址
                             fileList.add(file);
                             System.out.println(path);
-                            //post(fileList);
-
                         }
                         gridViewPhoto = (GridView) findViewById(R.id.gv);
                         initData(fileList);
@@ -165,13 +171,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Toast.makeText(getApplicationContext(), "Item"+position, Toast.LENGTH_LONG).show();
-                                //跳转至显示页面
-//                                Intent intent = new Intent(PublishActivity.this, PhotoActivity.class);
-//                                //获取文件路径
-//                                Bitmap bitmap = BitmapFactory.decodeFile(String.valueOf(fileList.get(position)));
-//                                intent.putExtra("bitmap", bitmap);
-//                                //启动intent
-//                                startActivity(intent);
 
                                 fileList.remove(position);
                                 initData(fileList);
@@ -182,7 +181,30 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         System.out.println(e);
                     }
                 }
+                break;
 
+            case PHOTO_REQUEST_CAREMA:
+                if (resultCode == RESULT_OK) {
+
+                    Intent intent = new Intent("com.android.camera.action.CROP");
+                    intent.setDataAndType(imageUri, "image/*");
+                    intent.putExtra("scale", true);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    startActivityForResult(intent, CROP_PHOTO); // 启动裁剪程序
+                }
+                break;
+            case CROP_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    try {
+                        imageUri = data.getData();
+                        String path = handleImageOkKitKat(imageUri);
+                        File file = new File(path);   //图片地址
+                        fileList.add(file);
+                        System.out.println(path);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
@@ -241,6 +263,117 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         adapter = new GridViewAdapter(listpath, this);
         gridViewPhoto.setAdapter(adapter);
     }
+
+
+    /**
+     * 底部弹出框
+     */
+    private void showDialog() {
+        if (mDialog ==null){
+            initShareDialog();
+        }
+        mDialog.show();
+    }
+
+    /**
+     * dialog 初始化
+     */
+    private void initShareDialog() {
+        mDialog = new Dialog(this, R.style.dialogStyle);
+        mDialog.setCanceledOnTouchOutside(true);
+        mDialog.setCancelable(true);            //点击框外，框退出
+        Window window = mDialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);      //位于底部
+        window.setWindowAnimations(R.style.dialogStyle);    //弹出动画
+        View inflate = View.inflate(this, R.layout.dialog_picture_camera, null);
+        inflate.findViewById(R.id.dialog_cancel).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                if (mDialog != null && mDialog.isShowing()){
+                    mDialog.dismiss();      //消失，退出
+                }
+            }
+        });
+        inflate.findViewById(R.id.dialog_Picture).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                if (mDialog != null && mDialog.isShowing()){
+                    mDialog.dismiss();      //消失，退出
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent,"Select Picture"), 0);
+                }
+            }
+        });
+        inflate.findViewById(R.id.dialog_Camera).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                if (mDialog != null && mDialog.isShowing()){
+                    mDialog.dismiss();      //消失，退出
+                    openCamera(PublishActivity.this);
+                }
+            }
+        });
+        window.setContentView(inflate);
+        //横向充满
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+    }
+
+
+    public void openCamera(Activity activity) {
+        //獲取系統版本
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        // 激活相机
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File tempFile;
+
+        // 判断存储卡是否可以用，可用进行存储
+        if (hasSdcard()) {
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat timeStampFormat = new SimpleDateFormat(
+                    "yyyy_MM_dd_HH_mm_ss");
+            String filename = timeStampFormat.format(new Date());
+            tempFile = new File(Environment.getExternalStorageDirectory(), filename + ".jpg");
+            if (currentapiVersion < 24) {
+                // 从文件中创建uri
+                imageUri = Uri.fromFile(tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            } else {
+                //兼容android7.0 使用共享文件的形式
+                ContentValues contentValues = new ContentValues(1);
+                contentValues.put(MediaStore.Images.Media.DATA, tempFile.getAbsolutePath());
+
+                //检查是否有存储权限，以免崩溃
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    //申请WRITE_EXTERNAL_STORAGE权限
+                    //Util.showToast(this,"请开启存储权限");
+                    Toast.makeText(this,"请开启存储权限",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                imageUri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            }
+        }
+        // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
+        activity.startActivityForResult(intent, PHOTO_REQUEST_CAREMA);
+    }
+
+    /*
+     * 判断sdcard是否被挂载
+     */
+    public static boolean hasSdcard() {
+        return Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED);
+    }
+
+
+
+
 
     public static void post(ArrayList<File> fileList, String title, String content) {
         new Thread(() -> {
