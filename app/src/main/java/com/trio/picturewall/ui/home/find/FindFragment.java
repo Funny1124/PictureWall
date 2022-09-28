@@ -147,7 +147,6 @@ public class FindFragment extends Fragment {
 
         //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
         //参数是：上下文、列表方向（横向还是纵向）、是否倒叙
-
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
