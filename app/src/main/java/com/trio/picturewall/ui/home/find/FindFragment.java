@@ -124,8 +124,6 @@ public class FindFragment extends Fragment {
             }
         });
 
-
-
         return view;
     }
 
