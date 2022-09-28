@@ -30,6 +30,14 @@ android {
     }
 }
 
+//    implementation 'com.github.bumptech.glide:glide:4.12.0'
+//    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+//
+//    implementation 'com.github.Hitomis.transferee:Transferee:v1.1.0'
+//    implementation 'com.github.Hitomis.transferee:PicassoImageLoader:1.6.1'
+//    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+
 
 dependencies {
 
@@ -53,5 +61,6 @@ dependencies {
     //第三方 圆形 图片
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
 
 }

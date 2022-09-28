@@ -3,11 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.share.ShareFragment">
+    tools:context=".ui.share.ShareFragment"
+    android:orientation="vertical"
+    android:gravity="center">
 
-    <com.trio.picturewall.widget.CircleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/upload"
-        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:id="@+id/login_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="27dp"
+            android:layout_above="@id/upload"
+            android:background="@mipmap/camera"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PictureWall"
+            android:textSize="24sp"
+            android:textColor="@color/selector"
+            android:typeface="serif"
+            android:layout_marginTop="24dp"
+            android:gravity="center"/>
+
+        <com.trio.picturewall.widget.CircleButton
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginBottom="24dp"
+            android:id="@+id/upload"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
