@@ -4,19 +4,24 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -50,7 +55,8 @@ public class FindFragment extends Fragment {
     public RecyclerView recyclerView;//定义RecyclerView
     private PostAdapter myPostsAdapter;
     private View view;
-
+    private SwipeRefreshLayout swipe;
+    private int current = 0;
     public static FindFragment newInstance() {
         return new FindFragment();
     }
@@ -60,11 +66,69 @@ public class FindFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_find, container, false);
+        swipe = view.findViewById(R.id.swipe_find);
         myPostsList = new ArrayList<>();
         find();
         initRecyclerView();
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+                initRecyclerView();
+
+                //在获取数据完成后设置刷新状态为false
+                //isRefreshing() 是否是处于刷新状态
+                if (swipe.isRefreshing()) {
+                    swipe.setRefreshing(false);
+                }
+            }
+        });
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            //用来标记是否正在向最后一个滑动
+            boolean isSlidingToLast = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //设置什么布局管理器,就获取什么的布局管理器
+                int[] positions = null;
+                StaggeredGridLayoutManager manager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+                // 当停止滑动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //获取最后一个完全显示的ItemPosition ,角标值
+                    int[] into = manager.findLastVisibleItemPositions(positions);
+                    //所有条目,数量值
+                    int totalItemCount = manager.getItemCount();
+                    int lastPositon = Math.max(into[0],into[1]);
+                    // 判断是否滚动到底部，并且是向右滚动
+                    if ((totalItemCount - lastPositon) <= 9 ) {
+                        //加载更多功能的代码
+                        refreshData();
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
+                //dx>0:向右滑动,dx<0:向左滑动
+                //dy>0:向下滑动,dy<0:向上滑动
+                if (dy > 0) {
+                    isSlidingToLast = true;
+                } else {
+                    isSlidingToLast = false;
+                }
+            }
+        });
+
+
+
         return view;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -84,17 +148,7 @@ public class FindFragment extends Fragment {
         //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
         //参数是：上下文、列表方向（横向还是纵向）、是否倒叙
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        //设置item的分割线
-        //mCollectRecyclerView.addItemDecoration(new DividerItemDecoration(requireActivity(),DividerItemDecoration.VERTICAL));
-
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                // super.getItemOffsets(outRect, view, parent, state);
-                outRect.set(32, 32, 32, 32);
-            }
-        });
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
         myPostsAdapter.setOnItemClickListener(new PostAdapter.OnItemClickListener() {
@@ -109,7 +163,8 @@ public class FindFragment extends Fragment {
 
     public void find() {
         // url路径
-        String url = "http://47.107.52.7:88/member/photo/share?current=1&size=90&userId=" +
+        String url = "http://47.107.52.7:88/member/photo/share?current=" +
+                current + "&size=3&userId=" +
                 LoginData.loginUser.getId();
 
         // 请求头
@@ -153,7 +208,7 @@ public class FindFragment extends Fragment {
                                 if (dataResponseBody.getData() != null) {
                                     Log.d("关注：", dataResponseBody.getData().getRecords().toString());
                                     myPostsList.addAll(dataResponseBody.getData().getRecords());
-                                }else {
+                                } else {
                                     requireActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -170,5 +225,10 @@ public class FindFragment extends Fragment {
         } catch (NetworkOnMainThreadException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void refreshData() {
+        current--;
+        find();
     }
 }
