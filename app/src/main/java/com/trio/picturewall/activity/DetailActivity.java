@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +33,9 @@ import com.trio.picturewall.responseBody.ResponseBody;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import okhttp3.Call;
@@ -50,6 +53,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     TextView post_title;
     TextView post_context;
     TextView com_num;
+
+    EditText com_edit_text;
     ImageView focus;
     ImageView photo;
     ImageView cancel;
@@ -58,6 +63,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     ImageView btn_comment;
     CommentAdapter commentAdapter;
     ImageView btn_close;
+    ImageView com_post;
     private Dialog com_dialog;
     private RecyclerView comment_list; //评论列表
     private List<Comment> comments = new ArrayList<>(); //评论数据list
@@ -127,6 +133,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.btn_comment:
                 showCommentDialog();
                 break;
+            case R.id.btn_close:
+                com_dialog.dismiss();
+                break;
+//            case R.id.com_post:
+//
+//                break;
             default:
                 break;
         }
@@ -142,7 +154,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         btn_like = findViewById(R.id.btn_like);
         btn_collect = findViewById(R.id.btn_collect);
         btn_comment = findViewById(R.id.btn_comment);
-
         focus.setOnClickListener(this);
         photo.setOnClickListener(this);
         cancel.setOnClickListener(this);
@@ -558,10 +569,20 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         //绑定view
         comment_list = com_view.findViewById(R.id.comment_list);
         btn_close = com_view.findViewById(R.id.btn_close);
+        com_post = com_view.findViewById(R.id.com_post);
         com_num = com_view.findViewById(R.id.com_num);
         btn_close.setOnClickListener(this);
+        com_edit_text = com_view.findViewById(R.id.com_edit_text);
+        com_post.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                System.out.println(com_edit_text.getText().toString());
+                addComment(com_edit_text.getText().toString(), shareId,
+                        LoginData.loginUser.getId(), LoginData.loginUser.getUsername());
+            }
+        });
         //开启UI线程更新UI
         runOnUiThread(new Runnable() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void run() {
                 //设置布局管理
@@ -578,5 +599,44 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
+    }
+
+    private void addComment(String content, int sahreId, String userId, String userName) {
+        // url路径
+        String url = "http://47.107.52.7:88/member/photo/comment/first";
+
+        // 请求头
+        Headers headers = new Headers.Builder()
+                .add("appId", "83cf5e533f8e47d5961d64e2831516e9")
+                .add("appSecret", "71291d9a048ed12e242c1916d79f55209f573")
+                .add("Accept", "application/json, text/plain, */*")
+                .build();
+
+        // 请求体
+        // PS.用户也可以选择自定义一个实体类，然后使用类似fastjson的工具获取json串
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("content", content);
+        bodyMap.put("shareId", shareId);
+        bodyMap.put("userId", userId);
+        bodyMap.put("userName", userName);
+        // 将Map转换为字符串类型加入请求体中
+        String body = new Gson().toJson(bodyMap);
+
+        MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+
+        //请求组合创建
+        Request request = new Request.Builder()
+                .url(url)
+                // 将请求头加至请求中
+                .headers(headers)
+                .post(RequestBody.create(MEDIA_TYPE_JSON, body))
+                .build();
+        try {
+            OkHttpClient client = new OkHttpClient();
+            //发起请求，传入callback进行回调
+            client.newCall(request).enqueue(ResponseBody.callback);
+        } catch (NetworkOnMainThreadException ex) {
+            ex.printStackTrace();
+        }
     }
 }

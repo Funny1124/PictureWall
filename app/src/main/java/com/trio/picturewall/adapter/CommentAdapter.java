@@ -31,7 +31,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             {
                 super(arg0);
             }
-            ImageView user_icon;
             TextView user_name;
             TextView com_context;
             TextView com_time;
@@ -53,7 +52,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             View view = mInflater.inflate(R.layout.item_comment,
                     viewGroup, false);
             ViewHolder viewHolder = new ViewHolder(view);
-            viewHolder.user_icon = view.findViewById(R.id.com_user_icon);
+            viewHolder.user_name = view.findViewById(R.id.com_user_name);
             viewHolder.com_context = view.findViewById(R.id.com_context);
             viewHolder.com_time = view.findViewById(R.id.com_time);
 
@@ -66,7 +65,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         @Override
         public void onBindViewHolder(final ViewHolder viewHolder, final int i)
         {
-//            viewHolder.user_name.setText(mDatas.get(0).getUserName());
+            viewHolder.user_name.setText(mDatas.get(0).getUserName());
             viewHolder.com_context.setText(mDatas.get(i).getContent());
             viewHolder.com_time.setText(mDatas.get(i).getCreateTime());
         }
