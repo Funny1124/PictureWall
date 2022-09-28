@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/9.25/PictureWall/app/src/main/res/layout/post_detail.xml" value="0.1125" />
         <entry key="..\:/Android/PictureWall/app/src/main/res/layout/fragment_find.xml" value="0.1" />
         <entry key="..\:/Android/PictureWall/app/src/main/res/layout/fragment_my_posts.xml" value="0.1" />
         <entry key="..\:/Android/PictureWall/app/src/main/res/layout/fragment_profiles.xml" value="0.1" />
@@ -24,6 +23,16 @@
         <entry key="..\:/AndroidStudio/Android_Project/ImageShare2/PictureWall/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
         <entry key="..\:/AndroidStudio/Android_Project/ImageShare2/PictureWall/app/src/main/res/layout/fragment_profiles.xml" value="0.22826086956521738" />
         <entry key="..\:/AndroidStudio/Android_Project/ImageShare2/PictureWall/app/src/main/res/layout/fragment_share.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudio/Android_Project/ImageShare3/PictureWall/app/src/main/res/layout/activity_login.xml" value="0.21197916666666666" />
+        <entry key="..\:/AndroidStudio/Android_Project/ImageShare3/PictureWall/app/src/main/res/layout/activity_photo.xml" value="0.136" />
+        <entry key="..\:/AndroidStudio/Android_Project/ImageShare3/PictureWall/app/src/main/res/layout/activity_publish.xml" value="0.2" />
+        <entry key="..\:/AndroidStudio/Android_Project/ImageShare3/PictureWall/app/src/main/res/layout/dialog_picture_camera.xml" value="0.25364583333333335" />
+        <entry key="..\:/AndroidStudio/Android_Project/ImageShare3/PictureWall/app/src/main/res/layout/fragment_collection.xml" value="0.21197916666666666" />
+        <entry key="..\:/AndroidStudio/Android_Project/ImageShare3/PictureWall/app/src/main/res/layout/fragment_find.xml" value="0.21197916666666666" />
+        <entry key="..\:/AndroidStudio/Android_Project/ImageShare3/PictureWall/app/src/main/res/layout/fragment_following.xml" value="0.21197916666666666" />
+        <entry key="..\:/AndroidStudio/Android_Project/ImageShare3/PictureWall/app/src/main/res/layout/fragment_share.xml" value="0.21197916666666666" />
+        <entry key="..\:/AndroidStudio/Android_Project/ImageShare3/PictureWall/app/src/main/res/layout/goodposts.xml" value="0.20208333333333334" />
+        <entry key="..\:/AndroidStudio/Android_Project/ImageShare3/PictureWall/app/src/main/res/layout/gridview_item.xml" value="0.21510416666666668" />
         <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable-v24/add.xml" value="0.169" />
         <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable-v24/edit_border_picture.xml" value="0.169" />
         <entry key="..\:/AndroidStudioProjects/PictureWall/app/src/main/res/drawable/bottom_corner_rectangle.xml" value="0.169" />
@@ -56,7 +65,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -3,138 +3,155 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".activity.PublishActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="44dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_height="44dp">
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/cancel"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
+            android:layout_height="20dp"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:text="取消"
-            android:textColor="@color/black"
-            android:layout_height="20dp"/>
+            android:textColor="@color/black" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="发作品"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/white"
-            android:layout_weight="1"/>
+            android:text="发布作品"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/publish"
-            android:layout_margin="10dp"
             android:layout_width="45dp"
-            android:text="发布"
-            android:gravity="center"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
             android:background="@color/teal_200"
+            android:gravity="center"
+            android:text="发布"
             android:textColor="@color/white"
             android:textSize="13dp"
-            android:layout_height="20dp"/>
+            tools:ignore="TextContrastCheck" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/picture"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:src="@mipmap/seraphine"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/null_view"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/edit_border_picture"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/add" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="#F6F5F5"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_img_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="给你的作品取个名字吧"
+                android:inputType="text"
+                android:maxLength="50"
+                android:textColor="@color/black"
+                android:textColorHint="@color/selector"
+                android:textSize="13dp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/edit_text_num_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/50"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="#F6F5F5"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_img_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="start"
+                android:hint="描述一下你的创作灵感吧"
+                android:inputType="textMultiLine"
+                android:maxLength="140"
+                android:minLines="4"
+                android:textColor="@color/black"
+                android:textColorHint="@color/selector"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/edit_text_num_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="3dp"
+                android:text="0/140"
+                android:textColor="@color/black" />
+        </LinearLayout>
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:visibility="gone"
-                    android:id="@+id/picture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    android:src="@mipmap/seraphine"/>
-                <LinearLayout
-                    android:id="@+id/null_view"
-                    android:layout_width="80dp"
-                    android:layout_margin="20dp"
-                    android:background="@drawable/edit_border_picture"
-                    android:gravity="center"
-                    android:layout_height="80dp">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/add"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_margin="10dp"
-                android:background="#F6F5F5"
-                android:layout_height="50dp">
-                <EditText
-                    android:id="@+id/edit_img_name"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="@color/black"
-                    android:textSize="13dp"
-                    android:hint="给你的作品取个名字吧"
-                    android:background="@null"
-                    android:maxLength="50"
-                    android:textColorHint="@color/selector"/>
-                <TextView
-                    android:id="@+id/edit_text_num_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0/50"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_margin="10dp"
-                android:background="#F6F5F5"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/edit_img_context"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:gravity="start"
-                    android:background="@null"
-                    android:textColor="@color/black"
-                    android:textSize="13dp"
-                    android:minLines="4"
-                    android:hint="描述一下你的创作灵感吧"
-                    android:maxLength="140"
-                    android:textColorHint="@color/selector"/>
-                <TextView
-                    android:id="@+id/edit_text_num_context"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="3dp"
-                    android:text="0/140"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/tag_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+    <GridView
+        android:id="@+id/gv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="3dp"
+        android:columnWidth="90dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp" />
+</ScrollView>
 </LinearLayout>

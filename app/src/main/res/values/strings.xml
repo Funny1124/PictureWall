@@ -3,19 +3,15 @@
     <string name="dialog_list_text">请选择</string>
     <string name="dialog_btn_confirm_text">ignore</string>
 
-    <string
-            name="shared_preferences_file_name">sp_login
-    </string >
+    <string name="shared_preferences_file_name">sp_login
+    </string>
 
-    <string
-        name="login_account_name">login_account_name
-    </string >
+    <string name="login_account_name">login_account_name
+    </string>
 
-    <string
-        name="login_password">login_password
-    </string >
+    <string name="login_password">login_password
+    </string>
 
-    <string
-        name="login_remember_password">login_remember_password
-    </string >
+    <string name="login_remember_password">login_remember_password
+    </string>
 </resources>
