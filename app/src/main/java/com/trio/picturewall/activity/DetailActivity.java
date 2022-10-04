@@ -305,8 +305,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         // 请求头
         Headers headers = new Headers.Builder()
-                .add("appId", "83cf5e533f8e47d5961d64e2831516e9")
-                .add("appSecret", "71291d9a048ed12e242c1916d79f55209f573")
+                .add("appId", Api.appId)
+                .add("appSecret", Api.appSecret)
                 .add("Accept", "application/json, text/plain, */*")
                 .build();
 
@@ -353,8 +353,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         // 请求头
         Headers headers = new Headers.Builder()
-                .add("appId", "83cf5e533f8e47d5961d64e2831516e9")
-                .add("appSecret", "71291d9a048ed12e242c1916d79f55209f573")
+                .add("appId", Api.appId)
+                .add("appSecret", Api.appSecret)
                 .add("Accept", "application/json, text/plain, */*")
                 .build();
 
@@ -404,8 +404,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         // 请求头
         Headers headers = new Headers.Builder()
-                .add("appId", "83cf5e533f8e47d5961d64e2831516e9")
-                .add("appSecret", "71291d9a048ed12e242c1916d79f55209f573")
+                .add("appId", Api.appId)
+                .add("appSecret", Api.appSecret)
                 .add("Accept", "application/json, text/plain, */*")
                 .build();
 
@@ -452,8 +452,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         String url = "http://47.107.52.7:88/member/photo/like/cancel?likeId=" + post.getLikeId();
         // 请求头
         Headers headers = new Headers.Builder()
-                .add("appId", "83cf5e533f8e47d5961d64e2831516e9")
-                .add("appSecret", "71291d9a048ed12e242c1916d79f55209f573")
+                .add("appId", Api.appId)
+                .add("appSecret", Api.appSecret)
                 .add("Accept", "application/json, text/plain, */*")
                 .build();
 
@@ -501,8 +501,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         // 请求头
         Headers headers = new Headers.Builder()
-                .add("appId", "83cf5e533f8e47d5961d64e2831516e9")
-                .add("appSecret", "71291d9a048ed12e242c1916d79f55209f573")
+                .add("appId", Api.appId)
+                .add("appSecret", Api.appSecret)
                 .add("Accept", "application/json, text/plain, */*")
                 .build();
 
@@ -607,8 +607,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         // 请求头
         Headers headers = new Headers.Builder()
-                .add("appId", "83cf5e533f8e47d5961d64e2831516e9")
-                .add("appSecret", "71291d9a048ed12e242c1916d79f55209f573")
+                .add("appId", Api.appId)
+                .add("appSecret", Api.appSecret)
                 .add("Accept", "application/json, text/plain, */*")
                 .build();
 

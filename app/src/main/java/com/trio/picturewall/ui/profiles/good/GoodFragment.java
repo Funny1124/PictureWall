@@ -92,7 +92,7 @@ public class GoodFragment extends Fragment {
 
     public void getMyPosts(String current, String size, String userId) {
         // url路径
-        String url = "http://47.107.52.7:88/member/photo/share/myself?" +
+        String url = "http://47.107.52.7:88/member/photo/like?" +
                 "current=" + current +
                 "&size=" + size +
                 "&userId=" + userId;
@@ -143,7 +143,7 @@ public class GoodFragment extends Fragment {
                         if (dataResponseBody.getData() != null) {//判断当前用户是否有发布帖子
                             Log.d("动态：", dataResponseBody.getData().getRecords().toString());
                             myPostsList.addAll(dataResponseBody.getData().getRecords());
-                        }else {
+                        } else {
                             requireActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

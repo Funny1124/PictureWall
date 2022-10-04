@@ -159,7 +159,7 @@ public class MyPostsFragment extends Fragment {
                         if (dataResponseBody.getData() != null) {//判断当前用户是否有发布帖子
                             Log.d("动态：", dataResponseBody.getData().getRecords().toString());
                             myPostsList.addAll(dataResponseBody.getData().getRecords());
-                        }else {
+                        } else {
                             requireActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
