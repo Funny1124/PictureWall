@@ -31,7 +31,7 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() { return mlist.size(); }
+    public int getCount() { return mlist.size()+1; }
 
     @Override
     public Object getItem(int position) {
@@ -55,8 +55,13 @@ public class GridViewAdapter extends BaseAdapter {
         } else {
             vh = (VIewHolder) convertView.getTag();
         }
-        vh.iv.setImageBitmap(mlist.get(position));
-        Bitmap path = mlist.get(position);
+        if (position < mlist.size()){
+            vh.iv.setImageBitmap(mlist.get(position));
+        }
+        else{
+            vh.iv.setBackgroundResource(R.mipmap.post_fill);
+        }
+        //Bitmap path = mlist.get(position);
         return convertView;
     }
 }

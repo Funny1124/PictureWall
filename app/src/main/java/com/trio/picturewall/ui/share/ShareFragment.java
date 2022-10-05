@@ -39,6 +39,7 @@ public class ShareFragment extends Fragment {
         circleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(getActivity(), PublishActivity.class));
             }
         });

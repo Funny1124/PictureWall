@@ -17,6 +17,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
 import android.os.NetworkOnMainThreadException;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -78,7 +79,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
     //图片数组
     ArrayList<File> fileList = new ArrayList<>();
-
+    //显示图片
     private GridView gridViewPhoto;
     //文件夹下所有图片的bitmap
     private List<Bitmap> listpath;
@@ -95,6 +96,16 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
+
+        gridViewPhoto = (GridView) findViewById(R.id.gv);
+        initData(fileList);
+        gridViewPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "Item"+position, Toast.LENGTH_LONG).show();
+                    showDialog();
+            }
+        });
 
         findViewById(R.id.publish).setOnClickListener(this);
         findViewById(R.id.null_view).setOnClickListener(this);
@@ -115,21 +126,36 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
                 edit_img_context = findViewById(R.id.edit_img_context);
                 content = edit_img_context.getText().toString().trim();
-                //上传并发布
-                post(fileList,title,content);
-                finish();
+
+
+                if(title.equals("")||content.equals("")){
+
+                    Toast toast = Toast.makeText(this,"请输入内容",Toast.LENGTH_SHORT);
+                    toast.show();
+                }else {
+                    if(fileList.size()>0){
+                        //上传并发布
+                        post(fileList,title,content);
+                        finish();
+                    }else{
+                        Toast.makeText(this, "请上传图片", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
                 break;
             case R.id.null_view:
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)||!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                }
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+
+                }else if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
                     //申请WRITE_EXTERNAL_STORAGE权限
                     Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 showDialog();
+
         }
 
     }
@@ -165,18 +191,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                             fileList.add(file);
                             System.out.println(path);
                         }
-                        gridViewPhoto = (GridView) findViewById(R.id.gv);
-                        initData(fileList);
-                        gridViewPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Toast.makeText(getApplicationContext(), "Item"+position, Toast.LENGTH_LONG).show();
-
-                                fileList.remove(position);
-                                initData(fileList);
-                            }
-                        });
-
                     } catch (Exception e) {
                         System.out.println(e);
                     }
@@ -185,7 +199,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
             case PHOTO_REQUEST_CAREMA:
                 if (resultCode == RESULT_OK) {
-
                     Intent intent = new Intent("com.android.camera.action.CROP");
                     intent.setDataAndType(imageUri, "image/*");
                     intent.putExtra("scale", true);
@@ -206,12 +219,28 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 }
                 break;
+
             default:
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
         }
+        gridViewPhoto = (GridView) findViewById(R.id.gv);
+        initData(fileList);
+        gridViewPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "Item"+position, Toast.LENGTH_LONG).show();
+                if (position<fileList.size()){
+                    fileList.remove(position);
+                    initData(fileList);
+                }else{
+                    showDialog();
+                }
+            }
+        });
     }
 
+    //图片uri判断
     private String handleImageOkKitKat(Uri uri) {
         String imagePath=null;
         Log.d("uri=intent.getData :",""+uri);
@@ -234,7 +263,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         }
         return imagePath;
     }
-
+    //uri转文件
     @SuppressLint("Range")
     public String getImagePath(Uri uri,String selection) {
         System.out.println("异常0");
@@ -372,9 +401,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-
-
-
     public static void post(ArrayList<File> fileList, String title, String content) {
         new Thread(() -> {
             Gson gson = new Gson();
@@ -392,14 +418,17 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     .add("Accept", "application/json, text/plain, */*")
                     .build();
 
-            MediaType mediaType = MediaType.Companion.parse("text/x-markdown; charset=utf-8");
-            RequestBody fileBody = RequestBody.Companion.create(fileList.get(0), mediaType);
+
 //            RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
 //                    .addFormDataPart("fileList", fileList.get(0).getName(), fileBody)
+//                    .addFormDataPart("fileList", fileList.get(1).getName(), fileBody)
 //                    .build();
+
+            MediaType mediaType = MediaType.Companion.parse("text/x-markdown; charset=utf-8");
 
             MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
             for (int i = 0; i <= length - 1; i++) {
+                RequestBody fileBody = RequestBody.Companion.create(fileList.get(i), mediaType);
                 requestBody.addFormDataPart("fileList", fileList.get(i).getName(), fileBody);
             }
             RequestBody body = requestBody.build();

@@ -9,8 +9,7 @@
         android:id="@+id/iv_image"
         android:layout_width="wrap_content"
         android:layout_height="130dp"
-        android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"
-         />
+        android:scaleType="centerCrop" />
 
 </RelativeLayout>
