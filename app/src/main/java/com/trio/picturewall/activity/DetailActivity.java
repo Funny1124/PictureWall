@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -66,14 +67,17 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     ImageView com_post;
     private Dialog com_dialog;
     private RecyclerView comment_list; //评论列表
+    private SwipeRefreshLayout swipe_comment;
     private List<Comment> comments = new ArrayList<>(); //评论数据list
-    int com_count;
+    private int com_count = 0;
     public static int shareId;
-
+    //private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        //view = inflater.inflate(R.layout.fragment_find, container, false);
+        //swipe_comment = findViewById(R.id.swipe_comment);
         getdetail();
         getComment();
         try {
@@ -497,12 +501,14 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
     private void getComment() {
         // url路径
-        String url = "http://47.107.52.7:88/member/photo/comment/first?current=1&shareId=805&size=2";
+        String url = "http://47.107.52.7:88/member/photo/comment/first?current=1&shareId=" +
+                shareId +
+                "&size=32";
 
         // 请求头
         Headers headers = new Headers.Builder()
                 .add("appId", Api.appId)
-                .add("appSecret", Api.appSecret)
+                .add("appSecret",Api.appSecret)
                 .add("Accept", "application/json, text/plain, */*")
                 .build();
 
@@ -571,6 +577,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         btn_close = com_view.findViewById(R.id.btn_close);
         com_post = com_view.findViewById(R.id.com_post);
         com_num = com_view.findViewById(R.id.com_num);
+        swipe_comment = com_view.findViewById(R.id.swipe_comment);
         btn_close.setOnClickListener(this);
         com_edit_text = com_view.findViewById(R.id.com_edit_text);
         com_post.setOnClickListener(new View.OnClickListener() {
@@ -592,16 +599,35 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                         return true;
                     }
                 });
-                //设置适配器
+//                //设置适配器
                 commentAdapter = new CommentAdapter(DetailActivity.this, comments);
                 comment_list.setAdapter(commentAdapter);
                 com_num.setText("" + com_count);
             }
         });
 
+        swipe_comment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+
+                //设置适配器
+                commentAdapter = new CommentAdapter(DetailActivity.this, comments);
+                comment_list.setAdapter(commentAdapter);
+                comment_list.setLayoutManager(new StaggeredGridLayoutManager(1, RecyclerView.VERTICAL));
+                com_num.setText("" + com_count);
+                //在获取数据完成后设置刷新状态为false
+                //isRefreshing() 是否是处于刷新状态
+                if (swipe_comment.isRefreshing()) {
+                    swipe_comment.setRefreshing(false);
+                }
+            }
+        });
+
+
     }
 
-    private void addComment(String content, int sahreId, String userId, String userName) {
+    private void addComment(String content, int sahreID, String userId, String userName) {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/comment/first";
 
@@ -616,7 +642,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         // PS.用户也可以选择自定义一个实体类，然后使用类似fastjson的工具获取json串
         Map<String, Object> bodyMap = new HashMap<>();
         bodyMap.put("content", content);
-        bodyMap.put("shareId", shareId);
+        bodyMap.put("shareId", sahreID);
         bodyMap.put("userId", userId);
         bodyMap.put("userName", userName);
         // 将Map转换为字符串类型加入请求体中
@@ -638,5 +664,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         } catch (NetworkOnMainThreadException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void refreshData() {
+        getComment();
     }
 }

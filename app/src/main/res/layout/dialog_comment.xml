@@ -24,16 +24,16 @@
                 android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:text="0"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="条评论"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <ImageView
@@ -46,40 +46,47 @@
             tools:ignore="ContentDescription" />
     </FrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/comment_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_comment"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="630dp"
+        android:layout_margin="4dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/conner_bg_gray"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comment_list"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/conner_bg_gray"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/com_edit_text"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_rectangle"
-            android:hint="留下你的精彩评论吧"
-            android:textColor="#A5A5A5"
-            android:textColorHint="#C6C5C5"
-            android:textSize="13sp" />
+            <EditText
+                android:id="@+id/com_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_rectangle"
+                android:hint="留下你的精彩评论吧"
+                android:textColor="#A5A5A5"
+                android:textColorHint="#C6C5C5"
+                android:textSize="13sp" />
 
-        <ImageView
-            android:id="@+id/com_post"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/fly"
-            tools:ignore="ContentDescription" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/com_post"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:src="@mipmap/fly"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
 </LinearLayout>

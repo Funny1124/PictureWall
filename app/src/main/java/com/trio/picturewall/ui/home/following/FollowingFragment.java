@@ -73,6 +73,51 @@ public class FollowingFragment extends Fragment {
             public void onRefresh () {
                 refreshData();
                 initRecyclerView();
+
+                //在获取数据完成后设置刷新状态为false
+                //isRefreshing() 是否是处于刷新状态
+                if (swipe.isRefreshing()) {
+                    swipe.setRefreshing(false);
+                }
+            }
+        });
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            //用来标记是否正在向最后一个滑动
+            boolean isSlidingToLast = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //设置什么布局管理器,就获取什么的布局管理器
+                int[] positions = null;
+                StaggeredGridLayoutManager manager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+                // 当停止滑动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //获取最后一个完全显示的ItemPosition ,角标值
+                    int[] into = manager.findLastVisibleItemPositions(positions);
+                    //所有条目,数量值
+                    int totalItemCount = manager.getItemCount();
+                    int lastPositon = Math.max(into[0],into[1]);
+                    // 判断是否滚动到底部，并且是向右滚动
+                    if ((totalItemCount - lastPositon) <= 9 ) {
+                        //加载更多功能的代码
+                        refreshData();
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
+                //dx>0:向右滑动,dx<0:向左滑动
+                //dy>0:向下滑动,dy<0:向上滑动
+                if (dy > 0) {
+                    isSlidingToLast = true;
+                } else {
+                    isSlidingToLast = false;
+                }
             }
         });
 
