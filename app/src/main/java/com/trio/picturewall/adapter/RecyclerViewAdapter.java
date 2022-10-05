@@ -4,10 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -31,16 +30,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.goodposts, parent, false));
+        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.simple_post, parent, false));
         return holder;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        if ((position % 6 == 0) || (position % 8 == 4)) {
-            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 616));
+        if (position%2==0) {
+            holder.imageView.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 600));
         } else {
-            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
+            holder.imageView.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 500));
         }
         MyPosts data = myPostsList.get(position);
         goodUrls = data.getImageUrlList();
@@ -50,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     .load(goodUrls[0])
                     .into(holder.imageView);
         }
-
+        holder.title.setText(data.getTitle());
     }
 
 
@@ -63,10 +62,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         private RadiuImageView imageView;
+        private TextView title;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            this.imageView =itemView.findViewById(R.id.imageView1);
+            this.imageView =itemView.findViewById(R.id.sim_post_imageView);
+            this.title =itemView.findViewById(R.id.sim_post_title);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

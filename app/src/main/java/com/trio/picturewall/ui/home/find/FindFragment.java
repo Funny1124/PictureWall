@@ -225,7 +225,7 @@ public class FindFragment extends Fragment {
     }
 
     private void refreshData() {
-        current--;
+        current++;
         find();
     }
 }

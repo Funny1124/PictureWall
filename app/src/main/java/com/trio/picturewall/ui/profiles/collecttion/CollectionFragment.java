@@ -87,7 +87,7 @@ public class CollectionFragment extends Fragment {
                 startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });
-        getMyPosts("1", "6", LoginData.loginUser.getId());
+        getMyPosts("1", "8", LoginData.loginUser.getId());
     }
 
     private void initView() {

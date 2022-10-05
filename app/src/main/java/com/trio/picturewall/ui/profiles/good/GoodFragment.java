@@ -62,7 +62,7 @@ public class GoodFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         myPostsList = new ArrayList<>();
         view = inflater.inflate(R.layout.fragment_good, container, false);
-        getMyPosts("1", "12", LoginData.loginUser.getId());
+        getMyPosts("1", "8", LoginData.loginUser.getId());
         initRecyclerView2();
         return view;
     }

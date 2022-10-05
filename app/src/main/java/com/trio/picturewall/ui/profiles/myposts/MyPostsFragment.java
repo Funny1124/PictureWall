@@ -65,7 +65,7 @@ public class MyPostsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my_posts, container, false);
         myPostsList = new ArrayList<>();
-        getMyPosts("1", "12", LoginData.loginUser.getId());
+        getMyPosts("1", "8", LoginData.loginUser.getId());
         initRecyclerView();
         return view;
     }
