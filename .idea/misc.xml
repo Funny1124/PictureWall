@@ -58,6 +58,12 @@
         <entry key="..\:/bw/PictureWall/app/src/main/res/layout/fragment_find.xml" value="0.1" />
         <entry key="..\:/bw/PictureWall/app/src/main/res/layout/fragment_following.xml" value="0.1" />
         <entry key="..\:/bw/PictureWall/app/src/main/res/layout/fragment_profiles.xml" value="0.2" />
+        <entry key="..\:/f/PictureWall/app/src/main/res/layout/dialog_comment.xml" value="0.2" />
+        <entry key="..\:/f/PictureWall/app/src/main/res/layout/fragment_collection.xml" value="0.15520833333333334" />
+        <entry key="..\:/f/PictureWall/app/src/main/res/layout/fragment_find.xml" value="0.18958333333333333" />
+        <entry key="..\:/f/PictureWall/app/src/main/res/layout/fragment_good.xml" value="0.15520833333333334" />
+        <entry key="..\:/f/PictureWall/app/src/main/res/layout/fragment_my_posts.xml" value="0.15520833333333334" />
+        <entry key="..\:/f/PictureWall/app/src/main/res/layout/item_comment.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>

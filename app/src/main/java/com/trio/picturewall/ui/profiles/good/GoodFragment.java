@@ -22,8 +22,6 @@ import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.activity.DetailActivity;
-import com.trio.picturewall.activity.LoginActivity;
-import com.trio.picturewall.activity.RegisterActivity;
 import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
@@ -52,7 +50,9 @@ public class GoodFragment extends Fragment {
     private RecyclerViewAdapter adapter;
 
     private List<MyPosts> myPostsList;
-
+    private int current = 1;
+    private int size = 8;
+    private String userId = LoginData.loginUser.getId();
     public static GoodFragment newInstance() {
         return new GoodFragment();
     }
@@ -62,8 +62,48 @@ public class GoodFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         myPostsList = new ArrayList<>();
         view = inflater.inflate(R.layout.fragment_good, container, false);
-        getMyPosts("1", "8", LoginData.loginUser.getId());
+        getLike();
         initRecyclerView2();
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            //用来标记是否正在向最后一个滑动
+            boolean isSlidingToLast = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //设置什么布局管理器,就获取什么的布局管理器
+                int[] positions = null;
+                StaggeredGridLayoutManager manager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+                // 当停止滑动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //获取最后一个完全显示的ItemPosition ,角标值
+                    int[] into = manager.findLastVisibleItemPositions(positions);
+                    //所有条目,数量值
+                    int totalItemCount = manager.getItemCount();
+                    int lastPositon = Math.max(into[0],into[1]);
+                    // 判断是否滚动到底部，并且是向右滚动
+                    if ((totalItemCount - lastPositon) <= 8 ) {
+                        //加载更多功能的代码
+                        refreshData();
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
+                //dx>0:向右滑动,dx<0:向左滑动
+                //dy>0:向下滑动,dy<0:向上滑动
+                if (dy > 0) {
+                    isSlidingToLast = true;
+                } else {
+                    isSlidingToLast = false;
+                }
+            }
+        });
+
         return view;
     }
 
@@ -90,7 +130,7 @@ public class GoodFragment extends Fragment {
         });
     }
 
-    public void getMyPosts(String current, String size, String userId) {
+    public void getLike() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/like?" +
                 "current=" + current +
@@ -157,4 +197,9 @@ public class GoodFragment extends Fragment {
             }
         }
     };
+
+    public void refreshData() {
+        current++;
+        getLike();
+    }
 }
