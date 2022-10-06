@@ -26,6 +26,7 @@ import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.activity.DetailActivity;
 import com.trio.picturewall.adapter.PostAdapter;
+import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
 import com.trio.picturewall.information.LoginData;
@@ -51,7 +52,7 @@ public class FollowingFragment extends Fragment {
     private FindFragment binding;
     public List<MyPosts> myFocusList;
     public RecyclerView recyclerView;//定义RecyclerView
-    private PostAdapter myPostsAdapter;
+    private RecyclerViewAdapter myPostsAdapter;
     private View view;
     private SwipeRefreshLayout swipe;
     private int current = 1;
@@ -135,7 +136,7 @@ public class FollowingFragment extends Fragment {
         //获取RecyclerView
         recyclerView = view.findViewById(R.id.following_list);
         //创建adapter
-        myPostsAdapter = new PostAdapter(getActivity(), myFocusList);
+        myPostsAdapter = new RecyclerViewAdapter(getActivity(), myFocusList);
         //给RecyclerView设置adapter
         recyclerView.setAdapter(myPostsAdapter);
 
@@ -144,7 +145,7 @@ public class FollowingFragment extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
-        myPostsAdapter.setOnItemClickListener(new PostAdapter.OnItemClickListener() {
+        myPostsAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener(){
             @Override
             public void OnItemClick(View view, MyPosts data) {
                 //此处进行监听事件的业务处理
