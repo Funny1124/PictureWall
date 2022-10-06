@@ -37,6 +37,7 @@ public class ProfilesFragment extends Fragment {
     private FragmentProfilesBinding binding;
     private View view;
 
+
     public static ProfilesFragment newInstance() {
         return new ProfilesFragment();
     }
@@ -144,8 +145,9 @@ public class ProfilesFragment extends Fragment {
      * 加载个人信息
      */
     private void setUserData() {
+        String url = LoginData.loginUser.getAvatar();
         //加载头像
-        Glide.with(requireActivity()).load(LoginData.loginUser.getAvatar()).into(binding.mineUserIcon);
+        Glide.with(this).load(url).into(binding.mineUserIcon);
         //加载用户名
         binding.mineUserName.setText(profilesViewModel.getMineUserName());
         //加载用户名

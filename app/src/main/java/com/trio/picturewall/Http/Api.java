@@ -145,7 +145,7 @@ public class Api {
                         // 解析json串到自己封装的状态
                         ResponseBody<Picture> dataResponseBody = gson.fromJson(body, jsonType);
                         LoginData.avater = dataResponseBody.getData();
-                        LoginData.loginUser.setAvatar(LoginData.avater.getImageUrlList().toString());
+                        LoginData.loginUser.setAvatar(LoginData.avater.getImageUrlList().get(0));
                         Log.d("info", dataResponseBody.toString());
                         Log.d("User:", LoginData.avater.getImageUrlList().toString());
                         Log.d("User:", LoginData.loginUser.getAvatar());
