@@ -83,6 +83,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private List<Comment> comments = new ArrayList<>(); //评论数据list
     private int com_count = 0;
     public static int shareId;
+    private static String[] Url;
     private int i = 0;
 
     @Override
@@ -278,6 +279,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                     ResponseBody<MyPosts> dataResponseBody = gson.fromJson(body, jsonType);
                     Log.d("DetailActivity", dataResponseBody.toString());
                     post = dataResponseBody.getData();
+                    post.setImageUrlList(Url);
                 }
             });
         } catch (NetworkOnMainThreadException ex) {
@@ -830,5 +832,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             Log.e("TAG", "保存图片找不到文件夹");
             e.printStackTrace();
         }
+    }
+
+    public static void setUrl(String[] url) {
+        Url = url;
     }
 }

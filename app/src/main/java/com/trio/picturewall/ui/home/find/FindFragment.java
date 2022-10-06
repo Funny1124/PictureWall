@@ -154,6 +154,7 @@ public class FindFragment extends Fragment {
             public void OnItemClick(View view, MyPosts data) {
                 //此处进行监听事件的业务处理
                 DetailActivity.shareId = data.getId();
+                DetailActivity.setUrl(data.getImageUrlList());
                 startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });
