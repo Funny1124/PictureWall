@@ -74,6 +74,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private int com_count = 0;
     public static int shareId;
     private int i = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,12 +146,18 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.forward_image: {
                 if (post.getImageUrlList().length != 0 && i > 0) {//解决没有图片闪退
                     Glide.with(this).load(post.getImageUrlList()[--i]).into(photo);
+                } else if (i == 0) {//到第一张图片后再向左，则加载最后一张图片
+                    i = post.getImageUrlList().length - 1;
+                    Glide.with(this).load(post.getImageUrlList()[i]).into(photo);
                 }
                 break;
             }
-            case R.id.next_image:{
+            case R.id.next_image: {
                 if (post.getImageUrlList().length != 0 && i < post.getImageUrlList().length - 1) {//解决没有图片闪退
                     Glide.with(this).load(post.getImageUrlList()[++i]).into(photo);
+                } else if (i == post.getImageUrlList().length - 1) {//到最后一张图片后再向右，则加载第一张图片
+                    i = 0;
+                    Glide.with(this).load(post.getImageUrlList()[i]).into(photo);
                 }
                 break;
             }
@@ -522,7 +529,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         // 请求头
         Headers headers = new Headers.Builder()
                 .add("appId", Api.appId)
-                .add("appSecret",Api.appSecret)
+                .add("appSecret", Api.appSecret)
                 .add("Accept", "application/json, text/plain, */*")
                 .build();
 
