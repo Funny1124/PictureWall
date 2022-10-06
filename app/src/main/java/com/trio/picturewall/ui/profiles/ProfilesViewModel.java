@@ -11,8 +11,8 @@ public class ProfilesViewModel extends ViewModel {
     private String mineUserIntroduce;
 
     {
-//        mineUserIconPath = LoginData.loginUser.getAvatar();
         mineUserIconPath = LoginData.loginUser.getAvatar();
+        //mineUserIconPath = LoginData.loginUser.getAvatar();
         mineUserName = LoginData.loginUser.getUsername();
         mineUserIntroduce = LoginData.loginUser.getIntroduce();
     }
@@ -34,6 +34,8 @@ public class ProfilesViewModel extends ViewModel {
     }
 
     public String getMineUserIntroduce() {
+
+
         return mineUserIntroduce;
     }
 

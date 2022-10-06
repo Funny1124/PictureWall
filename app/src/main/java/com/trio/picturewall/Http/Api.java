@@ -45,8 +45,6 @@ public class Api {
 
     static Gson gson = new Gson();
 
-
-
     public static void alter(User alterUser) {
         new Thread(() -> {
 
@@ -91,15 +89,15 @@ public class Api {
         }).start();
     }
 
-    public static void post(ArrayList<File> fileList) {
+    public static void avatarpost(File fileList) {
         new Thread(() -> {
-            int length = fileList.size();
+
 
             // url路径
             String url = "http://47.107.52.7:88/member/photo/image/upload";
 
             Log.d("DialogActivity", "upload-run: 上传照片！");
-            Log.d("fileList.size()", String.valueOf(length));
+
             // 请求头
             Headers headers = new Headers.Builder()
                     .add("appId", appId)
@@ -108,16 +106,16 @@ public class Api {
                     .build();
 
             MediaType mediaType = MediaType.Companion.parse("text/x-markdown; charset=utf-8");
-            RequestBody fileBody = RequestBody.Companion.create(fileList.get(0), mediaType);
-//            RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
-//                    .addFormDataPart("fileList", fileList.get(0).getName(), fileBody)
-//                    .build();
+            RequestBody fileBody = RequestBody.Companion.create(fileList, mediaType);
+            RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                    .addFormDataPart("fileList", fileList.getName(), fileBody)
+                    .build();
 
-            MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
-            for (int i = 0; i <= length - 1; i++) {
-                requestBody.addFormDataPart("fileList", fileList.get(i).getName(), fileBody);
-            }
-            RequestBody body = requestBody.build();
+//            MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+//            for (int i = 0; i <= length - 1; i++) {
+//                requestBody.addFormDataPart("fileList", fileList.get(i).getName(), fileBody);
+//            }
+//            RequestBody body = requestBody.build();
 
 
             //请求组合创建
@@ -146,10 +144,11 @@ public class Api {
                         Log.d("info", body);
                         // 解析json串到自己封装的状态
                         ResponseBody<Picture> dataResponseBody = gson.fromJson(body, jsonType);
-                        LoginData.picture = dataResponseBody.getData();
+                        LoginData.avater = dataResponseBody.getData();
+                        LoginData.loginUser.setAvatar(LoginData.avater.getImageUrlList().toString());
                         Log.d("info", dataResponseBody.toString());
-                        Log.d("Picture:", LoginData.picture.getImageCode());
-                        Log.d("Picture:", String.valueOf(LoginData.picture.getImageUrlList()));
+                        Log.d("User:", LoginData.avater.getImageUrlList().toString());
+                        Log.d("User:", LoginData.loginUser.getAvatar());
                     }
                 });
 

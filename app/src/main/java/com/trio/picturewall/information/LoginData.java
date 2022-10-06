@@ -6,4 +6,5 @@ import com.trio.picturewall.entity.User;
 public class LoginData {
     public static User loginUser = null;
     public static Picture picture = null;
+    public static Picture avater = null;
 }

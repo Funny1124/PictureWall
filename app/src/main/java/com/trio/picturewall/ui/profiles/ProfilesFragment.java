@@ -66,7 +66,6 @@ public class ProfilesFragment extends Fragment {
                     getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, goodFragment).commit();
                 }
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
@@ -146,7 +145,7 @@ public class ProfilesFragment extends Fragment {
      */
     private void setUserData() {
         //加载头像
-        Glide.with(this).load(profilesViewModel.getMineUserIconPath()).into(binding.mineUserIcon);
+        Glide.with(requireActivity()).load(LoginData.loginUser.getAvatar()).into(binding.mineUserIcon);
         //加载用户名
         binding.mineUserName.setText(profilesViewModel.getMineUserName());
         //加载用户名

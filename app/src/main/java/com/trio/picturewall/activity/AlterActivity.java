@@ -1,6 +1,14 @@
 package com.trio.picturewall.activity;
 
+import android.annotation.SuppressLint;
+import android.content.ContentUris;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +20,9 @@ import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.entity.User;
 import com.trio.picturewall.information.LoginData;
+
+import java.io.EOFException;
+import java.io.File;
 
 public class AlterActivity extends AppCompatActivity {
 
@@ -49,6 +60,74 @@ public class AlterActivity extends AppCompatActivity {
                 finish();
             }
         });
+        temp_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 0:
+                if (resultCode == RESULT_OK){
+                    try {
+                    Uri uri = null;
+                    if (data != null){
+                        uri = data.getData();
+                        String path = handleImageOkKitKat(uri);
+                        File file = new File(path);   //图片地址
+                        Api.avatarpost(file);
+                        System.out.println(path);
+                    }
+                }catch (Exception e){
+                        System.out.println(e);
+                    }
+        }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+    }
+
+    private String handleImageOkKitKat(Uri uri) {
+        String imagePath=null;
+        Log.d("uri=intent.getData :",""+uri);
+        if (DocumentsContract.isDocumentUri(this,uri)){
+            String docId = DocumentsContract.getDocumentId(uri);        //数据表里指定的行
+            Log.d("getDocumentId(uri) :",""+docId);
+            Log.d("uri.getAuthority() :",""+uri.getAuthority());
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())){
+                String id = docId.split(":")[1];
+                String selection = MediaStore.Images.Media._ID + "=" + id;
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,selection);
+            }
+            else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"),Long.valueOf(docId));
+                imagePath = getImagePath(contentUri,null);
+            }
+        }
+        else if ("content".equalsIgnoreCase(uri.getScheme())){
+            imagePath = getImagePath(uri,null);
+        }
+        return imagePath;
+    }
+    //uri转文件
+    @SuppressLint("Range")
+    public String getImagePath(Uri uri,String selection) {
+        System.out.println("uri转file");
+        String path = null;
+        Cursor cursor = getContentResolver().query(uri,null,selection,null,null);   //内容提供器
+        if (cursor!=null){
+            if (cursor.moveToFirst()){
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));   //获取路径
+            }
+        }
+        cursor.close();
+        return path;
     }
 
     private void autoInput() {
@@ -61,10 +140,12 @@ public class AlterActivity extends AppCompatActivity {
 
         User alterUser = new User();
         alterUser.setId(LoginData.loginUser.getId());
-//        alterUser.setAvatar(temp_avatar.);
+        alterUser.setAvatar(LoginData.loginUser.getAvatar());
         alterUser.setUsername(temp_username.getText().toString().trim());
         alterUser.setSex(temp_sex.getText().toString().trim());
         alterUser.setIntroduce(temp_introduce.getText().toString().trim());
         return alterUser;
     }
+
+
 }
