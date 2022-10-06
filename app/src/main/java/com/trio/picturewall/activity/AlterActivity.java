@@ -93,6 +93,7 @@ public class AlterActivity extends AppCompatActivity {
         }
     }
 
+    //判断图片文件
     private String handleImageOkKitKat(Uri uri) {
         String imagePath=null;
         Log.d("uri=intent.getData :",""+uri);
