@@ -23,6 +23,9 @@ public class GridViewAdapter extends BaseAdapter {
     private LayoutInflater minflater;
     private int selected = -1;
 
+    private View deleteView;
+    private boolean isShowDelete;// 根据这个变量来判断是否显示删除图标，true是显示，false是不显示
+
     public GridViewAdapter(List<Bitmap> list, Context context) {
         super();
         this.mlist = list;
@@ -43,6 +46,11 @@ public class GridViewAdapter extends BaseAdapter {
         return position;
     }
 
+    public void setIsShowDelete(boolean isShowDelete) {
+        this.isShowDelete = isShowDelete;
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         VIewHolder vh;
@@ -56,6 +64,8 @@ public class GridViewAdapter extends BaseAdapter {
             vh = (VIewHolder) convertView.getTag();
         }
         if (position < mlist.size()){
+            deleteView = convertView.findViewById(R.id.delete_markView);
+            deleteView.setVisibility(isShowDelete ? View.VISIBLE : View.GONE);// 设置删除按钮是否显示
             vh.iv.setImageBitmap(mlist.get(position));
         }
         else{

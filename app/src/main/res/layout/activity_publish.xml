@@ -60,20 +60,6 @@
                 android:src="@mipmap/seraphine"
                 android:visibility="gone" />
 
-            <LinearLayout
-                android:id="@+id/null_view"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="20dp"
-                android:background="@drawable/edit_border_picture"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/add" />
-            </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout

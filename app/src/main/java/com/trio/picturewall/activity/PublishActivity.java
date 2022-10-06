@@ -54,6 +54,7 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -76,6 +77,8 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     public static final int CROP_PHOTO = 2;// 裁剪
     public static final int ARRAY_PHOTO = 3;// 相册选取
     private Uri imageUri = null;
+    //显示删除符号
+    private boolean isShowDelete = false;
 
     //图片数组
     ArrayList<File> fileList = new ArrayList<>();
@@ -97,20 +100,56 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
 
+        findViewById(R.id.publish).setOnClickListener(this);
+        findViewById(R.id.cancel).setOnClickListener(this);
+
         gridViewPhoto = (GridView) findViewById(R.id.gv);
         initData(fileList);
+        //单击事件
         gridViewPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "Item"+position, Toast.LENGTH_LONG).show();
+                if (position<fileList.size()){
+                    Toast.makeText(getApplicationContext(), "长按点击删除", Toast.LENGTH_LONG).show();
+                }else{
                     showDialog();
+                }
+            }
+        });
+        //长按事件
+        gridViewPhoto.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if (isShowDelete) {
+                    isShowDelete = false;
+                } else {
+                    isShowDelete = true;
+                    adapter.setIsShowDelete(isShowDelete);
+                    if (position<fileList.size()){
+                        findViewById(R.id.delete_markView).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                delete(position);//删除选中项
+                                initData(fileList);
+                            }
+                        });
+                    }else{
+                        showDialog();
+                    }
+                }
+                adapter.setIsShowDelete(isShowDelete);//setIsShowDelete()方法用于传递isShowDelete值
+                return true;
             }
         });
 
-        findViewById(R.id.publish).setOnClickListener(this);
-        findViewById(R.id.null_view).setOnClickListener(this);
-        findViewById(R.id.cancel).setOnClickListener(this);
+    }
 
+    private void delete(int position) {//删除选中项方法
+        if (isShowDelete) {
+            fileList.remove(position);
+            isShowDelete = false;
+        }
+        initData(fileList);
     }
 
     @Override
@@ -127,9 +166,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 edit_img_context = findViewById(R.id.edit_img_context);
                 content = edit_img_context.getText().toString().trim();
 
-
                 if(title.equals("")||content.equals("")){
-
                     Toast toast = Toast.makeText(this,"请输入内容",Toast.LENGTH_SHORT);
                     toast.show();
                 }else {
@@ -140,22 +177,8 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     }else{
                         Toast.makeText(this, "请上传图片", Toast.LENGTH_SHORT).show();
                     }
-
                 }
-
                 break;
-            case R.id.null_view:
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)||!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-
-                }else if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    //申请WRITE_EXTERNAL_STORAGE权限
-                    Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                showDialog();
-
         }
 
     }
@@ -226,18 +249,18 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         }
         gridViewPhoto = (GridView) findViewById(R.id.gv);
         initData(fileList);
-        gridViewPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "Item"+position, Toast.LENGTH_LONG).show();
-                if (position<fileList.size()){
-                    fileList.remove(position);
-                    initData(fileList);
-                }else{
-                    showDialog();
-                }
-            }
-        });
+//        gridViewPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getApplicationContext(), "Item"+position, Toast.LENGTH_LONG).show();
+//                if (position<fileList.size()){
+//                    //fileList.remove(position);
+//                    //initData(fileList);
+//                }else{
+//                    showDialog();
+//                }
+//            }
+//        });
     }
 
     //图片uri判断
@@ -266,7 +289,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     //uri转文件
     @SuppressLint("Range")
     public String getImagePath(Uri uri,String selection) {
-        System.out.println("异常0");
+        System.out.println("uri转file");
         String path = null;
         Cursor cursor = getContentResolver().query(uri,null,selection,null,null);   //内容提供器
         if (cursor!=null){
@@ -277,7 +300,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         cursor.close();
         return path;
     }
-
+    //初始化
     private void initData(ArrayList<File> fileList) {
         listpath = new ArrayList<>();
         /**遍历数组*/
@@ -418,7 +441,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     .add("Accept", "application/json, text/plain, */*")
                     .build();
 
-
 //            RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
 //                    .addFormDataPart("fileList", fileList.get(0).getName(), fileBody)
 //                    .addFormDataPart("fileList", fileList.get(1).getName(), fileBody)
@@ -432,7 +454,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 requestBody.addFormDataPart("fileList", fileList.get(i).getName(), fileBody);
             }
             RequestBody body = requestBody.build();
-
 
             //请求组合创建
             Request request = new Request.Builder()
