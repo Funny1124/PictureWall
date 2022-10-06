@@ -62,6 +62,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     ImageView btn_like;
     ImageView btn_collect;
     ImageView btn_comment;
+    ImageView forward_image;
+    ImageView next_image;
     CommentAdapter commentAdapter;
     ImageView btn_close;
     ImageView com_post;
@@ -71,7 +73,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private List<Comment> comments = new ArrayList<>(); //评论数据list
     private int com_count = 0;
     public static int shareId;
-    //private View view;
+    private int i = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,9 +142,18 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.btn_close:
                 com_dialog.dismiss();
                 break;
-//            case R.id.com_post:
-//
-//                break;
+            case R.id.forward_image: {
+                if (post.getImageUrlList().length != 0 && i > 0) {//解决没有图片闪退
+                    Glide.with(this).load(post.getImageUrlList()[--i]).into(photo);
+                }
+                break;
+            }
+            case R.id.next_image:{
+                if (post.getImageUrlList().length != 0 && i < post.getImageUrlList().length - 1) {//解决没有图片闪退
+                    Glide.with(this).load(post.getImageUrlList()[++i]).into(photo);
+                }
+                break;
+            }
             default:
                 break;
         }
@@ -158,12 +169,16 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         btn_like = findViewById(R.id.btn_like);
         btn_collect = findViewById(R.id.btn_collect);
         btn_comment = findViewById(R.id.btn_comment);
+        forward_image = findViewById(R.id.forward_image);
+        next_image = findViewById(R.id.next_image);
         focus.setOnClickListener(this);
         photo.setOnClickListener(this);
         cancel.setOnClickListener(this);
         btn_like.setOnClickListener(this);
         btn_collect.setOnClickListener(this);
         btn_comment.setOnClickListener(this);
+        forward_image.setOnClickListener(this);
+        next_image.setOnClickListener(this);
     }
 
     public void initData() {
