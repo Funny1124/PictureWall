@@ -377,7 +377,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 .add("Accept", "application/json, text/plain, */*")
                 .build();
 
-
         MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
         //请求组合创建
