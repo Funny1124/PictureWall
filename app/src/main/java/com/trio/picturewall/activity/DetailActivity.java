@@ -630,6 +630,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 System.out.println(com_edit_text.getText().toString());
                 addComment(com_edit_text.getText().toString(), shareId,
                         LoginData.loginUser.getId(), LoginData.loginUser.getUsername());
+                com_edit_text.setText("");//置空输入框
+
             }
         });
         //开启UI线程更新UI
