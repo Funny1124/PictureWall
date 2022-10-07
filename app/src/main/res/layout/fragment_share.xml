@@ -1,43 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.share.ShareFragment"
+    android:background="@mipmap/bg_car"
     android:orientation="vertical"
-    android:gravity="center">
-
-    <LinearLayout
-        android:id="@+id/login_title"
+    tools:context=".ui.share.ShareFragment">
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <LinearLayout
+        android:id="@+id/draft_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:gravity="center"
-        tools:ignore="MissingConstraints">
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="27dp"
-            android:layout_above="@id/upload"
-            android:background="@mipmap/camera"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PictureWall"
-            android:textSize="24sp"
-            android:textColor="@color/selector"
-            android:typeface="serif"
-            android:layout_marginTop="24dp"
-            android:gravity="center"/>
+        android:orientation="horizontal"
+        android:background="@drawable/conner_rectangle"
+        tools:ignore="UseCompoundDrawables">
 
-        <com.trio.picturewall.widget.CircleButton
+        <ImageView
+            android:id="@+id/modify"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:background="@mipmap/modify"
+            tools:ignore="ContentDescription" />
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_marginTop="56dp"
-            android:layout_marginBottom="24dp"
-            android:id="@+id/upload"
-            tools:ignore="MissingConstraints" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="草稿箱"
+            android:textSize="32sp"/>
+
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/new_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@drawable/conner_rectangle"
+        android:layout_marginBottom="120dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:src="@mipmap/add"
+            tools:ignore="ContentDescription,MissingConstraints" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="新发布"
+            android:textSize="32sp"/>
+    </LinearLayout>
+</LinearLayout>

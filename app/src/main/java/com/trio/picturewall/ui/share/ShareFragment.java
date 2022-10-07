@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.trio.picturewall.activity.PublishActivity;
 import com.trio.picturewall.databinding.FragmentShareBinding;
@@ -35,12 +37,19 @@ public class ShareFragment extends Fragment {
         binding = FragmentShareBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final CircleButton circleButton = binding.upload;
-        circleButton.setOnClickListener(new View.OnClickListener() {
+        final LinearLayout newPost = binding.newPost;
+        final LinearLayout draftBox = binding.draftBox;
+        newPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 startActivity(new Intent(getActivity(), PublishActivity.class));
+            }
+        });
+        draftBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO
             }
         });
 
