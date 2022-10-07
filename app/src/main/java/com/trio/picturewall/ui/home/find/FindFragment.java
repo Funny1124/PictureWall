@@ -51,7 +51,7 @@ public class FindFragment extends Fragment {
     private RecyclerViewAdapter myPostsAdapter;
     private View view;
     private SwipeRefreshLayout swipe;
-    private int current = 0;
+    private int current = 1;
     public static FindFragment newInstance() {
         return new FindFragment();
     }
@@ -63,7 +63,7 @@ public class FindFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_find, container, false);
         swipe = view.findViewById(R.id.swipe_find);
         myPostsList = new ArrayList<>();
-        find();
+        find(current);
         initRecyclerView();
 
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -153,11 +153,12 @@ public class FindFragment extends Fragment {
         });
     }
 
-    public void find() {
+    public void find(int current) {
         // url路径
-        String url = "http://47.107.52.7:88/member/photo/share?current=" +
-                current + "&size=3&userId=" +
-                LoginData.loginUser.getId();
+        String url = "http://47.107.52.7:88/member/photo/share?" +
+                "current=" + current +
+                "&size=8" +
+                "&userId=" + LoginData.loginUser.getId();
 
         // 请求头
         Headers headers = new Headers.Builder()
@@ -198,7 +199,7 @@ public class FindFragment extends Fragment {
                                 // 解析json串到自己封装的状态
                                 ResponseBody<Records> dataResponseBody = new Gson().fromJson(body, jsonType);
                                 if (dataResponseBody.getData() != null) {
-                                    Log.d("关注：", dataResponseBody.getData().getRecords().toString());
+                                    Log.d("发现：", dataResponseBody.getData().getRecords().toString());
                                     myPostsList.addAll(dataResponseBody.getData().getRecords());
                                 } else {
                                     requireActivity().runOnUiThread(new Runnable() {
@@ -221,6 +222,6 @@ public class FindFragment extends Fragment {
 
     public void refreshData() {
         current++;
-        find();
+        find(current);
     }
 }
