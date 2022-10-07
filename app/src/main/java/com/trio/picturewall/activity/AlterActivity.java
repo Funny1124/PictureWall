@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.entity.User;
@@ -93,6 +94,7 @@ public class AlterActivity extends AppCompatActivity {
         }
     }
 
+    //判断图片文件
     private String handleImageOkKitKat(Uri uri) {
         String imagePath=null;
         Log.d("uri=intent.getData :",""+uri);
@@ -131,6 +133,10 @@ public class AlterActivity extends AppCompatActivity {
     }
 
     private void autoInput() {
+        String url = LoginData.loginUser.getAvatar();
+        //加载头像
+        Glide.with(this).load(url).into(temp_avatar);
+
         temp_username.setText(LoginData.loginUser.getUsername());
         temp_sex.setText(LoginData.loginUser.getSex());
         temp_introduce.setText(LoginData.loginUser.getIntroduce());

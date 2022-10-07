@@ -111,13 +111,6 @@ public class Api {
                     .addFormDataPart("fileList", fileList.getName(), fileBody)
                     .build();
 
-//            MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
-//            for (int i = 0; i <= length - 1; i++) {
-//                requestBody.addFormDataPart("fileList", fileList.get(i).getName(), fileBody);
-//            }
-//            RequestBody body = requestBody.build();
-
-
             //请求组合创建
             Request request = new Request.Builder()
                     .url(url)

@@ -112,7 +112,16 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 if (position<fileList.size()){
                     Toast.makeText(getApplicationContext(), "长按点击删除", Toast.LENGTH_LONG).show();
                 }else{
-                    showDialog();
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(PublishActivity.this, Manifest.permission.CAMERA)||!ActivityCompat.shouldShowRequestPermissionRationale(PublishActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        ActivityCompat.requestPermissions(PublishActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+                    }
+                    if (ContextCompat.checkSelfPermission(PublishActivity.this, Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        //申请WRITE_EXTERNAL_STORAGE权限
+                        return;
+                    }else showDialog();
+
                 }
             }
         });
@@ -173,6 +182,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     if(fileList.size()>0){
                         //上传并发布
                         post(fileList,title,content);
+                        Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
                         finish();
                     }else{
                         Toast.makeText(this, "请上传图片", Toast.LENGTH_SHORT).show();
