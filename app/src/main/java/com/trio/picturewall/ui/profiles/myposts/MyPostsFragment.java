@@ -51,6 +51,7 @@ public class MyPostsFragment extends Fragment {
     private int current = 1;
     private int size = 8;
     private String userId = LoginData.loginUser.getId();
+
     public static MyPostsFragment newInstance() {
         return new MyPostsFragment();
     }
@@ -79,9 +80,9 @@ public class MyPostsFragment extends Fragment {
                     int[] into = manager.findLastVisibleItemPositions(positions);
                     //所有条目,数量值
                     int totalItemCount = manager.getItemCount();
-                    int lastPositon = Math.max(into[0],into[1]);
+                    int lastPositon = Math.max(into[0], into[1]);
                     // 判断是否滚动到底部，并且是向右滚动
-                    if ((totalItemCount - lastPositon) <= 8 ) {
+                    if ((totalItemCount - lastPositon) <= 8) {
                         //加载更多功能的代码
                         refreshData();
                     }

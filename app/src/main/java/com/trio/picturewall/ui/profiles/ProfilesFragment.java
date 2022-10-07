@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +22,7 @@ import com.trio.picturewall.activity.LoginActivity;
 import com.trio.picturewall.databinding.FragmentProfilesBinding;
 import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.ui.profiles.collecttion.CollectionFragment;
-import com.trio.picturewall.ui.profiles.good.GoodFragment;
+import com.trio.picturewall.ui.profiles.like.LikeFragment;
 import com.trio.picturewall.ui.profiles.myposts.MyPostsFragment;
 
 import java.util.Objects;
@@ -32,7 +31,7 @@ public class ProfilesFragment extends Fragment {
 
     private MyPostsFragment myPostsFragment;
     private CollectionFragment collectionFragment;
-    private GoodFragment goodFragment;
+    private LikeFragment likeFragment;
     private ProfilesViewModel profilesViewModel;
     private FragmentProfilesBinding binding;
     private View view;
@@ -51,7 +50,7 @@ public class ProfilesFragment extends Fragment {
 
         myPostsFragment = MyPostsFragment.newInstance();
         collectionFragment = CollectionFragment.newInstance();
-        goodFragment = GoodFragment.newInstance();
+        likeFragment = LikeFragment.newInstance();
         getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, myPostsFragment).commit();
         TabLayout tabLayout = view.findViewById(R.id.profiles_tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -63,8 +62,8 @@ public class ProfilesFragment extends Fragment {
                 if (tab.getText().equals("收藏")) {
                     getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, collectionFragment).commit();
                 }
-                if (tab.getText().equals("点赞")) {
-                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, goodFragment).commit();
+                if (tab.getText().equals("喜欢")) {
+                    getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, likeFragment).commit();
                 }
             }
             @Override

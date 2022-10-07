@@ -51,6 +51,7 @@ public class CollectionFragment extends Fragment {
     private int current = 1;
     private int size = 1;
     private String userId = LoginData.loginUser.getId();
+
     public CollectionFragment() {
     }
 
@@ -81,9 +82,9 @@ public class CollectionFragment extends Fragment {
                     int[] into = manager.findLastVisibleItemPositions(positions);
                     //所有条目,数量值
                     int totalItemCount = manager.getItemCount();
-                    int lastPositon = Math.max(into[0],into[1]);
+                    int lastPositon = Math.max(into[0], into[1]);
                     // 判断是否滚动到底部，并且是向右滚动
-                    if ((totalItemCount - lastPositon) <= 8 ) {
+                    if ((totalItemCount - lastPositon) <= 8) {
                         //加载更多功能的代码
                         refreshData();
                     }
@@ -129,22 +130,11 @@ public class CollectionFragment extends Fragment {
         getcollet();
     }
 
-    private void initView() {
-
-
-//        lvNewsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//            }
-//        }
-    }
-
     public void getcollet() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/collect?" +
                 "current=" + current +
-                "&size=" + size +
+                "&size=8" + size +
                 "&userId=" + userId;
         // 请求头
         Headers headers = new Headers.Builder()
@@ -187,7 +177,6 @@ public class CollectionFragment extends Fragment {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void run() {
-                        Gson gson = new Gson();
                         Type jsonType = new TypeToken<ResponseBody<Records>>() {
                         }.getType();
                         // 解析json串到自己封装的状态

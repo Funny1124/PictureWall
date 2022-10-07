@@ -1,4 +1,4 @@
-package com.trio.picturewall.ui.profiles.good;
+package com.trio.picturewall.ui.profiles.like;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -41,9 +41,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class GoodFragment extends Fragment {
+public class LikeFragment extends Fragment {
 
-    private GoodViewModel mViewModel;
+    private LikeViewModel mViewModel;
     private View view;
 
     private RecyclerView recyclerView;
@@ -53,8 +53,9 @@ public class GoodFragment extends Fragment {
     private int current = 1;
     private int size = 8;
     private String userId = LoginData.loginUser.getId();
-    public static GoodFragment newInstance() {
-        return new GoodFragment();
+
+    public static LikeFragment newInstance() {
+        return new LikeFragment();
     }
 
     @Override
@@ -63,14 +64,14 @@ public class GoodFragment extends Fragment {
         myPostsList = new ArrayList<>();
         view = inflater.inflate(R.layout.fragment_good, container, false);
         getLike();
-        initRecyclerView2();
+        initRecyclerView();
 
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             //用来标记是否正在向最后一个滑动
             boolean isSlidingToLast = false;
 
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 //设置什么布局管理器,就获取什么的布局管理器
                 int[] positions = null;
@@ -78,12 +79,13 @@ public class GoodFragment extends Fragment {
                 // 当停止滑动时
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     //获取最后一个完全显示的ItemPosition ,角标值
+                    assert manager != null;
                     int[] into = manager.findLastVisibleItemPositions(positions);
                     //所有条目,数量值
                     int totalItemCount = manager.getItemCount();
-                    int lastPositon = Math.max(into[0],into[1]);
+                    int lastPositon = Math.max(into[0], into[1]);
                     // 判断是否滚动到底部，并且是向右滚动
-                    if ((totalItemCount - lastPositon) <= 8 ) {
+                    if ((totalItemCount - lastPositon) <= 8) {
                         //加载更多功能的代码
                         refreshData();
                     }
@@ -91,7 +93,7 @@ public class GoodFragment extends Fragment {
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
                 //dx>0:向右滑动,dx<0:向左滑动
@@ -110,11 +112,11 @@ public class GoodFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(GoodViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(LikeViewModel.class);
         // TODO: Use the ViewModel
     }
 
-    private void initRecyclerView2() {
+    private void initRecyclerView() {
 
         recyclerView = view.findViewById(R.id.good_recyclerView);
         adapter = new RecyclerViewAdapter(getActivity(), myPostsList);
