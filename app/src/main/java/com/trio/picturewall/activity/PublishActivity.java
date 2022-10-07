@@ -121,7 +121,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         //申请WRITE_EXTERNAL_STORAGE权限
                         return;
                     }else showDialog();
-                    
+
                 }
             }
         });
