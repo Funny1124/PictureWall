@@ -23,7 +23,6 @@ import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.activity.DetailActivity;
 import com.trio.picturewall.adapter.RecyclerViewAdapter;
-import com.trio.picturewall.databinding.MypostsBinding;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
 import com.trio.picturewall.information.LoginData;
@@ -45,7 +44,6 @@ import okhttp3.Response;
 public class MyPostsFragment extends Fragment {
 
     private MyPostsViewModel mViewModel;
-    private MypostsBinding binding;
     public List<MyPosts> myPostsList;
     public RecyclerView recyclerView;//定义RecyclerView
     private RecyclerViewAdapter myPostsAdapter;

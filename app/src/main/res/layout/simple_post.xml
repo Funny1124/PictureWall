@@ -10,40 +10,39 @@
         android:id="@+id/sim_post_imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:scaleType="centerCrop"
         android:src="@mipmap/seraphine"
-        app:radius="16dp" />
-    <TextView
-        android:id="@+id/v1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="   "
-        android:background="@drawable/left_conner_bg_gray"/>
-    <TextView
-        android:id="@+id/sim_post_title"
+        app:radius="16dp" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:layout_constraintStart_toEndOf="@id/v1"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="title"
-        android:textSize="14sp"
-        android:background="@drawable/edit_text_rectangle"/>
-    <TextView
-        android:id="@+id/v2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:layout_constraintStart_toEndOf="@id/sim_post_title"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="   "
-        android:background="@drawable/right_conner_bg_gray"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/edit_text_rectangle"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sim_post_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sim_post_title"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@id/sim_post_content"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/sim_post_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sim_post_content"
+            android:textSize="12sp" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

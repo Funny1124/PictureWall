@@ -50,6 +50,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     .into(holder.imageView);
         }
         holder.title.setText(data.getTitle());
+        holder.content.setText(data.getContent());
     }
 
 
@@ -63,11 +64,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         private RadiuImageView imageView;
         private TextView title;
+        private TextView content;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             this.imageView =itemView.findViewById(R.id.sim_post_imageView);
             this.title =itemView.findViewById(R.id.sim_post_title);
+            this.content =itemView.findViewById(R.id.sim_post_content);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
