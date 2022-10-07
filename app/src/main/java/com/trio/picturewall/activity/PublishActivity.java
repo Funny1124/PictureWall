@@ -110,7 +110,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position<fileList.size()){
-                    Toast.makeText(getApplicationContext(), "长按点击删除", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "长按可删除", Toast.LENGTH_LONG).show();
                 }else{
                     if (!ActivityCompat.shouldShowRequestPermissionRationale(PublishActivity.this, Manifest.permission.CAMERA)||!ActivityCompat.shouldShowRequestPermissionRationale(PublishActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         ActivityCompat.requestPermissions(PublishActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);

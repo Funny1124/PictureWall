@@ -19,14 +19,14 @@
         app:radius="16dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_margin="4dp"
+        android:padding="4dp"
         android:background="@drawable/conner_bg_gray"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/sim_post_title"
@@ -40,8 +40,8 @@
         <TextView
             android:id="@+id/sim_post_content"
             android:layout_width="wrap_content"
-            android:maxHeight="32dp"
             android:layout_height="wrap_content"
+            android:maxHeight="32dp"
             android:text="sim_post_content"
             android:textSize="12sp" />
     </LinearLayout>

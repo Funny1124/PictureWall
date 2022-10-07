@@ -25,8 +25,8 @@
 
         <ImageView
             android:id="@+id/delete_markView"
-            android:layout_width="20dip"
-            android:layout_height="20dip"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="right|top"
             android:adjustViewBounds="true"
             android:src="@mipmap/delete"
