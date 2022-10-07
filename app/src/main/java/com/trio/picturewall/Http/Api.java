@@ -33,15 +33,18 @@ import okhttp3.Response;
 
 public class Api {
 
-////    //冀
-    public static String appId = "f3d10b15acaf4ed0a0cee98adc03b447";
-    public static String appSecret = "545153dc74d28165d46f9833b9e7282fb20ce";
+//    public static String appId = "f3d10b15acaf4ed0a0cee98adc03b447";
+//    public static String appSecret = "545153dc74d28165d46f9833b9e7282fb20ce";
 
 //    public static String appId = "036c2739697b4e89997e5897849d2975";
 //    public static String appSecret = "21695a53223293e7b4b64bef4935133f57af3";
 
 //    public static String appId = "10f623a5dc0345e0ade966247f1c7a24";
 //    public static String appSecret = "48335c92b7b6fbf374899af0d381708a379fe";
+
+    public static String appId = "71c1c3d47205488eab5be23dc03b447d";
+    public static String appSecret = "073692b705b0437da4203b663467a62d8df70";
+
 
     static Gson gson = new Gson();
 
