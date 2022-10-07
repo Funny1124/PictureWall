@@ -63,7 +63,7 @@ public class FollowingFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_following, container, false);
         swipe = view.findViewById(R.id.swipe_following);
         myFocusList = new ArrayList<>();
-        getfocus();
+        getfocus(current);
         initRecyclerView();
 
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
@@ -152,11 +152,12 @@ public class FollowingFragment extends Fragment {
         });
     }
 
-    public void getfocus() {
+    public void getfocus(int current) {
         // url路径
-        String url = "http://47.107.52.7:88/member/photo/focus?current=" +
-                    current +"&size=3&userId=" +
-                    LoginData.loginUser.getId();
+        String url = "http://47.107.52.7:88/member/photo/focus?"
+                + "current=" + current
+                + "&size=8"
+                + "&userId=" + LoginData.loginUser.getId();
 
         // 请求头
         Headers headers = new Headers.Builder()
@@ -220,6 +221,6 @@ public class FollowingFragment extends Fragment {
 
     private void refreshData() {
         current++;
-        getfocus();
+        getfocus(current);
     }
 }
