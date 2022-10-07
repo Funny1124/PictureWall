@@ -53,6 +53,7 @@ public class FollowingFragment extends Fragment {
     private View view;
     private SwipeRefreshLayout swipe;
     private int current = 1;
+
     public static FollowingFragment newInstance() {
         return new FollowingFragment();
     }
@@ -66,9 +67,9 @@ public class FollowingFragment extends Fragment {
         getfocus(current);
         initRecyclerView();
 
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh () {
+            public void onRefresh() {
                 refreshData();
                 initRecyclerView();
 
@@ -96,9 +97,9 @@ public class FollowingFragment extends Fragment {
                     int[] into = manager.findLastVisibleItemPositions(positions);
                     //所有条目,数量值
                     int totalItemCount = manager.getItemCount();
-                    int lastPositon = Math.max(into[0],into[1]);
+                    int lastPositon = Math.max(into[0], into[1]);
                     // 判断是否滚动到底部，并且是向右滚动
-                    if ((totalItemCount - lastPositon) <= 9 ) {
+                    if ((totalItemCount - lastPositon) <= 9) {
                         //加载更多功能的代码
                         refreshData();
                     }
@@ -142,11 +143,11 @@ public class FollowingFragment extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
-        myPostsAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener(){
+        myPostsAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, MyPosts data) {
                 //此处进行监听事件的业务处理
-                DetailActivity.shareId = data.getId();
+                DetailActivity.post = data;
                 startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });
@@ -200,7 +201,7 @@ public class FollowingFragment extends Fragment {
                                 if (dataResponseBody.getData() != null) {
                                     Log.d("关注：", dataResponseBody.getData().getRecords().toString());
                                     myFocusList.addAll(dataResponseBody.getData().getRecords());
-                                }else {
+                                } else {
                                     requireActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {

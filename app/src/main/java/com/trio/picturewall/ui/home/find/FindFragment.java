@@ -52,6 +52,7 @@ public class FindFragment extends Fragment {
     private View view;
     private SwipeRefreshLayout swipe;
     private int current = 1;
+
     public static FindFragment newInstance() {
         return new FindFragment();
     }
@@ -96,9 +97,9 @@ public class FindFragment extends Fragment {
                     int[] into = manager.findLastVisibleItemPositions(positions);
                     //所有条目,数量值
                     int totalItemCount = manager.getItemCount();
-                    int lastPositon = Math.max(into[0],into[1]);
+                    int lastPositon = Math.max(into[0], into[1]);
                     // 判断是否滚动到底部，并且是向右滚动
-                    if ((totalItemCount - lastPositon) <= 9 ) {
+                    if ((totalItemCount - lastPositon) <= 9) {
                         //加载更多功能的代码
                         refreshData();
                     }
@@ -147,7 +148,7 @@ public class FindFragment extends Fragment {
             @Override
             public void OnItemClick(View view, MyPosts data) {
                 //此处进行监听事件的业务处理
-                DetailActivity.shareId = data.getId();
+                DetailActivity.post = data;
                 startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });

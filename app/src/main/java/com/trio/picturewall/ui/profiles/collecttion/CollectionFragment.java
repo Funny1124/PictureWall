@@ -123,7 +123,7 @@ public class CollectionFragment extends Fragment {
         adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, MyPosts data) {
-                DetailActivity.shareId = data.getId();
+                DetailActivity.post = data;
                 startActivity(new Intent(getActivity(), DetailActivity.class));
             }
         });

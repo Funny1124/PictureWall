@@ -82,7 +82,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private SwipeRefreshLayout swipe_comment;
     private List<Comment> comments = new ArrayList<>(); //评论数据list
     private int com_count = 0;
-    public static int shareId;
+
     private int i = 0;
 
     @Override
@@ -91,7 +91,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_detail);
         //view = inflater.inflate(R.layout.fragment_find, container, false);
         //swipe_comment = findViewById(R.id.swipe_comment);
-        getdetail();
+//        getdetail();
         getComment();
         try {
             Thread.sleep(1000);
@@ -236,55 +236,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void getdetail() {
-        // url路径
-        String url = "http://47.107.52.7:88/member/photo/share/detail?shareId="
-                + shareId + "&userId="
-                + LoginData.loginUser.getId();
-
-        // 请求头
-        Headers headers = new Headers.Builder()
-                .add("Accept", "application/json, text/plain, */*")
-                .add("appId", Api.appId)
-                .add("appSecret", Api.appSecret)
-                .build();
-
-        //请求组合创建
-        Request request = new Request.Builder()
-                .url(url)
-                // 将请求头加至请求中
-                .headers(headers)
-                .get()
-                .build();
-
-        try {
-            OkHttpClient client = new OkHttpClient();
-            //发起请求，传入callback进行回调
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    e.printStackTrace();
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    Type jsonType = new TypeToken<ResponseBody<MyPosts>>() {
-                    }.getType();
-                    Gson gson = new Gson();
-                    // 获取响应体的json串
-                    String body = Objects.requireNonNull(response.body()).string();
-                    Log.d("DetailActivity", body);
-                    // 解析json串到自己封装的状态
-                    ResponseBody<MyPosts> dataResponseBody = gson.fromJson(body, jsonType);
-                    Log.d("DetailActivity", dataResponseBody.toString());
-                    post = dataResponseBody.getData();
-                }
-            });
-        } catch (NetworkOnMainThreadException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public void hasfocus() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/focus?focusUserId="
@@ -350,7 +301,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private void collect() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/collect?" +
-                "shareId=" + shareId +
+                "shareId=" + post.getId() +
                 "&userId=" + LoginData.loginUser.getId();
 
         // 请求头
@@ -448,7 +399,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private void like() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/like?" +
-                "shareId=" + shareId +
+                "shareId=" + post.getId() +
                 "&userId=" + LoginData.loginUser.getId();
 
         // 请求头
@@ -547,7 +498,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private void getComment() {
         // url路径
         String url = "http://47.107.52.7:88/member/photo/comment/first?current=1&shareId=" +
-                shareId +
+                post.getId() +
                 "&size=32";
 
         // 请求头
@@ -628,7 +579,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         com_post.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 System.out.println(com_edit_text.getText().toString());
-                addComment(com_edit_text.getText().toString(), shareId,
+                addComment(com_edit_text.getText().toString(), post.getId(),
                         LoginData.loginUser.getId(), LoginData.loginUser.getUsername());
                 com_edit_text.setText("");//置空输入框
 
