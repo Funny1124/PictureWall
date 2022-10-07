@@ -11,10 +11,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/com_user_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
             android:src="@mipmap/seraphine" />
 
         <TextView
@@ -25,7 +25,7 @@
             android:layout_marginStart="10dp"
             android:text="用户名"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,7 +36,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:id="@+id/com_context"
@@ -52,14 +52,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
-
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp">
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
             <TextView
                 android:id="@+id/com_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="12:30"
                 android:textColor="@color/black"
                 android:textSize="12sp" />

@@ -40,6 +40,7 @@
         <TextView
             android:id="@+id/sim_post_content"
             android:layout_width="wrap_content"
+            android:maxHeight="32dp"
             android:layout_height="wrap_content"
             android:text="sim_post_content"
             android:textSize="12sp" />

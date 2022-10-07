@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@drawable/conner_bg_gray"
+    android:background="@drawable/conner_bg_white"
     android:orientation="vertical">
 
     <FrameLayout
@@ -61,18 +61,17 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/conner_bg_gray"
+            android:background="@drawable/conner_bg_white"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/com_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/edit_text_rectangle"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/conner_bg_gray"
                 android:hint="留下你的精彩评论吧"
                 android:textColor="#A5A5A5"
                 android:textColorHint="#C6C5C5"
@@ -80,11 +79,13 @@
 
             <ImageView
                 android:id="@+id/com_post"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/conner_bg_gray"
                 android:src="@mipmap/fly"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
