@@ -23,13 +23,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void init() {
-        /*
-        动画
-         */
         enter = findViewById(R.id.enter);
-//        Animation enter_ani = AnimationUtils.loadAnimation(WelcomeActivity.this,R.anim.wel_translate_left);
-//        enter.startAnimation(enter_ani);
-
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

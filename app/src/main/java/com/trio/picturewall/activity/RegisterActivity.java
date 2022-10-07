@@ -108,8 +108,8 @@ public class RegisterActivity extends AppCompatActivity {
                 .build();
         // 请求体
         Map<String, Object> bodyMap = new HashMap<>();
-        bodyMap.put("password", password);
         bodyMap.put("username", username);
+        bodyMap.put("password", password);
         // 将Map转换为字符串类型加入请求体中
         String body = new Gson().toJson(bodyMap);
         MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");

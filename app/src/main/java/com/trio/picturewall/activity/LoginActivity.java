@@ -154,8 +154,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(String username, String password) {
-        new Thread(() -> {
-
             // url路径
             String url = "http://47.107.52.7:88/member/photo/user/login";
             // 请求头
@@ -212,6 +210,5 @@ public class LoginActivity extends AppCompatActivity {
             } catch (NetworkOnMainThreadException ex) {
                 ex.printStackTrace();
             }
-        }).start();
     }
 }
