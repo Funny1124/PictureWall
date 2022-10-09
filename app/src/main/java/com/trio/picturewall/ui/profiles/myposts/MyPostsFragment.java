@@ -1,17 +1,23 @@
 package com.trio.picturewall.ui.profiles.myposts;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +28,7 @@ import com.google.gson.reflect.TypeToken;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.activity.DetailActivity;
+import com.trio.picturewall.adapter.MyPostAdapter;
 import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
@@ -37,8 +44,10 @@ import java.util.Objects;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MyPostsFragment extends Fragment {
@@ -46,12 +55,12 @@ public class MyPostsFragment extends Fragment {
     private MyPostsViewModel mViewModel;
     public List<MyPosts> myPostsList;
     public RecyclerView recyclerView;//定义RecyclerView
-    private RecyclerViewAdapter myPostsAdapter;
+    private MyPostAdapter myPostsAdapter;
     private View view;
     private int current = 1;
     private int size = 8;
     private String userId = LoginData.loginUser.getId();
-
+    private int shareId;
     public static MyPostsFragment newInstance() {
         return new MyPostsFragment();
     }
@@ -117,7 +126,7 @@ public class MyPostsFragment extends Fragment {
         //获取RecyclerView
         recyclerView = view.findViewById(R.id.lv_news_list);
         //创建adapter
-        myPostsAdapter = new RecyclerViewAdapter(getActivity(), myPostsList);
+        myPostsAdapter = new MyPostAdapter(getActivity(), myPostsList);
         //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         //给RecyclerView设置adapter
@@ -126,11 +135,34 @@ public class MyPostsFragment extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
-        myPostsAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+        myPostsAdapter.setOnItemClickListener(new MyPostAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, MyPosts data) {
                 DetailActivity.post = data;
                 startActivity(new Intent(getActivity(), DetailActivity.class));
+            }
+        });
+
+        myPostsAdapter.setOnItemLongClickListener(new MyPostAdapter.OnItemLongClickListener() {
+            @Override
+            public void OnItemLongClick(View view, MyPosts data) {
+                shareId = data.getId();
+                PopupMenu popupMenu = new PopupMenu(getContext(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.delete, popupMenu.getMenu());
+
+                //弹出式菜单的菜单项点击事件
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        myPostsList.remove(data);
+                        //此处回传点击监听事件
+                        myPostsAdapter.notifyItemRemoved(myPostsAdapter.pos);
+                        deleteMyPost();
+                        return true;
+                    }
+                });
+                popupMenu.show();
             }
         });
     }
@@ -208,5 +240,37 @@ public class MyPostsFragment extends Fragment {
     public void refreshData() {
         current++;
         getMyPosts();
+    }
+
+    public void deleteMyPost() {
+        // url路径
+        String url = "http://47.107.52.7:88/member/photo/share/delete?shareId="
+                + shareId + "&userId=" + LoginData.loginUser.getId();
+
+        // 请求头
+        Headers headers = new Headers.Builder()
+                .add("Accept", "application/json, text/plain, */*")
+                .add("appId", Api.appId)
+                .add("appSecret", Api.appSecret)
+                .build();
+
+        MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+
+        //请求组合创建
+        Request request = new Request.Builder()
+                .url(url)
+                // 将请求头加至请求中
+                .headers(headers)
+                .post(RequestBody.create(MEDIA_TYPE_JSON, ""))
+                .build();
+        try {
+            OkHttpClient client = new OkHttpClient();
+            //发起请求，传入callback进行回调
+            client.newCall(request).enqueue(ResponseBody.callback);
+        } catch (NetworkOnMainThreadException ex) {
+            ex.printStackTrace();
+        }
+
+
     }
 }
