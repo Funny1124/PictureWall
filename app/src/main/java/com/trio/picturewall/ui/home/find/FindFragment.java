@@ -203,12 +203,7 @@ public class FindFragment extends Fragment {
                                     Log.d("发现：", dataResponseBody.getData().getRecords().toString());
                                     myPostsList.addAll(dataResponseBody.getData().getRecords());
                                 } else {
-                                    requireActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(requireActivity(), "暂时没有人分享！", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                    Toast.makeText(requireActivity(), "暂时没有人分享作品！", Toast.LENGTH_SHORT).show();
                                 }
                                 myPostsAdapter.notifyDataSetChanged();
                             }

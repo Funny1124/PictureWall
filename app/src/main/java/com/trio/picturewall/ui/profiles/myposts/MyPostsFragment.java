@@ -196,12 +196,7 @@ public class MyPostsFragment extends Fragment {
                             Log.d("动态：", dataResponseBody.getData().getRecords().toString());
                             myPostsList.addAll(dataResponseBody.getData().getRecords());
                         } else {
-                            requireActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(requireActivity(), "你没有发布任何作品！", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            Toast.makeText(requireActivity(), "你没有发布任何作品！", Toast.LENGTH_SHORT).show();
                         }
                         myPostsAdapter.notifyDataSetChanged();
                     }

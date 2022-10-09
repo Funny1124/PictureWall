@@ -202,12 +202,7 @@ public class FollowingFragment extends Fragment {
                                     Log.d("关注：", dataResponseBody.getData().getRecords().toString());
                                     myFocusList.addAll(dataResponseBody.getData().getRecords());
                                 } else {
-                                    requireActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(requireActivity(), "你没有关注任何人！", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                    Toast.makeText(requireActivity(), "你没有关注任何用户！", Toast.LENGTH_SHORT).show();
                                 }
                                 myPostsAdapter.notifyDataSetChanged();
                             }
