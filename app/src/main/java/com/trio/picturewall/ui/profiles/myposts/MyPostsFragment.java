@@ -29,7 +29,6 @@ import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.activity.DetailActivity;
 import com.trio.picturewall.adapter.MyPostAdapter;
-import com.trio.picturewall.adapter.RecyclerViewAdapter;
 import com.trio.picturewall.entity.MyPosts;
 import com.trio.picturewall.entity.Records;
 import com.trio.picturewall.information.LoginData;
