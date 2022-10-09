@@ -61,10 +61,13 @@
         <entry key="..\:/bw/PictureWall/app/src/main/res/layout/fragment_find.xml" value="0.1" />
         <entry key="..\:/bw/PictureWall/app/src/main/res/layout/fragment_following.xml" value="0.1" />
         <entry key="..\:/bw/PictureWall/app/src/main/res/layout/fragment_profiles.xml" value="0.2" />
+        <entry key="..\:/f/app/src/main/res/menu/delete.xml" value="0.25364583333333335" />
         <entry key="..\:/last/PictureWall/app/src/main/res/layout/fragment_find.xml" value="0.264" />
         <entry key="..\:/last/PictureWall/app/src/main/res/layout/fragment_following.xml" value="0.16145833333333334" />
         <entry key="..\:/last/PictureWall/app/src/main/res/layout/fragment_profiles.xml" value="0.4" />
         <entry key="..\:/last/PictureWall/app/src/main/res/layout/post_detail.xml" value="0.264" />
+        <entry key="..\:/last/app/src/main/res/layout/fragment_good.xml" value="0.25" />
+        <entry key="..\:/last/app/src/main/res/menu/delete.xml" value="0.25" />
       </map>
     </option>
   </component>
