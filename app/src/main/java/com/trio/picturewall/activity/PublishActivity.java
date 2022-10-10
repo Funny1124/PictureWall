@@ -17,7 +17,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Looper;
 import android.os.NetworkOnMainThreadException;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -38,8 +37,6 @@ import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-//import com.hitomi.tilibrary.transfer.TransferConfig;
-//import com.hitomi.tilibrary.transfer.Transferee;
 import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.adapter.GridViewAdapter;
@@ -48,7 +45,6 @@ import com.trio.picturewall.information.LoginData;
 import com.trio.picturewall.responseBody.ResponseBody;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -56,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import okhttp3.Call;
@@ -102,6 +99,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
         findViewById(R.id.publish).setOnClickListener(this);
         findViewById(R.id.cancel).setOnClickListener(this);
+        findViewById(R.id.save).setOnClickListener(this);
 
         gridViewPhoto = (GridView) findViewById(R.id.gv);
         initData(fileList);
@@ -109,10 +107,10 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         gridViewPhoto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position<fileList.size()){
+                if (position < fileList.size()) {
                     Toast.makeText(getApplicationContext(), "长按可删除", Toast.LENGTH_LONG).show();
-                }else{
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(PublishActivity.this, Manifest.permission.CAMERA)||!ActivityCompat.shouldShowRequestPermissionRationale(PublishActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                } else {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(PublishActivity.this, Manifest.permission.CAMERA) || !ActivityCompat.shouldShowRequestPermissionRationale(PublishActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         ActivityCompat.requestPermissions(PublishActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
                     }
@@ -120,7 +118,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                             != PackageManager.PERMISSION_GRANTED) {
                         //申请WRITE_EXTERNAL_STORAGE权限
                         return;
-                    }else showDialog();
+                    } else showDialog();
 
                 }
             }
@@ -134,7 +132,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 } else {
                     isShowDelete = true;
                     adapter.setIsShowDelete(isShowDelete);
-                    if (position<fileList.size()){
+                    if (position < fileList.size()) {
                         findViewById(R.id.delete_markView).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -142,7 +140,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                                 initData(fileList);
                             }
                         });
-                    }else{
+                    } else {
                         showDialog();
                     }
                 }
@@ -175,16 +173,37 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 edit_img_context = findViewById(R.id.edit_img_context);
                 content = edit_img_context.getText().toString().trim();
 
-                if(title.equals("")||content.equals("")){
-                    Toast toast = Toast.makeText(this,"请输入内容",Toast.LENGTH_SHORT);
+                if (title.equals("") || content.equals("")) {
+                    Toast toast = Toast.makeText(this, "请输入内容", Toast.LENGTH_SHORT);
                     toast.show();
-                }else {
-                    if(fileList.size()>0){
+                } else {
+                    if (fileList.size() > 0) {
                         //上传并发布
-                        post(fileList,title,content);
+                        post(fileList, title, content, 1);
                         Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
                         finish();
-                    }else{
+                    } else {
+                        Toast.makeText(this, "请上传图片", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+            case R.id.save:
+                edit_img_name = findViewById(R.id.edit_img_name);
+                title = edit_img_name.getText().toString().trim();
+
+                edit_img_context = findViewById(R.id.edit_img_context);
+                content = edit_img_context.getText().toString().trim();
+
+                if (title.equals("") || content.equals("")) {
+                    Toast toast = Toast.makeText(this, "请输入内容", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    if (fileList.size() > 0) {
+                        //上传并保存
+                        post(fileList, title, content, 0);
+                        Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
                         Toast.makeText(this, "请上传图片", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -275,41 +294,41 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
     //图片uri判断
     private String handleImageOkKitKat(Uri uri) {
-        String imagePath=null;
-        Log.d("uri=intent.getData :",""+uri);
-        if (DocumentsContract.isDocumentUri(this,uri)){
+        String imagePath = null;
+        Log.d("uri=intent.getData :", "" + uri);
+        if (DocumentsContract.isDocumentUri(this, uri)) {
             String docId = DocumentsContract.getDocumentId(uri);        //数据表里指定的行
-            Log.d("getDocumentId(uri) :",""+docId);
-            Log.d("uri.getAuthority() :",""+uri.getAuthority());
-            if ("com.android.providers.media.documents".equals(uri.getAuthority())){
+            Log.d("getDocumentId(uri) :", "" + docId);
+            Log.d("uri.getAuthority() :", "" + uri.getAuthority());
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 String id = docId.split(":")[1];
                 String selection = MediaStore.Images.Media._ID + "=" + id;
-                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,selection);
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+                imagePath = getImagePath(contentUri, null);
             }
-            else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
-                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"),Long.valueOf(docId));
-                imagePath = getImagePath(contentUri,null);
-            }
-        }
-        else if ("content".equalsIgnoreCase(uri.getScheme())){
-            imagePath = getImagePath(uri,null);
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            imagePath = getImagePath(uri, null);
         }
         return imagePath;
     }
+
     //uri转文件
     @SuppressLint("Range")
-    public String getImagePath(Uri uri,String selection) {
+    public String getImagePath(Uri uri, String selection) {
         System.out.println("uri转file");
         String path = null;
-        Cursor cursor = getContentResolver().query(uri,null,selection,null,null);   //内容提供器
-        if (cursor!=null){
-            if (cursor.moveToFirst()){
+        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);   //内容提供器
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));   //获取路径
             }
         }
         cursor.close();
         return path;
     }
+
     //初始化
     private void initData(ArrayList<File> fileList) {
         listpath = new ArrayList<>();
@@ -331,7 +350,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
      * 底部弹出框
      */
     private void showDialog() {
-        if (mDialog ==null){
+        if (mDialog == null) {
             initShareDialog();
         }
         mDialog.show();
@@ -348,34 +367,31 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         window.setGravity(Gravity.BOTTOM);      //位于底部
         window.setWindowAnimations(R.style.dialogStyle);    //弹出动画
         View inflate = View.inflate(this, R.layout.dialog_picture_camera, null);
-        inflate.findViewById(R.id.dialog_cancel).setOnClickListener(new View.OnClickListener()
-        {
+        inflate.findViewById(R.id.dialog_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDialog != null && mDialog.isShowing()){
+                if (mDialog != null && mDialog.isShowing()) {
                     mDialog.dismiss();      //消失，退出
                 }
             }
         });
-        inflate.findViewById(R.id.dialog_Picture).setOnClickListener(new View.OnClickListener()
-        {
+        inflate.findViewById(R.id.dialog_Picture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDialog != null && mDialog.isShowing()){
+                if (mDialog != null && mDialog.isShowing()) {
                     mDialog.dismiss();      //消失，退出
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent,"Select Picture"), 0);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), 0);
                 }
             }
         });
-        inflate.findViewById(R.id.dialog_Camera).setOnClickListener(new View.OnClickListener()
-        {
+        inflate.findViewById(R.id.dialog_Camera).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDialog != null && mDialog.isShowing()){
+                if (mDialog != null && mDialog.isShowing()) {
                     mDialog.dismiss();      //消失，退出
                     openCamera(PublishActivity.this);
                 }
@@ -383,7 +399,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         });
         window.setContentView(inflate);
         //横向充满
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
 
@@ -414,7 +430,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         != PackageManager.PERMISSION_GRANTED) {
                     //申请WRITE_EXTERNAL_STORAGE权限
                     //Util.showToast(this,"请开启存储权限");
-                    Toast.makeText(this,"请开启存储权限",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请开启存储权限", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 imageUri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
@@ -433,8 +449,15 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 Environment.MEDIA_MOUNTED);
     }
 
-
-    public static void post(ArrayList<File> fileList, String title, String content) {
+    /**
+     * 上传图片并进行分享或保存
+     *
+     * @param fileList 图片列表
+     * @param title    标题
+     * @param content  内容
+     * @param choose   choose==1为分享，否则为保存
+     */
+    public static void post(ArrayList<File> fileList, String title, String content, int choose) {
         new Thread(() -> {
             Gson gson = new Gson();
             int length = fileList.size();
@@ -495,7 +518,11 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         Log.d("info", dataResponseBody.toString());
                         Log.d("Picture:", LoginData.picture.getImageCode());
                         Log.d("Picture:", String.valueOf(LoginData.picture.getImageUrlList()));
-                        postAdd(LoginData.picture.getImageCode(),LoginData.loginUser.getId(), title,content);
+                        if (choose == 1) {
+                            postAdd(LoginData.picture.getImageCode(), LoginData.loginUser.getId(), title, content);
+                        } else {
+                            save(LoginData.picture.getImageCode(), LoginData.loginUser.getId(), title, content);
+                        }
                     }
                 });
 
@@ -505,4 +532,45 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         }).start();
     }
 
+    public static void save(String imageCode, String pUserId, String title, String content) {
+        new Thread(() -> {
+
+            // url路径
+            String url = "http://47.107.52.7:88/member/photo/share/save";
+
+            // 请求头
+            Headers headers = new Headers.Builder()
+                    .add("appId", Api.appId)
+                    .add("appSecret", Api.appSecret)
+                    .add("Accept", "application/json, text/plain, */*")
+                    .build();
+
+            // 请求体
+            // PS.用户也可以选择自定义一个实体类，然后使用类似fastjson的工具获取json串
+            Map<String, Object> bodyMap = new HashMap<>();
+            bodyMap.put("content", content);
+            bodyMap.put("imageCode", imageCode);
+            bodyMap.put("pUserId", pUserId);
+            bodyMap.put("title", title);
+            // 将Map转换为字符串类型加入请求体中
+            String body = new Gson().toJson(bodyMap);
+
+            MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+
+            //请求组合创建
+            Request request = new Request.Builder()
+                    .url(url)
+                    // 将请求头加至请求中
+                    .headers(headers)
+                    .post(RequestBody.create(MEDIA_TYPE_JSON, body))
+                    .build();
+            try {
+                OkHttpClient client = new OkHttpClient();
+                //发起请求，传入callback进行回调
+                client.newCall(request).enqueue(ResponseBody.callback);
+            } catch (NetworkOnMainThreadException ex) {
+                ex.printStackTrace();
+            }
+        }).start();
+    }
 }

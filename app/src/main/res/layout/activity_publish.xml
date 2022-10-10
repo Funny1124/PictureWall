@@ -17,8 +17,8 @@
             android:id="@+id/cancel"
             android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:layout_gravity="center"
+            android:layout_margin="8dp"
             android:src="@mipmap/back"
             tools:ignore="ContentDescription" />
 
@@ -30,13 +30,11 @@
             android:text="发布作品"
             android:textColor="@color/black" />
 
-        <ImageView
-            android:id="@+id/publish"
+        <TextView
             android:layout_width="48dp"
-            android:layout_margin="8dp"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:gravity="center"
-            android:src="@mipmap/fly"
             tools:ignore="ContentDescription" />
     </LinearLayout>
 
@@ -44,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -56,9 +55,9 @@
                 android:id="@+id/edit_img_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/conner_bg_white"
                 android:hint="给你的作品取个名字吧"
                 android:inputType="text"
@@ -79,9 +78,9 @@
                 android:id="@+id/edit_img_context"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/conner_bg_white"
                 android:gravity="start"
                 android:hint="描述一下你的创作灵感吧"
@@ -96,17 +95,49 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:fillViewport="true">
-    <GridView
-        android:id="@+id/gv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:numColumns="3"
-        android:columnWidth="120dp"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"/>
-</ScrollView>
+
+        <GridView
+            android:id="@+id/gv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:columnWidth="120dp"
+            android:horizontalSpacing="10dp"
+            android:numColumns="3"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="10dp" />
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/black" />
+        <ImageView
+            android:id="@+id/save"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:src="@mipmap/save"
+            tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/publish"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:src="@mipmap/fly"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
 </LinearLayout>
