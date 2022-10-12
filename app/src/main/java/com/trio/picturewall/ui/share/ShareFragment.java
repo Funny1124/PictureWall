@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.trio.picturewall.activity.DraftBoxActivity;
 import com.trio.picturewall.activity.PublishActivity;
 import com.trio.picturewall.databinding.FragmentShareBinding;
 import com.trio.picturewall.widget.CircleButton;
@@ -49,7 +50,7 @@ public class ShareFragment extends Fragment {
         draftBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO
+                startActivity(new Intent(getActivity(), DraftBoxActivity.class));
             }
         });
 
