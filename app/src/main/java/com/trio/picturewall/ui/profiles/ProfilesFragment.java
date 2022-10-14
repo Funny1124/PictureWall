@@ -153,4 +153,5 @@ public class ProfilesFragment extends Fragment {
         binding.mineUserIntro.setText(profilesViewModel.getMineUserIntroduce());
     }
 
+
 }

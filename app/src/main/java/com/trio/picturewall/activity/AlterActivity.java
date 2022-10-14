@@ -21,6 +21,7 @@ import com.trio.picturewall.Http.Api;
 import com.trio.picturewall.R;
 import com.trio.picturewall.entity.User;
 import com.trio.picturewall.information.LoginData;
+import com.trio.picturewall.ui.profiles.ProfilesFragment;
 
 import java.io.EOFException;
 import java.io.File;

@@ -329,7 +329,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         return path;
     }
 
-    //初始化
+    //写入适配器进行初始化
     private void initData(ArrayList<File> fileList) {
         listpath = new ArrayList<>();
         /**遍历数组*/
@@ -346,9 +346,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    /**
-     * 底部弹出框
-     */
+    //底部弹出框
     private void showDialog() {
         if (mDialog == null) {
             initShareDialog();
@@ -356,9 +354,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         mDialog.show();
     }
 
-    /**
-     * dialog 初始化
-     */
+    //dialog 初始化
     private void initShareDialog() {
         mDialog = new Dialog(this, R.style.dialogStyle);
         mDialog.setCanceledOnTouchOutside(true);
@@ -402,7 +398,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
-
+    //图片上传接口
     public void openCamera(Activity activity) {
         //獲取系統版本
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
@@ -421,7 +417,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 imageUri = Uri.fromFile(tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             } else {
-                //兼容android7.0 使用共享文件的形式
+                //使用共享文件的形式
                 ContentValues contentValues = new ContentValues(1);
                 contentValues.put(MediaStore.Images.Media.DATA, tempFile.getAbsolutePath());
 
