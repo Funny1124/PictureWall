@@ -44,11 +44,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:background="@drawable/conner_rectangle"
-        android:layout_marginBottom="120dp">
+        android:layout_marginBottom="70dp">
 
         <ImageView
             android:layout_width="60dp"
