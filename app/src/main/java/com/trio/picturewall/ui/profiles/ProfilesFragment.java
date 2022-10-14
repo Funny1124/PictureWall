@@ -62,7 +62,7 @@ public class ProfilesFragment extends Fragment {
                 if (tab.getText().equals("收藏")) {
                     getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, collectionFragment).commit();
                 }
-                if (tab.getText().equals("喜欢")) {
+                if (tab.getText().equals("已赞")) {
                     getChildFragmentManager().beginTransaction().replace(R.id.profiles_linearLayout, likeFragment).commit();
                 }
             }

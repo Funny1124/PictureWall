@@ -93,11 +93,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         //swipe_comment = findViewById(R.id.swipe_comment);
 //        getdetail();
         getComment();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         initView();
         initData();
     }
@@ -128,11 +128,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.btn_like:
                 if (!post.getHasLike()) {//detail.getHasFocus() == false：未关注->已关注
                     like();
-                    btn_like.setImageResource(R.mipmap.like);
+                    btn_like.setImageResource(R.mipmap.good_fill);
                     post.setHasLike(true);
                 } else {
                     cancelLike();
-                    btn_like.setImageResource(R.mipmap.unlike);
+                    btn_like.setImageResource(R.mipmap.good);
                     post.setHasLike(false);
                 }
                 break;
@@ -219,9 +219,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             focus.setImageResource(R.mipmap.focus);
         }
         if (!post.getHasLike()) {//detail.getHasFocus() == false：未关注->已关注
-            btn_like.setImageResource(R.mipmap.unlike);
+            btn_like.setImageResource(R.mipmap.good);
         } else {
-            btn_like.setImageResource(R.mipmap.like);
+            btn_like.setImageResource(R.mipmap.good_fill);
         }
         if (!post.getHasCollect()) {//detail.getHasFocus() == false：未关注->已关注
             btn_collect.setImageResource(R.mipmap.collect);
