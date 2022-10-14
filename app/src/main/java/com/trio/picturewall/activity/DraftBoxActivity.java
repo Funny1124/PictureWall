@@ -13,6 +13,7 @@ import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -46,6 +47,7 @@ public class DraftBoxActivity extends AppCompatActivity {
     public List<MyPosts> drafBoxItems;
     public RecyclerView recyclerView;//定义RecyclerView
     private MyPostAdapter myPostsAdapter;
+    private ImageView exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class DraftBoxActivity extends AppCompatActivity {
     private void initRecyclerView() {
         //获取RecyclerView
         recyclerView = findViewById(R.id.draft_box_items);
+        exit = findViewById(R.id.exit);
         //创建adapter
         myPostsAdapter = new MyPostAdapter(this, drafBoxItems);
         //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
@@ -67,7 +70,12 @@ public class DraftBoxActivity extends AppCompatActivity {
         recyclerView.setAdapter(myPostsAdapter);
         //参数是：上下文、列表方向（横向还是纵向）、是否倒叙
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //RecyclerView中没有item的监听事件，需要自己在适配器中写一个监听事件的接口。参数根据自定义
         myPostsAdapter.setOnItemClickListener(new MyPostAdapter.OnItemClickListener() {
             @Override
