@@ -30,7 +30,7 @@ public class AlterActivity extends AppCompatActivity {
     private ImageView iv_back;
     private ImageView temp_avatar;
     private EditText temp_username;
-    private EditText temp_sex;
+//    private EditText temp_sex;
     private EditText temp_introduce;
     private Button btn_save;
 
@@ -42,7 +42,7 @@ public class AlterActivity extends AppCompatActivity {
         iv_back = findViewById(R.id.iv_back);
         temp_avatar = findViewById(R.id.iv_avatar);
         temp_username = findViewById(R.id.temp_username);
-        temp_sex = findViewById(R.id.temp_sex);
+//        temp_sex = findViewById(R.id.temp_sex);
         temp_introduce = findViewById(R.id.temp_introduce);
         btn_save = findViewById(R.id.btn_save);
 
@@ -138,7 +138,7 @@ public class AlterActivity extends AppCompatActivity {
         Glide.with(this).load(url).into(temp_avatar);
 
         temp_username.setText(LoginData.loginUser.getUsername());
-        temp_sex.setText(LoginData.loginUser.getSex());
+//        temp_sex.setText(LoginData.loginUser.getSex());
         temp_introduce.setText(LoginData.loginUser.getIntroduce());
     }
 
@@ -148,7 +148,8 @@ public class AlterActivity extends AppCompatActivity {
         alterUser.setId(LoginData.loginUser.getId());
         alterUser.setAvatar(LoginData.loginUser.getAvatar());
         alterUser.setUsername(temp_username.getText().toString().trim());
-        alterUser.setSex(temp_sex.getText().toString().trim());
+//        alterUser.setSex(temp_sex.getText().toString().trim());
+        alterUser.setSex("0");
         alterUser.setIntroduce(temp_introduce.getText().toString().trim());
         return alterUser;
     }

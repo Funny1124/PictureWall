@@ -33,7 +33,8 @@
         android:id="@+id/re_avatar"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="20dp">
+        android:background="@drawable/edit_text_top_conner_rectangle"
+        android:layout_marginTop="80dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_avatar"
@@ -56,20 +57,14 @@
             android:textColor="#353535"
             android:textSize="16sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/re_name"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/edit_text_top_conner_rectangle"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text_rectangle"
         android:clickable="true">
 
         <TextView
@@ -102,43 +97,43 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/re_sex"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/edit_text_rectangle"
-        android:clickable="true">
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/re_sex"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:background="@drawable/edit_text_rectangle"-->
+<!--        android:clickable="true">-->
 
-        <TextView
-            android:id="@+id/tv_temp_sex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="性    别"
-            android:textColor="#353535"
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_temp_sex"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:text="性    别"-->
+<!--            android:textColor="#353535"-->
+<!--            android:textSize="16sp" />-->
 
-        <TextView
-            android:id="@+id/i2"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:layout_toEndOf="@+id/tv_temp_sex"
-            android:background="#DCDCDC" />
+<!--        <TextView-->
+<!--            android:id="@+id/i2"-->
+<!--            android:layout_width="1dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_margin="15dp"-->
+<!--            android:layout_toEndOf="@+id/tv_temp_sex"-->
+<!--            android:background="#DCDCDC" />-->
 
-        <EditText
-            android:id="@+id/temp_sex"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/i2"
-            android:background="@null"
-            android:hint="请输入性别"
-            android:inputType="text"
-            android:textSize="13sp" />
+<!--        <EditText-->
+<!--            android:id="@+id/temp_sex"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_toEndOf="@+id/i2"-->
+<!--            android:background="@null"-->
+<!--            android:hint="请输入性别"-->
+<!--            android:inputType="text"-->
+<!--            android:textSize="13sp" />-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
     <RelativeLayout
         android:id="@+id/re_profiles"
