@@ -144,13 +144,21 @@ public class ProfilesFragment extends Fragment {
      * 加载个人信息
      */
     private void setUserData() {
-        String url = LoginData.loginUser.getAvatar();
-        //加载头像
-        Glide.with(this).load(url).into(binding.mineUserIcon);
+//        String avatar = LoginData.loginUser.getAvatar();
+        String avatar = profilesViewModel.getMineUserIconPath();
+        String userIntro = profilesViewModel.getMineUserIntroduce();
+        if (avatar != null){
+            //加载头像
+            Glide.with(this).load(avatar).into(binding.mineUserIcon);
+        }
         //加载用户名
         binding.mineUserName.setText(profilesViewModel.getMineUserName());
-        //加载用户名
-        binding.mineUserIntro.setText(profilesViewModel.getMineUserIntroduce());
+        if (userIntro != null){
+            //加载用户名
+            binding.mineUserIntro.setText(userIntro);
+        }else {
+            binding.mineUserIntro.setText("这个人很懒，什么都没留下！");
+        }
     }
 
 }
